@@ -1,6 +1,3 @@
 dist
 node_modules
-<<<<<<< HEAD
 .next
-=======
->>>>>>> 6b97a64... Ignore "dist" and "node_modules"
