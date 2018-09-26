@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Back end",
+  "main": "src/index.js",
+  "license": "MIT",
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,json,graphql,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "watch": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "husky": "^1.0.0",
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.4",
+    "prettier": "1.14.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  }
+}
