@@ -1,18 +1,18 @@
-#Requirements - Team 2
+# Requirements - Team 2
 
-##Stakeholder and Actors
+## Stakeholder and Actors
 * Client
 * Students searching for jobs
 * Employers
 * System Administrator
 
-##Domain Concepts
+## Domain Concepts
 * Offer a job (add insertion)
 * Apply for a job
 * Filter suitable job to student 
 * Profiling (Employers and Students)
 
-##Use Cases
+## Use Cases
 * Register as user
 * Register as employer
 * Login to your profile
@@ -21,11 +21,11 @@
 * Apply for a job
 * Select applicant
 
-##Scenarios
+## Scenarios
 * Student has no suitable job
 * Employer
 
-##NFR
+## NFR
 * Privacy
 * Security
 * High availability
