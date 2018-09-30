@@ -1,7 +1,9 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
+
 import { Job } from "./entity/Job";
-import { Init1538334286302 } from "./migration/1538334286302-Init";
+
+import { Init1538335078008 } from "./migration/1538335078008-Init";
 
 createConnection(
   {
@@ -15,7 +17,7 @@ createConnection(
       Job
     ],
     migrations: [
-      Init1538334286302
+      Init1538335078008
     ],
     logging: true
   }
