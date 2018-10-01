@@ -10,6 +10,12 @@
     "paths": {
       "*": ["node_modules/*"]
     },
-    "esModuleInterop": true
+    "lib": [
+      "es5",
+      "es6"
+    ],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }
