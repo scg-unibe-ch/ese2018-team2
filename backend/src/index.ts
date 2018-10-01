@@ -3,10 +3,10 @@ import { createConnection } from "typeorm";
 
 import { Job } from "./entity/Job";
 
-import { Init1538335078008 } from "./migration/1538335078008-Init";
 import { GraphQLServer } from "graphql-yoga";
 import { importSchema } from "graphql-import";
 import { resolvers } from "./resolvers";
+import { Init1538386311316 } from "./migration/1538386311316-Init";
 
 createConnection(
   {
@@ -20,7 +20,7 @@ createConnection(
       Job
     ],
     migrations: [
-      Init1538335078008
+      Init1538386311316
     ],
     logging: true
   }
