@@ -6,7 +6,7 @@ import { Job } from "./entity/Job";
 import { GraphQLServer } from "graphql-yoga";
 import { importSchema } from "graphql-import";
 import { resolvers } from "./resolvers";
-import { Init1538386311316 } from "./migration/1538386311316-Init";
+import { Init1538501665722 } from "./migration/1538501665722-Init";
 
 createConnection(
   {
@@ -20,18 +20,14 @@ createConnection(
       Job
     ],
     migrations: [
-      Init1538386311316
+      Init1538501665722
     ],
     logging: true
   }
   ).then(async connection => {
     await connection.runMigrations({transaction: true});
 
-    const job = new Job();
-    job.title = "Hello world";
-    job.description = "This is a test description";
-
-    await connection.getRepository(Job).save(job);
+    await connection.getRepository(Job).clear();
 });
 
 const typeDefs = importSchema("./src/schema.graphql");
