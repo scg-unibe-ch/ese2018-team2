@@ -1,6 +1,6 @@
 # Requirements - Team 2
 
-## Stakeholder and Actors
+## Stakeholders and Actors
 * Client
 * Students searching for jobs
 * Employers
@@ -9,21 +9,25 @@
 ## Domain Concepts
 * Offer a job (add insertion)
 * Apply for a job
-* Filter suitable job to student 
-* Profiling (Employers and Students)
+* Filter suitable job to student
+* Profiles (Employers and Students)
+* Profile visibility (Students private, Employers public)
+* Security (Credibility, privacy)
 
 ## Use Cases
 * Register as user
 * Register as employer
 * Login to your profile
-* Search for jobs(filter)
-* Manage entries as SysAdmin
+* Search for jobs (filter)
+* Manage entries as System Administrator
 * Apply for a job
 * Select applicant
+* Commit and delete a job insert
 
 ## Scenarios
 * Student has no suitable job
-* Employer
+* Employer has a deadline for hiring
+* Employer has to update his insert
 
 ## NFR
 * Privacy
