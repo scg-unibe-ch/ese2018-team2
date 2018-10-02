@@ -12,7 +12,8 @@
     },
     "lib": [
       "es5",
-      "es6"
+      "es6",
+      "esnext.asynciterable"
     ],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,

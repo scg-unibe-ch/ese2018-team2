@@ -7,6 +7,7 @@ import { GraphQLServer } from "graphql-yoga";
 import { importSchema } from "graphql-import";
 import { resolvers } from "./resolvers";
 import { Init1538501665722 } from "./migration/1538501665722-Init";
+import { JobRepository } from "./repository/JobRepository";
 
 createConnection(
   {
@@ -26,11 +27,12 @@ createConnection(
   }
   ).then(async connection => {
     await connection.runMigrations({transaction: true});
+    const typeDefs = importSchema("./src/schema.graphql");
 
-    await connection.getRepository(Job).clear();
+    const context = {
+      jobRepository: new JobRepository(connection)
+    };
+
+    const server = new GraphQLServer({ typeDefs, resolvers, context });
+    server.start(() => console.log('Server is running on localhost:4000'));
 });
-
-const typeDefs = importSchema("./src/schema.graphql");
-
-const server = new GraphQLServer({ typeDefs, resolvers });
-server.start(() => console.log('Server is running on localhost:4000'));

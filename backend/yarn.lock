@@ -94,6 +94,14 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/ws@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.1.tgz#ca7a3f3756aa12f62a0a62145ed14c6db25d5a28"
+  integrity sha512-EzH8k1gyZ4xih/MaZTXwT2xOkPiIMSrhQ9b8wrlX88L0T02eYsddatQlwVFlEPyEqV0ChpdpNnE51QPH6NVT4Q==
+  dependencies:
+    "@types/events" "*"
+    "@types/node" "*"
+
 "@types/zen-observable@^0.5.3":
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.4.tgz#b863a4191e525206819e008097ebf0fb2e3a1cdc"
