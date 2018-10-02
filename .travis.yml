@@ -1,0 +1,7 @@
+language: node_js
+install:
+    - yarn --cwd "backend"
+    - yarn --cwd "frontend"
+script:
+    - yarn --cwd "backend" run build
+    - yarn --cwd "frontend" run build
