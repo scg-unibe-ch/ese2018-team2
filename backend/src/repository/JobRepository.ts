@@ -2,7 +2,6 @@ import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
 
 export class JobRepository {
-
   private connection: Connection;
   private jobs: Repository<Job>;
 
@@ -11,11 +10,11 @@ export class JobRepository {
     this.jobs = connection.getRepository(Job);
   }
 
-  getJobs():Promise<Job[]> {
+  getJobs(): Promise<Job[]> {
     return this.jobs.find();
   }
 
-  async createJob(title: string, description: string):Promise<Job> {
+  async createJob(title: string, description: string): Promise<Job> {
     const job = new Job();
     job.title = title;
     job.description = description;
@@ -26,10 +25,10 @@ export class JobRepository {
   }
 
   // TODO
-  deleteJob(id: String):void {}
+  deleteJob(id: String): void {}
 
   // TODO
   updateJob(title: string, description: string): Promise<Job> {
-    return null
+    return null;
   }
 }

@@ -10,11 +10,7 @@
     "paths": {
       "*": ["node_modules/*"]
     },
-    "lib": [
-      "es5",
-      "es6",
-      "esnext.asynciterable"
-    ],
+    "lib": ["es5", "es6", "esnext.asynciterable"],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true

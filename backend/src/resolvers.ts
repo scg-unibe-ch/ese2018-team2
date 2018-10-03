@@ -5,14 +5,19 @@ import { JobRepository } from "./repository/JobRepository";
 import ArgsCreateJob = IMutation.ArgsCreateJob;
 
 interface BackendContext {
-  jobRepository: JobRepository
+  jobRepository: JobRepository;
 }
-export const resolvers : IResolvers = {
+
+export const resolvers: IResolvers = {
   Query: {
-    hello: (_, { name }: ArgsHello) => `Hello ${name || 'World'}`,
-    jobs: (_, args, ctx:BackendContext) => ctx.jobRepository.getJobs()
+    hello: (_, { name }: ArgsHello) => `Hello ${name || "World"}`,
+    jobs: (_, args, ctx: BackendContext) => ctx.jobRepository.getJobs()
   },
   Mutation: {
-    createJob: (_, {title, description}:ArgsCreateJob, ctx: BackendContext) => ctx.jobRepository.createJob(title, description)
+    createJob: (
+      _,
+      { title, description }: ArgsCreateJob,
+      ctx: BackendContext
+    ) => ctx.jobRepository.createJob(title, description)
   }
 };

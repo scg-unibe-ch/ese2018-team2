@@ -19,6 +19,7 @@
   "scripts": {
     "watch": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "build": "tsc",
+    "prettier": "prettier --write './**/*.{ts,json,graphql}'",
     "gen:schema": "mkdirp src/generated && graphql-resolver-codegen interfaces -s ./src/schema.graphql -o ./src/generated/resolvers.ts"
   },
   "devDependencies": {

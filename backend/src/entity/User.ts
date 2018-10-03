@@ -3,7 +3,6 @@ import { Skill } from "./Skill";
 
 @Entity("users")
 export class User {
-
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -30,5 +29,4 @@ export class User {
 
   @Column("text")
   bio: string;
-
 }
