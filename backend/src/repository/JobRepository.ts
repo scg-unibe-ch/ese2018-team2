@@ -1,9 +1,16 @@
-import { Connection, Repository } from "typeorm";
+import {
+  Connection,
+  Repository,
+  EntityManager,
+  getManager,
+  getConnection
+} from "typeorm";
 import { Job } from "../entity/Job";
 
 export class JobRepository {
   private connection: Connection;
   private jobs: Repository<Job>;
+  private manager = getManager();
 
   constructor(connection: Connection) {
     this.connection = connection;
@@ -25,10 +32,44 @@ export class JobRepository {
   }
 
   // TODO
-  deleteJob(id: String): void {}
+
+  async deleteJob(id: String) {
+    /*
+        this.userRepository.findOne(request.params.id);
+        await this.userRepository.remove(userToRemove );
+        */
+    /*
+        JobRepository.remove({  id: 1  })()
+            .select()
+            .from(Job,  "user")
+            .where("user.name = :name", { name: "John" })
+            .getMany();
+        await repository.remove(user);
+            */
+    await getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(Job) // or JobRepository
+      .where("id", { id }) // oder uuid?
+      .execute();
+  }
 
   // TODO
-  updateJob(title: string, description: string): Promise<Job> {
-    return null;
+  async updateJob(
+    title: string,
+    description: string,
+    id: string
+  ): Promise<Job> {
+    const job = await this.manager
+      .createQueryBuilder()
+      .select()
+      .from(Job, "jobs")
+      .where("job.id = :id", { id })
+      .getOne();
+
+    job.title = title;
+    job.description = description;
+
+    return job;
   }
 }

@@ -18,6 +18,9 @@ export const resolvers: IResolvers = {
       _,
       { title, description }: ArgsCreateJob,
       ctx: BackendContext
-    ) => ctx.jobRepository.createJob(title, description)
+    ) => ctx.jobRepository.createJob(title, description),
+    deleteJob: (_, { id }, ctx) => ctx.jobRepository.deleteJob(id),
+    updateJob: (_, { title, description, id }, ctx) =>
+      ctx.jobRepository.updateJobJob(id)
   }
 };
