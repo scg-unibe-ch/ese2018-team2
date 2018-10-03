@@ -1,5 +1,6 @@
 import Document, { Head, Main, NextScript } from "next/document";
 import NavBar from "../components/navbar/NavBar";
+import * as React from "react";
 
 export default class MyDocument extends Document {
   render() {
