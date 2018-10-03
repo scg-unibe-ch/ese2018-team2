@@ -1,3 +1,4 @@
 import * as React from "react";
+import { Grid } from "semantic-ui-react";
 
-export default ({ children }) => <div>{children}</div>;
+export default ({ children }) => <Grid columns={1}>{children}</Grid>;
