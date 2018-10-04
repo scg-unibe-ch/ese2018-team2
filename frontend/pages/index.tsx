@@ -1,6 +1,7 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Button, List } from "semantic-ui-react";
+import Layout from "../components/layout/layout/Layout";
 
 interface User {
   id: number;
@@ -27,7 +28,7 @@ const team: Array<User> = [
 ];
 
 export default () => (
-  <div>
+  <Layout>
     <h1>De beschte Team</h1>
     <List>
       {team.map(teammate => (
@@ -40,5 +41,5 @@ export default () => (
       ))}
     </List>
     <Button>Klicken</Button>
-  </div>
+  </Layout>
 );

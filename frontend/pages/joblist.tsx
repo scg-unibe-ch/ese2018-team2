@@ -1,7 +1,7 @@
 import React from "react";
-import JobList from "../components/joblist/JobList";
 import JobItem from "../components/joblist/JobItem";
-import { Container, Header } from "semantic-ui-react";
+import { Item, Header, Segment } from "semantic-ui-react";
+import Layout from "../components/layout/layout/Layout";
 
 interface Job {
   id: string;
@@ -11,7 +11,10 @@ interface Job {
   salary: number;
   schedule: string[];
   period: string;
-  employer: string;
+  employer: {
+    name: string;
+    logo: string;
+  };
 }
 
 const joblist: Array<Job> = [
@@ -23,7 +26,10 @@ const joblist: Array<Job> = [
     salary: 24.5,
     schedule: ["Monday morning", "Tuesday morning"],
     period: "undefined",
-    employer: "BWL GmbH"
+    employer: {
+      name: "BWL GmbH",
+      logo: "../static/companyLogo.png"
+    }
   },
   {
     id: "0e12a329-66fd-4669-9420-c04520e372a4",
@@ -33,17 +39,22 @@ const joblist: Array<Job> = [
     salary: 25.5,
     schedule: ["Thursday morning", "Friday morning"],
     period: "undefined",
-    employer: "BWL GmbH"
+    employer: {
+      name: "BWL GmbH",
+      logo: "../static/companyLogo.png"
+    }
   }
 ];
 
 export default () => (
-  <Container>
+  <Layout>
     <Header as={"h1"}>Job List</Header>
-    <JobList>
-      {joblist.map(job => (
-        <JobItem job={job} key={job.id} />
-      ))}
-    </JobList>
-  </Container>
+    <Segment>
+      <Item.Group divided>
+        {joblist.map(job => (
+          <JobItem job={job} key={job.id} />
+        ))}
+      </Item.Group>
+    </Segment>
+  </Layout>
 );
