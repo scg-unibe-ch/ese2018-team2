@@ -28,17 +28,11 @@ class JobItem extends React.Component<Job> {
   constructor(Job) {
     super(Job);
     this.showPopup = this.showPopup.bind(this);
-    this.hidePopup = this.hidePopup.bind(this);
   }
 
   showPopup() {
     console.log("Parent Method called : showPopup()");
     this.child.open();
-  }
-
-  hidePopup() {
-    console.log("Parent Method called : hidePopup");
-    this.child.current.close();
   }
 
   render() {
