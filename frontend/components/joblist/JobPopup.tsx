@@ -80,7 +80,7 @@ class JobPopup extends React.Component<JobProps, popupState> {
                          TODO: insert Beris component and maybe passing the close-button to it
                          */}
             <Button
-              icon={"closePopup"}
+              icon={"close"}
               onClick={this.closePopup}
               floated={"right"}
             />
