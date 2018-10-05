@@ -6,6 +6,13 @@ import {
   getConnection
 } from "typeorm";
 import { Job } from "../entity/Job";
+import { cursorTo } from "readline";
+
+export interface JobUpdateArgs {
+  id: string;
+  title: string;
+  description: string;
+}
 
 export class JobRepository {
   private connection: Connection;
@@ -31,45 +38,25 @@ export class JobRepository {
     return job;
   }
 
-  // TODO
-
-  async deleteJob(id: String) {
-    /*
-        this.userRepository.findOne(request.params.id);
-        await this.userRepository.remove(userToRemove );
-        */
-    /*
-        JobRepository.remove({  id: 1  })()
-            .select()
-            .from(Job,  "user")
-            .where("user.name = :name", { name: "John" })
-            .getMany();
-        await repository.remove(user);
-            */
-    await getConnection()
-      .createQueryBuilder()
-      .delete()
-      .from(Job) // or JobRepository
-      .where("id", { id }) // oder uuid?
-      .execute();
+  async deleteJob(id: string) {
+    await this.jobs.delete(id);
+    return true;
   }
 
-  // TODO
-  async updateJob(
-    title: string,
-    description: string,
-    id: string
-  ): Promise<Job> {
-    const job = await this.manager
-      .createQueryBuilder()
-      .select()
-      .from(Job, "jobs")
-      .where("job.id = :id", { id })
-      .getOne();
+  async updateJob(args: JobUpdateArgs): Promise<Job> {
+    const id = Object.entries(args)
+      .filter(e => e[0] === "id")
+      .map(e => e[1])[0];
 
-    job.title = title;
-    job.description = description;
+    const fieldsToUpdate = Object.entries(args)
+      .filter(e => e[0] !== "id")
+      .reduce(
+        (prev, curr) => Object.assign({}, prev, { [curr[0]]: curr[1] }),
+        {}
+      );
 
-    return job;
+    await this.jobs.update({ id }, fieldsToUpdate);
+
+    return this.jobs.findOneOrFail(id);
   }
 }
