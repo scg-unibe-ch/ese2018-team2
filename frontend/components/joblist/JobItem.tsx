@@ -2,10 +2,6 @@ import * as React from "react";
 import { Button, Item, Label } from "semantic-ui-react";
 import JobPopup from "./JobPopup";
 
-const popup = (jobId: string, jobTitle: string) => {
-  return new JobPopup({ jobId: jobId, jobTitle: jobTitle });
-};
-
 interface Job {
   job: {
     id: string;
@@ -22,17 +18,27 @@ interface Job {
   };
 }
 
+/**
+ * Item containing a Job-insert preview. By clicking on the
+ * eye-icon a detailed view of the insert is displayed.
+ */
 class JobItem extends React.Component<Job> {
-  private readonly child: React.RefObject<JobPopup>;
+  //Reference to the child component JobPopup for calling functions from it
+  private child: JobPopup;
 
   constructor(Job) {
     super(Job);
+    //bind the function to this.(Is not bound by default)
     this.showPopup = this.showPopup.bind(this);
   }
 
+  /**
+   * Calls the openPopup() function from the child JobPopup
+   * for changing its state and to trigger the rerender
+   */
   showPopup() {
     console.log("Parent Method called : showPopup()");
-    this.child.open();
+    this.child.openPopup();
   }
 
   render() {
@@ -50,23 +56,20 @@ class JobItem extends React.Component<Job> {
           <Item.Meta>
             <span className="schedule">{this.props.job.schedule}</span>
           </Item.Meta>
-          <Button
-            icon={"eye"}
-            floated={"right"}
-            onClick={e => this.showPopup()}
-          />
+          <Button icon={"eye"} floated={"right"} onClick={this.showPopup} />
           <Item.Description>{this.props.job.description}</Item.Description>
+          {/*Creat for each required skill for a job a Label*/}
           <Item.Extra>
             {this.props.job.skills.map(skill => (
               <Label key={skill.valueOf()}>{skill}</Label>
             ))}
           </Item.Extra>
+          {/*store the reference of this component in the local child field*/}
           <JobPopup
             ref={instance => (this.child = instance)}
             job={this.props.job}
           />
         </Item.Content>
-        {popup}
       </Item>
     );
   }

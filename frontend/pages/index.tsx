@@ -1,7 +1,7 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Button, List } from "semantic-ui-react";
-import Layout from "../components/layout/layout/Layout";
+import Layout from "../components/layout/Layout";
 
 interface User {
   id: number;

@@ -1,7 +1,7 @@
 import React from "react";
 import JobItem from "../components/joblist/JobItem";
 import { Item, Header, Segment } from "semantic-ui-react";
-import Layout from "../components/layout/layout/Layout";
+import Layout from "../components/layout/Layout";
 
 interface Job {
   id: string;
