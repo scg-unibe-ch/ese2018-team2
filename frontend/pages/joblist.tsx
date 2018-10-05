@@ -1,7 +1,8 @@
 import React from "react";
 import JobItem from "../components/joblist/JobItem";
-import { Item, Header, Segment, Button, Icon } from "semantic-ui-react";
+import { Button, Header, Icon, Item, Segment } from "semantic-ui-react";
 import Layout from "../components/layout/Layout";
+import JobPopup from "../components/joblist/JobPopup";
 
 interface Job {
   id: string;
@@ -46,16 +47,48 @@ const joblist: Array<Job> = [
   }
 ];
 
-export default () => (
-  <Layout>
-    <Button compact icon={"add"} floated={"right"} size={"huge"} />
-    <Header as={"h1"}>Job List</Header>
-    <Segment>
-      <Item.Group divided>
-        {joblist.map(job => (
-          <JobItem job={job} key={job.id} />
-        ))}
-      </Item.Group>
-    </Segment>
-  </Layout>
-);
+const emptyJob: Job = {
+  title: "New Entry",
+  description: "Blah Blah Blah"
+};
+
+export default class JobList extends React.Component {
+  private newJobForm: JobPopup;
+
+  constructor(props) {
+    super(props);
+    this.openEntryForm = this.openEntryForm.bind(this);
+  }
+
+  openEntryForm() {
+    this.newJobForm.openPopup();
+  }
+
+  render() {
+    return (
+      <Layout>
+        <Header as={"h1"}>Job List</Header>
+        <Segment attached>
+          <JobPopup
+            ref={newEntry => (this.newJobForm = newEntry)}
+            job={emptyJob}
+          />
+          <Item.Group divided>
+            {joblist.map(job => (
+              <JobItem job={job} key={job.id} />
+            ))}
+          </Item.Group>
+        </Segment>
+        <Button
+          attached={"bottom"}
+          icon={"add"}
+          size={"huge"}
+          onClick={this.openEntryForm}
+        >
+          <Icon name={"add"} />
+          Add new insert
+        </Button>
+      </Layout>
+    );
+  }
+}

@@ -6,6 +6,7 @@ import {
   TransitionablePortal
 } from "semantic-ui-react";
 import BerisComponent from "./BerisComponent";
+import { Component } from "react";
 
 interface JobProps {
   job: {
