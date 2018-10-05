@@ -56,7 +56,13 @@ class JobItem extends React.Component<Job> {
           <Item.Meta>
             <span className="schedule">{this.props.job.schedule}</span>
           </Item.Meta>
-          <Button icon={"eye"} floated={"right"} onClick={this.showPopup} />
+          <Button
+            compact
+            icon={"eye"}
+            floated={"right"}
+            size={"huge"}
+            onClick={this.showPopup}
+          />
           <Item.Description>{this.props.job.description}</Item.Description>
           {/*Creat for each required skill for a job a Label*/}
           <Item.Extra>

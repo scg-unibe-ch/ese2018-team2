@@ -1,6 +1,6 @@
 import React from "react";
 import JobItem from "../components/joblist/JobItem";
-import { Item, Header, Segment } from "semantic-ui-react";
+import { Item, Header, Segment, Button, Icon } from "semantic-ui-react";
 import Layout from "../components/layout/Layout";
 
 interface Job {
@@ -48,6 +48,7 @@ const joblist: Array<Job> = [
 
 export default () => (
   <Layout>
+    <Button compact icon={"add"} floated={"right"} size={"huge"} />
     <Header as={"h1"}>Job List</Header>
     <Segment>
       <Item.Group divided>
