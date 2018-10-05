@@ -17,13 +17,14 @@
     ]
   },
   "scripts": {
-    "watch": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "concurrently -k \"nodemon dist/index.js\" \"tsc -w\" \"nodemon -e graphql --exec 'yarn run schema:generate'\"",
     "build": "tsc",
     "prettier": "prettier --write './**/*.{ts,json,graphql}'",
     "schema:generate": "mkdirp src/generated && graphql-resolver-codegen interfaces -s ./src/schema.graphql -o ./src/generated/resolvers.ts"
   },
   "devDependencies": {
     "@types/ws": "^6.0.1",
+    "concurrently": "^4.0.1",
     "graphql-resolver-codegen": "^0.0.3",
     "husky": "^1.0.0",
     "lint-staged": "^7.3.0",
