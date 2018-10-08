@@ -1,8 +1,10 @@
 import React from "react";
+import "semantic-ui-css/semantic.min.css";
 import JobItem from "../components/joblist/JobItem";
 import { Button, Container, Header, Icon, Item, Segment } from "semantic-ui-react";
 import JobPopup from "../components/joblist/JobPopup";
 import NavBar from "../components/layout/header/NavBar";
+
 
 interface Job {
   id: string;
