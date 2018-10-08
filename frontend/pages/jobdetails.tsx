@@ -1,17 +1,6 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Checkbox, Form } from "semantic-ui-react";
-
-interface Job {
-  id: number;
-  title: string;
-  description: string;
-  skills: string;
-  salary: number;
-  schedule: string;
-  period: string;
-  employer: string;
-}
+import { Button, Form } from "semantic-ui-react";
 
 const FormExampleForm = () => (
   <Form>
