@@ -1,49 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import { Menu } from "semantic-ui-react";
-import Router from "next/router";
+import Link from "next/link";
+import { SingletonRouter, withRouter} from "next/router";
 
-export default class NavBar extends Component {
-  state = {};
-
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
-    Router.push(this.getPageName(name));
-  };
-
-  getPageName(name) {
-    if (name === "home") {
-      return "/index";
-    }
-    if (name === "joblist") {
-      return "/joblist";
-    }
-    if (name === "jobdetails") {
-      return "/jobdetails";
-    } else {
-      return "#";
-    }
-  }
-  render() {
-    const activeItem = this.state;
-
-    return (
-      <Menu fluid widths={6}>
-        <Menu.Item
-          name="home"
-          active={activeItem === "home"}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="joblist"
-          active={activeItem === "joblist"}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="jobdetails"
-          active={activeItem === "jobdetails"}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
-    );
-  }
+interface NavigationProperties {
+  router?: SingletonRouter
 }
+
+const Navigation: React.SFC<NavigationProperties> = ({ router }) => (
+  <Menu fluid widths={6}>
+    <Link href="/">
+      <Menu.Item as="a" active={router.pathname === "/"}>
+        Home
+      </Menu.Item>
+    </Link>
+    <Link href="/joblist">
+      <Menu.Item as="a" active={router.pathname === "/joblist"}>
+        Jobs
+      </Menu.Item>
+    </Link>
+    <Link href="/jobdetails">
+      <Menu.Item as="a" active={router.pathname === "/jobdetails"}>
+        Job-Detail
+      </Menu.Item>
+    </Link>
+  </Menu>
+);
+
+const NavBar = withRouter(Navigation);
+
+export default NavBar;
