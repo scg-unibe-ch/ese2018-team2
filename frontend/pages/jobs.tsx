@@ -60,7 +60,7 @@ const emptyJob: Job = {
   }
 };
 
-export default class JobList extends React.Component {
+export default class Jobs extends React.Component {
   private newJobForm: JobPopup;
 
   constructor(props) {

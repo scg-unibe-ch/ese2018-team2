@@ -14,8 +14,8 @@ const Navigation: React.SFC<NavigationProperties> = ({ router }) => (
         Home
       </Menu.Item>
     </Link>
-    <Link href="/joblist">
-      <Menu.Item as="a" active={router.pathname === "/joblist"}>
+    <Link href="/jobs">
+      <Menu.Item as="a" active={router.pathname === "/jobs"}>
         Jobs
       </Menu.Item>
     </Link>
