@@ -1,7 +1,6 @@
 import React from "react";
 import JobItem from "../components/joblist/JobItem";
-import { Button, Header, Icon, Item, Segment } from "semantic-ui-react";
-import Layout from "../components/layout/Layout";
+import { Button, Container, Header, Icon, Item, Segment } from "semantic-ui-react";
 import JobPopup from "../components/joblist/JobPopup";
 
 interface Job {
@@ -48,8 +47,17 @@ const joblist: Array<Job> = [
 ];
 
 const emptyJob: Job = {
-  title: "New Entry",
-  description: "Blah Blah Blah"
+  id: "",
+  title: "",
+  description: "",
+  skills: [],
+  salary: 0.0,
+  schedule: [],
+  period: "undefined",
+  employer: {
+    name: "",
+    logo: "../static/companyLogo.png"
+  }
 };
 
 export default class JobList extends React.Component {
@@ -66,7 +74,7 @@ export default class JobList extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Container>
         <Header as={"h1"}>Job List</Header>
         <Segment attached>
           <JobPopup
@@ -88,7 +96,7 @@ export default class JobList extends React.Component {
           <Icon name={"add"} />
           Add new insert
         </Button>
-      </Layout>
+      </Container>
     );
   }
 }
