@@ -1,6 +1,7 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Button, Container, List } from "semantic-ui-react";
+import NavBar from "../components/layout/header/NavBar";
 
 interface User {
   id: number;
@@ -27,18 +28,21 @@ const team: Array<User> = [
 ];
 
 export default () => (
-  <Container>
-    <h1>De beschte Team</h1>
-    <List>
-      {team.map(teammate => (
-        <List.Item key={teammate.id}>
-          <List.Icon name="heart" size="large" verticalAlign="middle" />
-          <List.Content>
-            {`${teammate.name} has id ${teammate.id}`}
-          </List.Content>
-        </List.Item>
-      ))}
-    </List>
-    <Button>Klicken</Button>
-  </Container>
+  <div>
+    <NavBar />
+    <Container text>
+      <h1>De beschte Team</h1>
+      <List>
+        {team.map(teammate => (
+          <List.Item key={teammate.id}>
+            <List.Icon name="heart" size="large" verticalAlign="middle" />
+            <List.Content>
+              {`${teammate.name} has id ${teammate.id}`}
+            </List.Content>
+          </List.Item>
+        ))}
+      </List>
+      <Button>Klicken</Button>
+    </Container>
+  </div>
 );

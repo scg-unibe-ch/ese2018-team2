@@ -2,6 +2,7 @@ import React from "react";
 import JobItem from "../components/joblist/JobItem";
 import { Button, Container, Header, Icon, Item, Segment } from "semantic-ui-react";
 import JobPopup from "../components/joblist/JobPopup";
+import NavBar from "../components/layout/header/NavBar";
 
 interface Job {
   id: string;
@@ -74,6 +75,8 @@ export default class Jobs extends React.Component {
 
   render() {
     return (
+      <div>
+        <NavBar />
       <Container>
         <Header as={"h1"}>Job List</Header>
         <Segment attached>
@@ -97,6 +100,7 @@ export default class Jobs extends React.Component {
           Add new insert
         </Button>
       </Container>
+      </div>
     );
   }
 }
