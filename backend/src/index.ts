@@ -31,6 +31,39 @@ createConnection({
     organizationRepository: new OrganizationRepository(connection)
   };
 
+  // SEED
+  await connection
+    .createQueryBuilder()
+    .delete()
+    .from(Job)
+    .execute();
+  await connection
+    .createQueryBuilder()
+    .delete()
+    .from(Organization)
+    .execute();
+
+  const exampleOrgs = ["Organization 1", "Organization 2", "Organization 3"];
+  const orgs = [];
+
+  for (let i = 0; i < exampleOrgs.length; i++) {
+    const org = await context.organizationRepository.createOrganization(
+      exampleOrgs[i]
+    );
+    orgs.push(org);
+  }
+
+  const exampleJobs = ["Job 1", "Job 2", "Job 3"];
+  for (let i = 0; i < exampleJobs.length; i++) {
+    await context.jobRepository.createJob({
+      input: {
+        title: exampleJobs[i],
+        organization: orgs[i].id,
+        description: ""
+      }
+    });
+  }
+
   const server = new GraphQLServer({ typeDefs, resolvers, context });
   server.start(() => console.log("Server is running on localhost:4000"));
 });
