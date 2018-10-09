@@ -11,14 +11,12 @@ import { Init1539088687179 } from "./migration/1539088687179-Init";
 import { Organization } from "./entity/Organization";
 import { User } from "./entity/User";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
+import config from "./config";
 
+//TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
-  host: "localhost",
-  port: 5432,
-  database: "postgres",
-  username: "postgres",
-  password: "",
+  url: config.get("database_url"),
   entities: [Job, Organization, User],
   migrations: [Init1539088687179],
   logging: true
@@ -31,7 +29,7 @@ createConnection({
     organizationRepository: new OrganizationRepository(connection)
   };
 
-  // SEED
+  // SEED TODO env-variable for seeding
   await connection
     .createQueryBuilder()
     .delete()
