@@ -26,7 +26,14 @@ export class JobRepository {
     this.organizations = connection.getRepository(Organization);
   }
 
-  getJobs(): Promise<Job[]> {
+  // TODO create interface for argument type
+  getJobs(args: any): Promise<Job[]> {
+    console.log(args);
+
+    if (args.id) {
+      return this.jobs.findByIds([args.id]);
+    }
+
     return this.jobs.find();
   }
 

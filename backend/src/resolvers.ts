@@ -7,6 +7,7 @@ import ArgsDeleteJob = IMutation.ArgsDeleteJob;
 import ArgsUpdateJob = IMutation.ArgsUpdateJob;
 import ArgsCreateOrganization = IMutation.ArgsCreateOrganization;
 import { OrganizationRepository } from "./repository/OrganizationRepository";
+import ArgsJobs = IQuery.ArgsJobs;
 
 interface BackendContext {
   jobRepository: JobRepository;
@@ -22,7 +23,8 @@ export const resolvers: IResolvers = {
   },
   Query: {
     hello: (_, { name }: ArgsHello) => `Hello ${name || "World"}`,
-    jobs: (_, args, ctx: BackendContext) => ctx.jobRepository.getJobs(),
+    jobs: (_, args: ArgsJobs, ctx: BackendContext) =>
+      ctx.jobRepository.getJobs(args),
     organizations: (_, args, ctx: BackendContext) =>
       ctx.organizationRepository.getOrganizations()
   },
