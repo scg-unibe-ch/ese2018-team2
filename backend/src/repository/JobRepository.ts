@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Job } from "../entity/Job";
 import { cursorTo } from "readline";
+import { Organization } from "../entity/Organization";
 
 export interface JobUpdateArgs {
   id: string;
@@ -17,22 +18,28 @@ export interface JobUpdateArgs {
 export class JobRepository {
   private connection: Connection;
   private jobs: Repository<Job>;
-  private manager = getManager();
+  private organizations: Repository<Organization>;
 
   constructor(connection: Connection) {
     this.connection = connection;
     this.jobs = connection.getRepository(Job);
+    this.organizations = connection.getRepository(Organization);
   }
 
   getJobs(): Promise<Job[]> {
     return this.jobs.find();
   }
 
-  async createJob(title: string, description: string): Promise<Job> {
+  async createJob(args: any): Promise<Job> {
+    console.log(args);
     const job = new Job();
-    job.title = title;
-    job.description = description;
+    job.title = args.input.title;
+    job.description = args.input.description;
 
+    const organization = await this.organizations.findOneOrFail(
+      args.input.organization
+    );
+    job.organization = organization;
     // save
     await this.jobs.insert(job);
     return job;
