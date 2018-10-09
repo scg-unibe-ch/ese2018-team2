@@ -1,7 +1,17 @@
 version: '3'
 services:
-  db:
+  postgres:
     container_name: "PostgreSQL-database"
     image: "postgres:10.5-alpine"
     ports:
       - "5432:5432"
+  backend:
+    container_name: "Backend"
+    links:
+      - postgres
+    build:
+      context: backend
+    ports:
+      - "4000:4000"
+    environment:
+      - DATABASE_URL=postgres://postgres@postgres/postgres
