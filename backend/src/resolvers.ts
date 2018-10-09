@@ -1,13 +1,6 @@
-import { IMutation, IQuery } from "./generated/resolvers";
-import ArgsHello = IQuery.ArgsHello;
 import { IResolvers } from "graphql-yoga/dist/types";
 import { JobRepository } from "./repository/JobRepository";
-import ArgsCreateJob = IMutation.ArgsCreateJob;
-import ArgsDeleteJob = IMutation.ArgsDeleteJob;
-import ArgsUpdateJob = IMutation.ArgsUpdateJob;
-import ArgsCreateOrganization = IMutation.ArgsCreateOrganization;
 import { OrganizationRepository } from "./repository/OrganizationRepository";
-import ArgsJobs = IQuery.ArgsJobs;
 
 interface BackendContext {
   jobRepository: JobRepository;
@@ -22,20 +15,24 @@ export const resolvers: IResolvers = {
     }
   },
   Query: {
-    hello: (_, { name }: ArgsHello) => `Hello ${name || "World"}`,
-    jobs: (_, args: ArgsJobs, ctx: BackendContext) =>
+    hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
+      `Hello ${name || "World"}`,
+    jobs: (_, args: GQL.ICreateJobInput, ctx: BackendContext) =>
       ctx.jobRepository.getJobs(args),
     organizations: (_, args, ctx: BackendContext) =>
       ctx.organizationRepository.getOrganizations()
   },
   Mutation: {
-    createJob: (_, args: ArgsCreateJob, ctx: BackendContext) =>
+    createJob: (_, args: GQL.ICreateJobInput, ctx: BackendContext) =>
       ctx.jobRepository.createJob(args),
-    deleteJob: (_, { job }: ArgsDeleteJob, ctx) =>
+    deleteJob: (_, { job }: GQL.IDeleteJobOnMutationArguments, ctx) =>
       ctx.jobRepository.deleteJob(job),
-    updateJob: (_, args: ArgsUpdateJob, ctx) =>
+    updateJob: (_, args: GQL.IUpdateJobOnMutationArguments, ctx) =>
       ctx.jobRepository.updateJob(args),
-    createOrganization: (_, { name }: ArgsCreateOrganization, ctx) =>
-      ctx.organizationRepository.createOrganization(name)
+    createOrganization: (
+      _,
+      { name }: GQL.ICreateOrganizationOnMutationArguments,
+      ctx
+    ) => ctx.organizationRepository.createOrganization(name)
   }
 };

@@ -9,6 +9,36 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@gql2ts/from-query@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@gql2ts/from-query/-/from-query-1.9.0.tgz#ae92a4fa3df005df57eb835b371d7964644b9beb"
+  integrity sha512-hfH2Oq3ikHu+zKE4b9kdGbzEqFiX+VxIg0nhgpY5iUgl975cAtTFhAdwfzr/jKdZhC9Ad5dE1CPrjEA+G7hzMg==
+  dependencies:
+    "@gql2ts/language-typescript" "^1.9.0"
+    "@gql2ts/util" "^1.9.0"
+
+"@gql2ts/from-schema@^1.10.1":
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/@gql2ts/from-schema/-/from-schema-1.10.1.tgz#f8bb1f9525d5731163b16f5bcf300f87ef560273"
+  integrity sha512-atYXxY8WBBfK39fEbdwx3CgqRYYUR10a1hGPIwVcvEuNYIlAnIUR1drVbmC3higwMbAyHGkMxDPJ9Us7tnNz6w==
+  dependencies:
+    "@gql2ts/language-typescript" "^1.9.0"
+    "@gql2ts/util" "^1.9.0"
+    dedent "^0.7.0"
+
+"@gql2ts/language-typescript@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@gql2ts/language-typescript/-/language-typescript-1.9.0.tgz#c521e800817d1341552e9c684bca6b64b0abb46f"
+  integrity sha512-d3OlIFMjKoXH+VukXD7+pQRLgrP3NkXDQbCWSGonIl5mpRQ5aO5I8Fo53cMZQ9xCjj1Y5Vg24wtZOuY8spc6Ag==
+  dependencies:
+    "@gql2ts/util" "^1.9.0"
+    humps "^2.0.0"
+
+"@gql2ts/util@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@gql2ts/util/-/util-1.9.0.tgz#d07a54832757d2f2d1fc9891e5b0e3e3b4886c6a"
+  integrity sha512-mkHar7AdyShUFJE6Mlke1tUbb+lPCK1EozZeAhCuRrhQ5aCCBAG6RxzNUYX1Q2jeGeyU0WRAtQu1oE/GoIsNXA==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1336,6 +1366,17 @@ got@^6.7.1:
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
 
+gql2ts@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/gql2ts/-/gql2ts-1.10.1.tgz#aae1a1312744f7c9b36abf78437413ea317f6a71"
+  integrity sha512-Kwa1Db1e3qGediBi1A5wX98UBKmvUklsQgfLwk7J8bj9RQ4AkAwTToFvUmKhflKTZndAtQbdOJWwm5cmgXsLYA==
+  dependencies:
+    "@gql2ts/from-query" "^1.9.0"
+    "@gql2ts/from-schema" "^1.10.1"
+    "@gql2ts/util" "^1.9.0"
+    commander "^2.9.0"
+    graphql ">= 0.10 <15"
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
@@ -1495,6 +1536,13 @@ graphql@0.13.2, "graphql@^0.11.0 || ^0.12.0 || ^0.13.0":
   dependencies:
     iterall "^1.2.1"
 
+"graphql@>= 0.10 <15":
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.0.2.tgz#7dded337a4c3fd2d075692323384034b357f5650"
+  integrity sha512-gUC4YYsaiSJT1h40krG3J+USGlwhzNTXSb4IOZljn9ag5Tj+RkoXrWp+Kh7WyE3t1NCfab5kzCuxBIvOMERMXw==
+  dependencies:
+    iterall "^1.2.2"
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
@@ -1577,6 +1625,11 @@ http-errors@1.6.3, http-errors@~1.6.2, http-errors@~1.6.3:
     inherits "2.0.3"
     setprototypeof "1.1.0"
     statuses ">= 1.4.0 < 2"
+
+humps@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
+  integrity sha1-3QLqYIG9BWjcXQcxhEY5V7qe+ao=
 
 husky@^1.0.0:
   version "1.0.0"
@@ -1911,7 +1964,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
-iterall@^1.1.3, iterall@^1.2.1:
+iterall@^1.1.3, iterall@^1.2.1, iterall@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
   integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
