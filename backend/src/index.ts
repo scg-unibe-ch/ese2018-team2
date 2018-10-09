@@ -24,7 +24,7 @@ createConnection({
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
-  const typeDefs = importSchema("./src/schema.graphql");
+  const typeDefs = importSchema("./schema.graphql");
 
   const context = {
     jobRepository: new JobRepository(connection),
