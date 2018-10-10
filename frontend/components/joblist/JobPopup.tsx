@@ -5,10 +5,11 @@ import {
   Segment,
   TransitionablePortal
 } from "semantic-ui-react";
-import BerisComponent from "./BerisComponent";
-import { Component } from "react";
+import JobShortDetails from "./JobShortDetails";
+import { SingletonRouter } from "next/router";
 
-interface JobProps {
+type PopupProps = {
+  router?: SingletonRouter;
   job: {
     id: string;
     title: string;
@@ -22,11 +23,11 @@ interface JobProps {
       logo: string;
     };
   };
-}
-
-type popupState = {
-  open: boolean;
 };
+
+interface PopupState {
+  open: boolean;
+}
 
 /**
  * Popup to display Job information. In this view the user
@@ -35,7 +36,7 @@ type popupState = {
  * @param JobProps: the job to display with its fields
  * @param popupState:  state interface with visibility state in it
  */
-class JobPopup extends React.Component<JobProps, popupState> {
+class JobPopup extends React.Component<PopupProps, PopupState> {
   constructor(JobProps) {
     super(JobProps);
     //Popup is closed by default
@@ -65,8 +66,9 @@ class JobPopup extends React.Component<JobProps, popupState> {
   };
 
   render(): React.ReactNode {
+    const { open } = this.state;
     return (
-      <TransitionablePortal open={this.state.open}>
+      <TransitionablePortal open={open}>
         <Container
           text
           style={{
@@ -88,7 +90,11 @@ class JobPopup extends React.Component<JobProps, popupState> {
             {/*
                         passing the job that is bounded to this popup to the display component
                         */}
-            <BerisComponent job={this.props.job} />
+            <JobShortDetails
+              router={this.props.router}
+              href="/jobdetails"
+              job={this.props.job}
+            />
           </Segment>
         </Container>
       </TransitionablePortal>

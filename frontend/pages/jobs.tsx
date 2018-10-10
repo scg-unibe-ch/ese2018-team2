@@ -1,10 +1,17 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import JobItem from "../components/joblist/JobItem";
-import { Button, Container, Header, Icon, Item, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Header,
+  Icon,
+  Item,
+  Segment
+} from "semantic-ui-react";
 import JobPopup from "../components/joblist/JobPopup";
 import NavBar from "../components/layout/header/NavBar";
-
+import Router from "next/router";
 
 interface Job {
   id: string;
@@ -69,39 +76,40 @@ export default class Jobs extends React.Component {
   constructor(props) {
     super(props);
     this.openEntryForm = this.openEntryForm.bind(this);
+    this.handleClick;
   }
 
   openEntryForm() {
     this.newJobForm.openPopup();
   }
 
+  handleClick = e => {
+    e.preventDefault();
+    Router.push("/jobdetails");
+  };
+
   render() {
     return (
       <div>
         <NavBar />
-      <Container>
-        <Header as={"h1"}>Job List</Header>
-        <Segment attached>
-          <JobPopup
-            ref={newEntry => (this.newJobForm = newEntry)}
-            job={emptyJob}
-          />
-          <Item.Group divided>
-            {joblist.map(job => (
-              <JobItem job={job} key={job.id} />
-            ))}
-          </Item.Group>
-        </Segment>
-        <Button
-          attached={"bottom"}
-          icon={"add"}
-          size={"huge"}
-          onClick={this.openEntryForm}
-        >
-          <Icon name={"add"} />
-          Add new insert
-        </Button>
-      </Container>
+        <Container>
+          <Header as={"h1"}>Job List</Header>
+          <Segment attached>
+            <JobPopup
+              ref={newEntry => (this.newJobForm = newEntry)}
+              job={emptyJob}
+            />
+            <Item.Group divided>
+              {joblist.map(job => (
+                <JobItem job={job} key={job.id} />
+              ))}
+            </Item.Group>
+          </Segment>
+          <Button attached={"bottom"} size={"huge"} onClick={this.handleClick}>
+            <Icon name={"add"} />
+            Add new insert
+          </Button>
+        </Container>
       </div>
     );
   }

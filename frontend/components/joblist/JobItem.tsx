@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Button, Item, Label } from "semantic-ui-react";
 import JobPopup from "./JobPopup";
+import Router from "next/router";
 
 interface Job {
   job: {
@@ -72,8 +73,10 @@ class JobItem extends React.Component<Job> {
           </Item.Extra>
           {/*store the reference of this component in the local child field*/}
           <JobPopup
+            open={false}
             ref={instance => (this.child = instance)}
             job={this.props.job}
+            router={Router}
           />
         </Item.Content>
       </Item>
