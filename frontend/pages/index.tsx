@@ -1,44 +1,54 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Button, List } from "semantic-ui-react";
+import { Button, Container, List } from "semantic-ui-react";
+import NavBar from "../components/layout/header/NavBar";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import { GetJobs } from "./__generated__/GetJobs";
 
-interface User {
-  id: number;
-  name: string;
-}
-
-const team: Array<User> = [
-  {
-    id: 1,
-    name: "Fabio"
-  },
-  {
-    id: 2,
-    name: "Luca"
-  },
-  {
-    id: 3,
-    name: "Berivan ❤️"
-  },
-  {
-    id: 4,
-    name: "Yannik"
+const query = gql`
+  query GetJobs {
+    jobs {
+      id
+      title
+      organization {
+        id
+        name
+      }
+    }
   }
-];
+`;
 
 export default () => (
   <div>
-    <h1>De beschte Team</h1>
-    <List>
-      {team.map(teammate => (
-        <List.Item key={teammate.id}>
-          <List.Icon name="heart" size="large" verticalAlign="middle" />
-          <List.Content>
-            {`${teammate.name} has id ${teammate.id}`}
-          </List.Content>
-        </List.Item>
-      ))}
-    </List>
-    <Button>Klicken</Button>
+    <NavBar />
+    <Container text>
+      <h1>Jobs</h1>
+
+      <Query query={query}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <div>Loading</div>;
+          }
+
+          if (error) {
+            return <div>error.message</div>;
+          }
+
+          const GetJobs = data as GetJobs;
+
+          return (
+            <List>
+              {GetJobs.jobs.map(job => (
+                <List.Item key={job.id}>{`${job.title} from ${
+                  job.organization.name
+                }`}</List.Item>
+              ))}
+            </List>
+          );
+        }}
+      </Query>
+      <Button>Klicken</Button>
+    </Container>
   </div>
 );

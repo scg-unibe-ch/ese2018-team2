@@ -16,25 +16,35 @@
     ]
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "concurrently -k \"next\" \"yarn run codegen:watch\"",
+    "build": "yarn run codegen:generate && next build",
+    "start": "next start",
+    "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
+    "codegen:watch": "chokidar \"**/*.tsx\" -c \"yarn run codegen:generate\""
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
+    "apollo-boost": "^0.1.16",
     "file-loader": "^2.0.0",
+    "graphql": "^13.0.2",
+    "graphql-tag": "^2.10.0",
     "next": "^7.0.0",
+    "next-with-apollo": "^3.2.0",
     "react": "^16.5.2",
+    "react-apollo": "^2.2.4",
     "react-dom": "^16.5.2",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.82.5",
     "url-loader": "^1.1.1"
   },
   "devDependencies": {
-    "@types/next": "^6.1.8",
+    "@types/next": "^7.0.0",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "apollo": "^1.9.2",
+    "chokidar-cli": "^1.2.1",
+    "concurrently": "^4.0.1",
     "husky": "^1.0.0",
     "lint-staged": "^7.3.0",
     "prettier": "1.14.3",
