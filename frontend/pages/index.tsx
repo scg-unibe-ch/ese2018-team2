@@ -2,13 +2,15 @@ import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Button, Container, List } from "semantic-ui-react";
 import NavBar from "../components/layout/header/NavBar";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 
-interface User {
+/*interface User {
   id: number;
   name: string;
-}
+}*/
 
-const team: Array<User> = [
+/*const team: Array<User> = [
   {
     id: 1,
     name: "Fabio"
@@ -25,23 +27,49 @@ const team: Array<User> = [
     id: 4,
     name: "Yannik"
   }
-];
+];*/
+
+const query = gql`
+
+query GetJobs {
+  jobs {
+    id
+    title
+  }
+}
+
+`;
 
 export default () => (
   <div>
     <NavBar />
     <Container text>
       <h1>De beschte Team</h1>
-      <List>
-        {team.map(teammate => (
-          <List.Item key={teammate.id}>
-            <List.Icon name="heart" size="large" verticalAlign="middle" />
-            <List.Content>
-              {`${teammate.name} has id ${teammate.id}`}
-            </List.Content>
-          </List.Item>
-        ))}
-      </List>
+
+      <Query query={query}>
+        {
+          ({ loading, error, data}) => {
+            if (loading) {
+              return <div>Loading</div>
+            }
+
+            if (error) {
+              return <div>error</div>
+            }
+
+            return (
+              <List>
+                {
+                  data.jobs.map((job) => (<List.Item key={job.id}>{job.title}</List.Item>))
+                }
+              </List>
+            )
+          }
+        }
+      </Query>
+      <p>
+        Hello
+      </p>
       <Button>Klicken</Button>
     </Container>
   </div>
