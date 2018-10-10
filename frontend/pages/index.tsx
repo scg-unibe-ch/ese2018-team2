@@ -4,72 +4,50 @@ import { Button, Container, List } from "semantic-ui-react";
 import NavBar from "../components/layout/header/NavBar";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-
-/*interface User {
-  id: number;
-  name: string;
-}*/
-
-/*const team: Array<User> = [
-  {
-    id: 1,
-    name: "Fabio"
-  },
-  {
-    id: 2,
-    name: "Luca"
-  },
-  {
-    id: 3,
-    name: "Berivan ❤️"
-  },
-  {
-    id: 4,
-    name: "Yannik"
-  }
-];*/
+import { GetJobs } from "./__generated__/GetJobs";
 
 const query = gql`
-
-query GetJobs {
-  jobs {
-    id
-    title
+  query GetJobs {
+    jobs {
+      id
+      title
+      organization {
+        id
+        name
+      }
+    }
   }
-}
-
 `;
 
 export default () => (
   <div>
     <NavBar />
     <Container text>
-      <h1>De beschte Team</h1>
+      <h1>Jobs</h1>
 
       <Query query={query}>
-        {
-          ({ loading, error, data}) => {
-            if (loading) {
-              return <div>Loading</div>
-            }
-
-            if (error) {
-              return <div>error</div>
-            }
-
-            return (
-              <List>
-                {
-                  data.jobs.map((job) => (<List.Item key={job.id}>{job.title}</List.Item>))
-                }
-              </List>
-            )
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <div>Loading</div>;
           }
-        }
+
+          if (error) {
+            return <div>error.message</div>;
+          }
+
+          const GetJobs = data as GetJobs;
+
+          return (
+            <List>
+              {GetJobs.jobs.map(job => (
+                <List.Item key={job.id}>{`${job.title} from ${
+                  job.organization.name
+                }`}</List.Item>
+              ))}
+            </List>
+          );
+        }}
       </Query>
-      <p>
-        Hello
-      </p>
       <Button>Klicken</Button>
     </Container>
   </div>
