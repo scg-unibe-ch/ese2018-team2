@@ -738,14 +738,15 @@
     exenv "^1.2.2"
     prop-types "^15.6.2"
 
-"@types/next@^6.1.8":
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/@types/next/-/next-6.1.8.tgz#6859a2a9ae9b3b93b8294bc1bb65e9f78b7f3df5"
-  integrity sha512-M6G0qqOmMy1D3uAASzV68nGMO+GBddAhttiSpNTT0mnQAvwtD9KPkcxjlA62PaqN6soloNHw3IDu11+yZ6fEDA==
+"@types/next@^7.0.0":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@types/next/-/next-7.0.1.tgz#c05ac38cce3312fe178bcd43cad8b2a4c61c4cda"
+  integrity sha512-ok79W66vxaF2vncl/BrnXdTuZwHcs677jljEuq7RSgtxDquXAfWagcPnzJCGxUQ1dIq//oi+WSpWyTroYVjMrQ==
   dependencies:
     "@types/node" "*"
     "@types/node-fetch" "*"
     "@types/react" "*"
+    "@types/react-loadable" "*"
 
 "@types/node-fetch@*":
   version "2.1.2"
@@ -774,6 +775,14 @@
     "@types/node" "*"
     "@types/react" "*"
 
+"@types/react-loadable@*":
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@types/react-loadable/-/react-loadable-5.4.1.tgz#bc76978c6d9039e5808797b5ee35f6ae18b7329f"
+  integrity sha512-nBvsWjPfBHepN5LoK/wgaunZSK9LmkKsPYum+/QrEKzUAb1yoe1/dwqTH6ZrinHDjru9LgjvXOqek9hvbq4Skw==
+  dependencies:
+    "@types/react" "*"
+    "@types/webpack" "*"
+
 "@types/react@*", "@types/react@^16.4.14":
   version "16.4.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.14.tgz#47c604c8e46ed674bbdf4aabf82b34b9041c6a04"
@@ -781,6 +790,28 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/tapable@*":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.4.tgz#b4ffc7dc97b498c969b360a41eee247f82616370"
+  integrity sha512-78AdXtlhpCHT0K3EytMpn4JNxaf5tbqbLcbIRoQIHzpTIyjpxLQKRoxU55ujBXAtg3Nl2h/XWvfDa9dsMOd0pQ==
+
+"@types/uglify-js@*":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-3.0.3.tgz#801a5ca1dc642861f47c46d14b700ed2d610840b"
+  integrity sha512-MAT0BW2ruO0LhQKjvlipLGCF/Yx0y/cj+tT67tK3QIQDrM2+9R78HgJ54VlrE8AbfjYJJBCQCEPM5ZblPVTuww==
+  dependencies:
+    source-map "^0.6.1"
+
+"@types/webpack@*":
+  version "4.4.14"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.14.tgz#05b73c955c2216b2f3d8af67d99cb3d2ce003bf1"
+  integrity sha512-Fl1zzJF07Lzx4uE4+T/zRJk4mXQVQ5OuOUWzlruxnf/wmJG9tJzKHdKyE02sMagiHZ9918zaruV9udV7buIkCA==
+  dependencies:
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    source-map "^0.6.0"
 
 "@webassemblyjs/ast@1.7.6":
   version "1.7.6"
