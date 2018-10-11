@@ -3,3 +3,5 @@ node_modules
 .next
 .idea
 */src/generated/*
+**/generated/*
+**/__generated__/*
