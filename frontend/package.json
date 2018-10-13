@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "server/index.ts",
   "license": "MIT",
   "private": true,
   "husky": {
@@ -16,8 +16,8 @@
     ]
   },
   "scripts": {
-    "dev": "concurrently -k \"next\" \"yarn run codegen:watch\"",
-    "build": "yarn run codegen:generate && next build",
+    "dev": "NODE_ENV=development nodemon server/index.ts concurrently -k \"next\" \"yarn run codegen:watch\"",
+    "build": "yarn run codegen:generate && next build && tsc --project tsconfig.server.json",
     "start": "next start",
     "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
     "codegen:watch": "chokidar \"**/*.tsx\" -c \"yarn run codegen:generate\""
@@ -26,6 +26,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.16",
+    "express": "^4.16.3",
     "file-loader": "^2.0.0",
     "graphql": "^13.0.2",
     "graphql-tag": "^2.10.0",
@@ -48,6 +49,8 @@
     "husky": "^1.0.0",
     "lint-staged": "^7.3.0",
     "prettier": "1.14.3",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1"
   }
 }
