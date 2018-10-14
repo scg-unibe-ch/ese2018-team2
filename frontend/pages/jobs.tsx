@@ -76,7 +76,7 @@ export default class Jobs extends React.Component {
   constructor(props) {
     super(props);
     this.openEntryForm = this.openEntryForm.bind(this);
-    this.handleClick;
+    this.handleClick = this.handleClick.bind(this);
   }
 
   openEntryForm() {
