@@ -1,31 +1,36 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
-import Link from "next/link";
-import { SingletonRouter, withRouter} from "next/router";
+import { SingletonRouter, withRouter } from "next/router";
+import { Link, Router, matchPath } from "../../../lib/routes";
+import { triggerAsyncId } from "async_hooks";
 
 interface NavigationProperties {
-  router?: SingletonRouter
+  router?: SingletonRouter;
 }
 
-const Navigation: React.SFC<NavigationProperties> = ({ router }) => (
-  <Menu fluid widths={6}>
-    <Link href="/">
-      <Menu.Item as="a" active={router.pathname === "/"}>
+const NavLink = ({ route, label, params }) => {
+  return (
+    <Link exact route={route} params={params}>
+      {label}
+    </Link>
+  );
+};
+
+const Navigation: React.SFC<NavigationProperties> = () => {
+  return (
+    <Menu fluid widths={6}>
+      <Menu.Item as={Link} to="/">
         Home
       </Menu.Item>
-    </Link>
-    <Link href="/jobs">
-      <Menu.Item as="a" active={router.pathname === "/jobs"}>
+      <Menu.Item as={Link} to="/jobs">
         Jobs
       </Menu.Item>
-    </Link>
-    <Link href="/jobdetails">
-      <Menu.Item as="a" active={router.pathname === "/jobdetails"}>
-        Job-Detail
+      <Menu.Item as={Link} to="/jobdetails">
+        Jobdetails
       </Menu.Item>
-    </Link>
-  </Menu>
-);
+    </Menu>
+  );
+};
 
 const NavBar = withRouter(Navigation);
 

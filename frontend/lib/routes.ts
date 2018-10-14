@@ -1,5 +1,5 @@
 const nextRoutes = require("next-routes");
-const routes = nextRoutes();
+const routes = (module.exports = nextRoutes());
 
 routes.matchPath = path => {
   const result = routes.match(path);
@@ -16,5 +16,3 @@ routes
   .add("index", "/")
   .add("jobs", "/jobs")
   .add("jobdetails", "/jobdetails");
-
-module.exports = routes;

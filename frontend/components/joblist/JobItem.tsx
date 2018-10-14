@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, Item, Label } from "semantic-ui-react";
 import JobPopup from "./JobPopup";
-import Router from "next/router";
+import { Link, Router, matchPath } from "../../lib/routes";
 
 interface Job {
   job: {
@@ -45,11 +45,15 @@ class JobItem extends React.Component<Job> {
   render() {
     return (
       <Item>
-        <Item.Image
-          src={this.props.job.employer.logo}
-          as="a"
-          href={"./jobdetails"}
-        />
+        <Link route={"/jobdetails"}>
+          <a>
+            <Item.Image
+              src={this.props.job.employer.logo}
+              as={"a"}
+              href={"/jobdetails"}
+            />
+          </a>
+        </Link>
         <Item.Content>
           <Item.Header as="a" href={"./jobdetails"}>
             {this.props.job.title}
@@ -73,7 +77,6 @@ class JobItem extends React.Component<Job> {
           </Item.Extra>
           {/*store the reference of this component in the local child field*/}
           <JobPopup
-            open={false}
             ref={instance => (this.child = instance)}
             job={this.props.job}
             router={Router}

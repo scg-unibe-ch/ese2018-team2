@@ -10,6 +10,8 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
+          {/* div to mount portals to */}
+          <div id="modal" />
           <NextScript />
         </body>
       </html>
