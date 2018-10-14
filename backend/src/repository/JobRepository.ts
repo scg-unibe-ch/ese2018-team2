@@ -38,10 +38,11 @@ export class JobRepository {
   }
 
   async createJob(args: any): Promise<Job> {
-    console.log(args);
     const job = new Job();
     job.title = args.input.title;
     job.description = args.input.description;
+    job.salary = args.input.salary;
+    job.start = args.input.start;
 
     const organization = await this.organizations.findOneOrFail(
       args.input.organization

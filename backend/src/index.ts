@@ -7,18 +7,19 @@ import { GraphQLServer } from "graphql-yoga";
 import { importSchema } from "graphql-import";
 import { resolvers } from "./resolvers";
 import { JobRepository } from "./repository/JobRepository";
-import { Init1539088687179 } from "./migration/1539088687179-Init";
 import { Organization } from "./entity/Organization";
 import { User } from "./entity/User";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import config from "./config";
+import { Init1539529717124 } from "./migration/1539529717124-Init";
+import { Skill } from "./entity/Skill";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User],
-  migrations: [Init1539088687179],
+  entities: [Job, Organization, User, Skill],
+  migrations: [Init1539529717124],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -57,7 +58,9 @@ createConnection({
       input: {
         title: exampleJobs[i],
         organization: orgs[i].id,
-        description: ""
+        description: "",
+        start: new Date(),
+        salary: 10
       }
     });
   }

@@ -8,6 +8,6 @@ export class Skill {
   @Column("text")
   title: string;
 
-  @Column()
+  @Column("text")
   description: string;
 }
