@@ -1,6 +1,3 @@
-import { withRouter } from "next/router";
-import * as React from "react";
+import Page from "../components/Job/Page";
 
-export default withRouter(props => {
-  return <h1>{props.router.query.id}</h1>;
-});
+export default Page;
