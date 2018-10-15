@@ -6,7 +6,6 @@ import "semantic-ui-css/semantic.min.css";
 import { Container, Header, Item, Segment } from "semantic-ui-react";
 import JobItem from "../components/joblist/JobItem";
 import NavBar from "../components/layout/header/NavBar";
-import { AllJobs } from "./__generated__/AllJobs";
 
 const query = gql`
   query AllJobs {
@@ -21,6 +20,15 @@ const query = gql`
     }
   }
 `;
+
+interface AllJobs {
+  jobs: {
+    id: string;
+    title: string;
+    description: string;
+    organization: { id: string; name };
+  }[];
+}
 
 interface JobPageProps {
   loading: boolean;

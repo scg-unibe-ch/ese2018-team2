@@ -16,7 +16,7 @@
     ]
   },
   "scripts": {
-    "dev": "NODE_ENV=development concurrently -k \"nodemon server/index.ts\" \"yarn run codegen:watch\"",
+    "dev": "nodemon -e ts,tsx server/index.ts",
     "build": "yarn run codegen:generate && next build && tsc --project tsconfig.server.json",
     "start": "next start",
     "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
