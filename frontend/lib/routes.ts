@@ -1,18 +1,16 @@
-const nextRoutes = require("next-routes");
-const routes = (module.exports = nextRoutes());
+import * as createRoutes from "next-routes";
+import Routes from "next-routes";
 
-routes.matchPath = path => {
-  const result = routes.match(path);
-  if (result.route && result.route.name && result.params) {
-    return {
-      route: result.route.name,
-      params: result.params
-    };
-  }
-  return null;
-};
+// https://github.com/fridays/next-routes/issues/181
+// @ts-ignore
+const routes: Routes = createRoutes();
 
 routes
   .add("index", "/")
   .add("jobs", "/jobs")
-  .add("jobdetails", "/jobdetails");
+  .add("jobdetails", "/jobs/:id", "details");
+
+export const Link = routes.Link;
+export const Router = routes.Router;
+
+export default routes;

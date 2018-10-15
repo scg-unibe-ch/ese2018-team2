@@ -1,28 +1,13 @@
 import { createServer } from "http";
-import { parse } from "url";
 import * as next from "next";
+import routes from "../lib/routes";
 
 const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+//const dev = process.env.NODE_ENV !== "production";
+const app = next({ dev: true });
+
+const handler = routes.getRequestHandler(app);
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true);
-    const { pathname, query } = parsedUrl;
-
-    if (pathname === "/") {
-      app.render(req, res, "/index", query);
-    } else if (pathname === "/jobs") {
-      app.render(req, res, "/jobs", query);
-    } else if (pathname === "/jobdetails") {
-      app.render(req, res, "/jobdetails", query);
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  }).listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+  createServer(handler).listen(port);
 });
