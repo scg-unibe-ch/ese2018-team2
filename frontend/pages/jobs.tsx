@@ -1,116 +1,73 @@
+import { ApolloError } from "apollo-boost";
+import gql from "graphql-tag";
 import React from "react";
+import { Query } from "react-apollo";
 import "semantic-ui-css/semantic.min.css";
+import { Container, Header, Item, Segment } from "semantic-ui-react";
 import JobItem from "../components/joblist/JobItem";
-import {
-  Button,
-  Container,
-  Header,
-  Icon,
-  Item,
-  Segment
-} from "semantic-ui-react";
-import JobPopup from "../components/joblist/JobPopup";
 import NavBar from "../components/layout/header/NavBar";
-import Router from "next/router";
 
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  skills: string[];
-  salary: number;
-  schedule: string[];
-  period: string;
-  employer: {
-    name: string;
-    logo: string;
-  };
+const query = gql`
+  query AllJobs {
+    jobs {
+      id
+      title
+      description
+      organization {
+        id
+        name
+      }
+    }
+  }
+`;
+
+interface AllJobs {
+  jobs: {
+    id: string;
+    title: string;
+    description: string;
+    organization: { id: string; name };
+  }[];
 }
 
-const joblist: Array<Job> = [
-  {
-    id: "c41426d7-219e-4353-b38f-a7d6b2e5dac5",
-    title: "Frontend Developer",
-    description: "Part time Junior frontend developer",
-    skills: ["HTML", "CSS", "JavaScript or TypeScript", "NextJS"],
-    salary: 24.5,
-    schedule: ["Monday morning", "Tuesday morning"],
-    period: "undefined",
-    employer: {
-      name: "BWL GmbH",
-      logo: "../static/companyLogo.png"
-    }
-  },
-  {
-    id: "0e12a329-66fd-4669-9420-c04520e372a4",
-    title: "Backend Developer",
-    description: "Part time Junior backend developer",
-    skills: ["JavaScript or TypeScript", "GraphQL"],
-    salary: 25.5,
-    schedule: ["Thursday morning", "Friday morning"],
-    period: "undefined",
-    employer: {
-      name: "BWL GmbH",
-      logo: "../static/companyLogo.png"
-    }
-  }
-];
+interface JobPageProps {
+  loading: boolean;
+  error: ApolloError;
+  data: AllJobs;
+}
 
-const emptyJob: Job = {
-  id: "",
-  title: "",
-  description: "",
-  skills: [],
-  salary: 0.0,
-  schedule: [],
-  period: "undefined",
-  employer: {
-    name: "",
-    logo: "../static/companyLogo.png"
+export const JobPage: React.SFC<JobPageProps> = ({ loading, error, data }) => {
+  // TODO: handle loading
+  if (loading) {
+    return <p>Loading</p>;
   }
+
+  // TODO: handle error
+  if (error) {
+    return <p>error.message</p>;
+  }
+
+  return (
+    <React.Fragment>
+      <NavBar />
+      <Container>
+        <Header as={"h1"}>Jobs</Header>
+        <Segment attached>
+          <Item.Group divided>
+            {data.jobs.map(job => (
+              <JobItem key={job.id} job={job} />
+            ))}
+          </Item.Group>
+        </Segment>
+      </Container>
+    </React.Fragment>
+  );
 };
 
-export default class Jobs extends React.Component {
-  private newJobForm: JobPopup;
-
-  constructor(props) {
-    super(props);
-    this.openEntryForm = this.openEntryForm.bind(this);
-    this.handleClick;
-  }
-
-  openEntryForm() {
-    this.newJobForm.openPopup();
-  }
-
-  handleClick = e => {
-    e.preventDefault();
-    Router.push("/jobdetails");
-  };
-
-  render() {
-    return (
-      <div>
-        <NavBar />
-        <Container>
-          <Header as={"h1"}>Job List</Header>
-          <Segment attached>
-            <JobPopup
-              ref={newEntry => (this.newJobForm = newEntry)}
-              job={emptyJob}
-            />
-            <Item.Group divided>
-              {joblist.map(job => (
-                <JobItem job={job} key={job.id} />
-              ))}
-            </Item.Group>
-          </Segment>
-          <Button attached={"bottom"} size={"huge"} onClick={this.handleClick}>
-            <Icon name={"add"} />
-            Add new insert
-          </Button>
-        </Container>
-      </div>
-    );
-  }
-}
+export default () => (
+  <Query query={query}>
+    {({ loading, error, data }) => (
+      <JobPage data={data} error={error} loading={loading} />
+    )}
+  </Query>
+);

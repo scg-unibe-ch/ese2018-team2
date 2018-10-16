@@ -4,7 +4,6 @@ import { Button, Container, List } from "semantic-ui-react";
 import NavBar from "../components/layout/header/NavBar";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import { GetJobs } from "./__generated__/GetJobs";
 
 const query = gql`
   query GetJobs {
@@ -18,6 +17,14 @@ const query = gql`
     }
   }
 `;
+
+interface GetJobs {
+  jobs: {
+    id: string;
+    title: string;
+    organization: { id: string; name: string };
+  }[];
+}
 
 export default () => (
   <div>
