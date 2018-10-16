@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
 import { SingletonRouter, withRouter } from "next/router";
-import { Link } from "../../../lib/routes";
+import Link from "next/link";
 
 interface NavigationProperties {
   router?: SingletonRouter;
@@ -11,17 +11,17 @@ class Navigation extends React.Component<NavigationProperties> {
   render() {
     return (
       <Menu fluid widths={6}>
-        <Link route={"/"} passHref>
+        <Link href={"/"}>
           <Menu.Item as="a" active={this.props.router.asPath === "/"}>
             Home
           </Menu.Item>
         </Link>
-        <Link route={"/jobs"} passHref>
+        <Link href={"/jobs"}>
           <Menu.Item as="a" active={this.props.router.asPath === "/jobs"}>
             Jobs
           </Menu.Item>
         </Link>
-        <Link route={"/jobdetails"} passHref>
+        <Link href={"/jobdetails"}>
           <Menu.Item
             as="a"
             name="home"

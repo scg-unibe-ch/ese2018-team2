@@ -16,7 +16,7 @@
     ]
   },
   "scripts": {
-    "dev": "nodemon -e ts,tsx server/index.ts",
+    "dev": "next",
     "build": "yarn run codegen:generate && next build && tsc --project tsconfig.server.json",
     "start": "next start",
     "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
@@ -28,10 +28,9 @@
     "apollo-boost": "^0.1.16",
     "express": "^4.16.4",
     "file-loader": "^2.0.0",
-    "graphql": "^13.0.2",
+    "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "next": "^7.0.2",
-    "next-routes": "^1.4.2",
     "next-with-apollo": "^3.2.0",
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, Item } from "semantic-ui-react";
-import { Link } from "../../lib/routes";
+import Link from "next/link";
 
 interface Job {
   job: {
@@ -23,7 +23,7 @@ const JobItem: React.SFC<Job> = ({ job }) => (
       <Item.Meta>
         <span className="schedule" />
       </Item.Meta>
-      <Link route={"jobdetails"} params={{ id: job.id }} passHref>
+      <Link href={{ pathname: "/jobs/detail", query: { id: job.id } }}>
         <Button as="a" compact icon={"eye"} floated={"right"} size={"huge"} />
       </Link>
       <Item.Description>{job.description}</Item.Description>
