@@ -1,10 +1,20 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE TABLE Company(
+    CompanyId uuid PRIMARY KEY DEFAULT uuid_generate_v4 (),
+    Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
+    WebSite VARCHAR(50)
+);
+
 CREATE TABLE Job(
     JobId uuid PRIMARY KEY DEFAULT uuid_generate_v4 (),
     Title VARCHAR(50) NOT NULL,
     Description TEXT NOT NULL,
-    Salary NUMERIC(4, 2)
+    CompanyId uuid NOT NULL,
+    Salary NUMERIC(4, 2) NOT NULL,
+    FOREIGN KEY (CompanyId) REFERENCES Company(CompanyId)
 );
 
 
@@ -33,7 +43,9 @@ CREATE TABLE RecRule(
 );
 
 CREATE TABLE Role(
-    RoleId uuid PRIMARY KEY DEFAULT uuid_generate_v4 ()
+    RoleId uuid PRIMARY KEY DEFAULT uuid_generate_v4 (),
+    RoleName VARCHAR(50) NOT NULL,
+    RoleDescription VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE JobRole(
@@ -60,7 +72,7 @@ CREATE TABLE StudyJob(
 CREATE TABLE Student(
     StudentId uuid PRIMARY KEY DEFAULT uuid_generate_v4 (),
     Name VARCHAR(50) NOT NULL,
-    Age INT
+    Age INT NOT NULL
 );
 
 CREATE TABLE StudentRole(
