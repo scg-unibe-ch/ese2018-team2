@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "yarn run codegen:generate && next build && tsc --project tsconfig.server.json",
+    "build": "next build",
     "start": "next start",
     "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
     "codegen:watch": "chokidar \"**/*.tsx\" -c \"yarn run codegen:generate\""
