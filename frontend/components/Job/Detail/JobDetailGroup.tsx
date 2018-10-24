@@ -1,14 +1,8 @@
 import { ApolloError } from "apollo-boost";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import {
-  Button,
-  Container,
-  Dimmer,
-  Header,
-  Loader,
-  Segment
-} from "semantic-ui-react";
+import { Container, Dimmer, Header, Loader, Segment } from "semantic-ui-react";
+import JobForm from "./JobForm";
 
 interface JobDetailGroupComponentProps {
   loading: boolean;
@@ -28,10 +22,7 @@ export const JobDetailGroupComponent: React.SFC<
       <Header block attached="top">
         {!loading && data.jobs[0].title}
       </Header>
-      <Segment attached>{!loading && data.jobs[0].description}</Segment>
-      <Segment attached>
-        <Button icon={"edit"} />
-      </Segment>
+      <Segment attached>{!loading && <JobForm data={data.jobs[0]} />}</Segment>
     </Dimmer.Dimmable>
   </Container>
 );
@@ -59,8 +50,6 @@ interface JobDetailGroupProps {
 }
 
 const JobDetailGroup: React.SFC<JobDetailGroupProps> = ({ job }) => {
-  console.log(job);
-
   return (
     <Query query={GET_JOB_WITH_DETAILS} variables={{ id: job }} ssr>
       {({ loading, error, data }) => (
