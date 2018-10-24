@@ -27,7 +27,7 @@ export const JobDetailGroupComponent: React.SFC<
   </Container>
 );
 
-const GET_JOB_WITH_DETAILS = gql`
+export const GET_JOB_WITH_DETAILS = gql`
   query GetJobWithDetails($id: String!) {
     jobs(id: $id) {
       id

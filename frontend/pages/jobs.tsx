@@ -7,7 +7,7 @@ import { Container, Header, Item, Segment } from "semantic-ui-react";
 import JobItem from "../components/joblist/JobItem";
 import NavBar from "../components/layout/header/NavBar";
 
-const query = gql`
+export const GET_ALL_JOBS = gql`
   query AllJobs {
     jobs {
       id
@@ -65,7 +65,7 @@ export const JobPage: React.SFC<JobPageProps> = ({ loading, error, data }) => {
 };
 
 export default () => (
-  <Query query={query}>
+  <Query query={GET_ALL_JOBS}>
     {({ loading, error, data }) => (
       <JobPage data={data} error={error} loading={loading} />
     )}
