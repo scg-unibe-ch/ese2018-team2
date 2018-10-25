@@ -15,8 +15,6 @@ export const resolvers: IResolvers = {
     }
   },
   Query: {
-    hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
-      `Hello ${name || "World"}`,
     jobs: (_, args: GQL.ICreateJobInput, ctx: BackendContext) =>
       ctx.jobRepository.getJobs(args),
     organizations: (_, args, ctx: BackendContext) =>

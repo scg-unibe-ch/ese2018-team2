@@ -26,7 +26,6 @@ type Mutation {
 }
 
 type Query {
-  hello(name: String!): String!
   jobs(id: String): [Job]!
   organizations: [Organization]!
 }
