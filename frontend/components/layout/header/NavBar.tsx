@@ -21,15 +21,6 @@ class Navigation extends React.Component<NavigationProperties> {
             Jobs
           </Menu.Item>
         </Link>
-        <Link href={"/jobdetails"}>
-          <Menu.Item
-            as="a"
-            name="home"
-            active={this.props.router.asPath === "/jobdetails"}
-          >
-            Jobdetails
-          </Menu.Item>
-        </Link>
       </Menu>
     );
   }
