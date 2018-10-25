@@ -26,3 +26,14 @@ After docker-compose finished you can browse the following urls:
 * [back end: http://localhost:4000](http://localhost:4000)
 
 The PostgreSQL instance runs on *localhost:5432*.
+
+## Technologies
+
+This project uses a number of different technologies. Most prominent are:
+
+* [TypeScript](https://www.typescriptlang.org): All code is written in TypeScript.
+* [React](https://reactjs.org): The front end is build with React.
+* [GraphQL](https://graphql.org): The back end provides a GraphQL-API.
+* [Apollo Client](https://www.apollographql.com/docs/react/): A GraphQL client which can be used with React. React components are connected with the GraphQL-API with this library.
+* [Next.js](https://nextjs.org): A React framework for server side rendered pages. The front end is based on Next.js.
+* [Docker](https://www.docker.com): To encapsulate front end, back end and make the developer experience a bit nicer.
