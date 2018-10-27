@@ -1,3 +1,4 @@
 src/generated/*
+src/graphql/__generated__/tmp-resolvers/*
 node_modules/*
 *.md
