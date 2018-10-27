@@ -20,14 +20,13 @@
     "dev": "concurrently -k \"nodemon dist/index.js\" \"tsc -w\" \"nodemon -e graphql --exec 'yarn run schema:generate'\"",
     "build": "yarn run schema:generate && tsc",
     "prettier": "prettier --write './**/*.{ts,json,graphql}'",
-    "schema:generate": "mkdirp src/generated && gql2ts schema.graphql -o 'src/generated/resolvers.ts'"
+    "schema:generate": "graphqlgen"
   },
   "devDependencies": {
     "@types/convict": "^4.2.0",
     "@types/ws": "^6.0.1",
     "concurrently": "^4.0.1",
-    "gql2ts": "^1.10.1",
-    "graphql-resolver-codegen": "^0.0.3",
+    "graphqlgen": "^0.2.12",
     "husky": "^1.0.0",
     "lint-staged": "^7.3.0",
     "mkdirp": "^0.5.1",

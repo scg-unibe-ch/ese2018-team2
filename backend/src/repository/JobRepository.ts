@@ -1,12 +1,5 @@
-import {
-  Connection,
-  Repository,
-  EntityManager,
-  getManager,
-  getConnection
-} from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
-import { cursorTo } from "readline";
 import { Organization } from "../entity/Organization";
 
 export interface JobUpdateArgs {
@@ -41,8 +34,8 @@ export class JobRepository {
     const job = new Job();
     job.title = args.input.title;
     job.description = args.input.description;
-    job.salary = args.input.salary;
-    job.start = args.input.start;
+    job.salary = 1.0;
+    job.start = new Date();
 
     const organization = await this.organizations.findOneOrFail(
       args.input.organization
