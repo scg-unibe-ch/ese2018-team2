@@ -20,7 +20,7 @@ input CreateJobInput {
 type Mutation {
   createJob(input: CreateJobInput!): Job!
   updateJob(id: ID!, title: String, description: String): Job!
-  deleteJob(job: ID!): String!
+  deleteJob(job: ID!): Boolean!
 
   createOrganization(name: String!): Organization!
 }
