@@ -5,6 +5,7 @@ COPY src/ ./
 COPY tsconfig.json ./
 COPY yarn.lock ./
 COPY schema.graphql ./
+COPY graphqlgen.yml ./
 RUN yarn
 RUN yarn build
 
