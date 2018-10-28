@@ -1,7 +1,11 @@
-import { MutationResolvers } from "../../__generated__/graphqlgen"
+import { MutationResolvers } from "../../__generated__/graphqlgen";
 
-const createOrganization: MutationResolvers.CreateOrganizationResolver = (_, args, ctx) => {
-  return ctx.organizationRepository.createOrganization(args.name)
-}
+const createOrganization: MutationResolvers.CreateOrganizationResolver = (
+  _,
+  args,
+  ctx
+) => {
+  return ctx.organizationRepository.createOrganization(args.name);
+};
 
-export default createOrganization
+export default createOrganization;

@@ -1,10 +1,16 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable
+} from "typeorm";
 import { Organization } from "./Organization";
 import { Skill } from "./Skill";
 
 @Entity("jobs")
 export class Job {
-
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -25,7 +31,7 @@ export class Job {
   @Column("date")
   start: Date;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   end: Date;
 
   @ManyToMany(type => Skill)

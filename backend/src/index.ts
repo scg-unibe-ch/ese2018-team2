@@ -5,7 +5,7 @@ import { Job } from "./entity/Job";
 
 import { GraphQLServer } from "graphql-yoga";
 import { importSchema } from "graphql-import";
-import resolvers from "./graphql"
+import resolvers from "./graphql";
 import { JobRepository } from "./repository/JobRepository";
 import { Organization } from "./entity/Organization";
 import { User } from "./entity/User";
@@ -65,6 +65,6 @@ createConnection({
     });
   }
 
-  const server = new GraphQLServer({ typeDefs, resolvers, context }as any) ;
+  const server = new GraphQLServer({ typeDefs, resolvers, context } as any);
   server.start(() => console.log("Server is running on localhost:4000"));
 });
