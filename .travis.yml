@@ -1,12 +1,16 @@
 matrix:
   include:
     - language: node_js
+      node_js:
+        - "11"
       install:
         - yarn --cwd "backend"
       script:
         - yarn --cwd "backend" run build
         - yarn --cwd "backend" run test
     - language: node_js
+      node_js:
+        - "11"
       install:
         - yarn --cwd "frontend"
       script:
