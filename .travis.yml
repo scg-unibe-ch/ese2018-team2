@@ -1,7 +1,13 @@
-language: node_js
-install:
-    - yarn --cwd "backend"
-    - yarn --cwd "frontend"
-script:
-    - yarn --cwd "backend" run build
-    - yarn --cwd "frontend" run build
+matrix:
+  include:
+    - language: node_js
+      install:
+        - yarn --cwd "backend"
+      script:
+        - yarn --cwd "backend" run build
+        - yarn --cwd "backend" run test
+    - language: node_js
+      install:
+        - yarn --cwd "frontend"
+      script:
+        - yarn --cwd "frontend" run build
