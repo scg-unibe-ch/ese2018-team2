@@ -68,3 +68,5 @@ export class JobRepository {
     return this.jobs.findOneOrFail(id);
   }
 }
+
+export default JobRepository;
