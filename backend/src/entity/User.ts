@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Skill } from "./Skill";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class User {
@@ -20,13 +19,4 @@ export class User {
 
   @Column("text")
   password: string;
-
-  @Column("text")
-  university: string;
-
-  @Column("text")
-  studyProgramm: string;
-
-  @Column("text")
-  bio: string;
 }
