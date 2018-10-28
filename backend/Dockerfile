@@ -15,6 +15,7 @@ COPY --from=build /app/package.json ./
 COPY --from=build /app/schema.graphql ./
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/yarn.lock ./
+COPY --from=build /app/graphqlgen.yml ./
 RUN yarn --production
 
 EXPOSE 4000
