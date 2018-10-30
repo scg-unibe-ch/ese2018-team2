@@ -28,4 +28,11 @@ export class UserRepository {
 
     return true;
   }
+
+  async getMe(session: Express.Session) {
+    if (!session.user) {
+      throw new Error("Please log in");
+    }
+    return this.users.findOneOrFail(session.user.id);
+  }
 }

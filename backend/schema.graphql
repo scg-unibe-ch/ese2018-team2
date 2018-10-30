@@ -1,3 +1,11 @@
+type User {
+  id: ID!
+  email: String!
+  firstname: String!
+  lastname: String!
+  phone: String
+}
+
 type Organization {
   id: ID!
   name: String!
@@ -30,4 +38,5 @@ type Mutation {
 type Query {
   jobs(id: String): [Job]!
   organizations: [Organization]!
+  me: User!
 }
