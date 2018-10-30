@@ -3,14 +3,16 @@ import NavBar from "../components/layout/header/NavBar";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Header } from "semantic-ui-react";
 import withAuthorization from "../components/Auth/withAuthorization";
+import Me from "../components/Auth/Me";
 
 const page = () => (
   <React.Fragment>
     <NavBar />
     <Container>
-      <Header>Dashboard</Header>
+      <Header as={"h1"}>Dashboard</Header>
+      <Me />
     </Container>
   </React.Fragment>
-)
+);
 
-export default withAuthorization(page)
+export default withAuthorization(page);
