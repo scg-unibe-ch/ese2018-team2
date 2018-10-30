@@ -1,9 +1,11 @@
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
+import { UserRepository } from "./repository/UserRpository";
 
 export interface Context {
   jobRepository: JobRepository;
   organizationRepository: OrganizationRepository;
+  userRepository: UserRepository;
   session?: Express.Session;
 }
 

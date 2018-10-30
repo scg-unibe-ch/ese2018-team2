@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import bcrypt from "bcryptjs";
 import { createConnection } from "typeorm";
 
 import { Job } from "./entity/Job";
@@ -14,6 +15,7 @@ import config from "./config";
 import { Init1539529717124 } from "./migration/1539529717124-Init";
 import { Skill } from "./entity/Skill";
 import session from "express-session";
+import { UserRepository } from "./repository/UserRpository";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
@@ -62,10 +64,22 @@ createConnection({
     });
   }
 
+  const admin = new User();
+  admin.email = "admin@example.com";
+  admin.firstname = "Noe";
+  admin.lastname = "Müller";
+  admin.password = bcrypt.hashSync("123456", bcrypt.genSaltSync(10));
+  admin.phone = "+41 123 456 34 34";
+
+  await connection.getRepository(User).save(admin);
+
+  const userRepository = new UserRepository(connection);
+
   // @ts-ignore
   const context = ({ request }) => ({
     jobRepository,
     organizationRepository,
+    userRepository,
     session: request.session
   });
 
