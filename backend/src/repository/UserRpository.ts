@@ -10,10 +10,6 @@ export class UserRepository {
   }
 
   async login(email: string, password: string, session: Express.Session) {
-    if (session.user) {
-      return true;
-    }
-
     const foundUsers = await this.users.find({ email });
     if (foundUsers.length === 0) {
       return false;
