@@ -6,10 +6,6 @@
     "outDir": "dist",
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
-    },
     "lib": ["es5", "es6", "es2017.object", "esnext.asynciterable"],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
