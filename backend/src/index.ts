@@ -13,6 +13,7 @@ import { OrganizationRepository } from "./repository/OrganizationRepository";
 import config from "./config";
 import { Init1539529717124 } from "./migration/1539529717124-Init";
 import { Skill } from "./entity/Skill";
+import session from "express-session";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
@@ -25,10 +26,8 @@ createConnection({
   await connection.runMigrations({ transaction: true });
   const typeDefs = importSchema("./schema.graphql");
 
-  const context = {
-    jobRepository: new JobRepository(connection),
-    organizationRepository: new OrganizationRepository(connection)
-  };
+  const jobRepository = new JobRepository(connection);
+  const organizationRepository = new OrganizationRepository(connection);
 
   // SEED TODO env-variable for seeding
   await connection
@@ -46,15 +45,13 @@ createConnection({
   const orgs = [];
 
   for (let i = 0; i < exampleOrgs.length; i++) {
-    const org = await context.organizationRepository.createOrganization(
-      exampleOrgs[i]
-    );
+    const org = await organizationRepository.createOrganization(exampleOrgs[i]);
     orgs.push(org);
   }
 
   const exampleJobs = ["Job 1", "Job 2", "Job 3"];
   for (let i = 0; i < exampleJobs.length; i++) {
-    await context.jobRepository.createJob({
+    await jobRepository.createJob({
       input: {
         title: exampleJobs[i],
         organization: orgs[i].id,
@@ -65,6 +62,32 @@ createConnection({
     });
   }
 
+  // @ts-ignore
+  const context = ({ request }) => ({
+    jobRepository,
+    organizationRepository,
+    session: request.session
+  });
+
   const server = new GraphQLServer({ typeDefs, resolvers, context } as any);
-  server.start(() => console.log("Server is running on localhost:4000"));
+
+  server.express.use(
+    session({
+      secret: "secret",
+      cookie: { maxAge: 3600000 },
+      saveUninitialized: true,
+      resave: true,
+      name: "sid"
+    })
+  );
+
+  const opts = {
+    port: 4000,
+    cors: {
+      credentials: true,
+      origin: ["http://localhost:3000", "http://localhost:4000"] // your frontend url.
+    }
+  };
+
+  server.start(opts, () => console.log("Server is running on localhost:4000"));
 });

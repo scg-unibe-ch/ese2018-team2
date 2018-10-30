@@ -4,6 +4,7 @@ import { OrganizationRepository } from "./repository/OrganizationRepository";
 export interface Context {
   jobRepository: JobRepository;
   organizationRepository: OrganizationRepository;
+  session?: Express.Session;
 }
 
 export interface Organization {

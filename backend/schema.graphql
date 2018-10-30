@@ -18,6 +18,8 @@ input CreateJobInput {
 }
 
 type Mutation {
+  login(email: String!, pw: String!): Boolean!
+
   createJob(input: CreateJobInput!): Job!
   updateJob(id: ID!, title: String, description: String): Job!
   deleteJob(job: ID!): Boolean!
