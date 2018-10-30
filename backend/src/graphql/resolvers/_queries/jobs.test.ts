@@ -5,6 +5,7 @@ import { makeExecutableSchema } from "graphql-tools";
 import { Context, Job } from "../../../types";
 import JobRepository from "../../../repository/JobRepository";
 import { OrganizationRepository } from "../../../repository/OrganizationRepository";
+import { UserRepository } from "../../../repository/UserRpository";
 
 describe("Get jobs", () => {
   const schema = makeExecutableSchema({
@@ -12,18 +13,13 @@ describe("Get jobs", () => {
     resolvers
   } as any);
 
-  const OrganizationRepositoryMock = jest.fn<OrganizationRepository>();
-
-  beforeEach(() => {
-    OrganizationRepositoryMock.mockClear();
-  });
-
   it("should return an empty list", async () => {
     const mockCtx: Context = {
       jobRepository: new (jest.fn<JobRepository>(() => ({
         getJobs: () => []
       })))(),
-      organizationRepository: new OrganizationRepositoryMock()
+      organizationRepository: new (jest.fn<OrganizationRepository>())(),
+      userRepository: new (jest.fn<UserRepository>())()
     };
 
     const query = `
@@ -53,7 +49,8 @@ describe("Get jobs", () => {
       jobRepository: new (jest.fn<JobRepository>(() => ({
         getJobs
       })))(),
-      organizationRepository: new OrganizationRepositoryMock()
+      organizationRepository: new (jest.fn<OrganizationRepository>())(),
+      userRepository: new (jest.fn<UserRepository>())()
     };
 
     const expectedId = "123";
