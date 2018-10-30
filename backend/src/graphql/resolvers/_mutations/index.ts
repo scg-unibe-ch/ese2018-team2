@@ -1,16 +1,18 @@
 import { MutationResolvers } from "../../__generated__/graphqlgen";
 import createJob from "./createJob";
-import updateJob from "./updateJob";
-import deleteJob from "./deleteJob";
 import createOrganization from "./createOrganization";
+import deleteJob from "./deleteJob";
 import login from "./login";
+import logout from "./logout";
+import updateJob from "./updateJob";
 
 export const Mutation: MutationResolvers.Type = {
   createJob,
   updateJob,
   deleteJob,
   createOrganization,
-  login
+  login,
+  logout
 };
 
 export default Mutation;

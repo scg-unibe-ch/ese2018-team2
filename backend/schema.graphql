@@ -27,6 +27,7 @@ input CreateJobInput {
 
 type Mutation {
   login(email: String!, pw: String!): Boolean!
+  logout: Boolean!
 
   createJob(input: CreateJobInput!): Job!
   updateJob(id: ID!, title: String, description: String): Job!
