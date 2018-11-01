@@ -22,11 +22,12 @@ const StudentJobCard: React.SFC<StudentJobCardProps> = ({router, job}) => (
             </Card.Description>
         </Card.Content>
         <Card.Content extra>
-                <Link>
-                    <Button>
-                        More
-                    </Button>
+            <div className='ui two buttons'>
+                <Button icon="star"/>
+                <Link href={{pathname: "/jobs/detail", query: {id: job.id}}}>
+                    <Button icon="eye"/>
                 </Link>
+            </div>
         </Card.Content>
     </Card>
 );
