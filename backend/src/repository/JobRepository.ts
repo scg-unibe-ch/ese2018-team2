@@ -53,7 +53,7 @@ export class JobRepository {
 
   async updateJob(args: JobUpdateArgs): Promise<Job> {
     const id = Object.entries(args)
-      .filter(e => e[0] === "id")
+      .filter(e => e[0] === "userId")
       .map(e => e[1])[0];
 
     const fieldsToUpdate = Object.entries(args)

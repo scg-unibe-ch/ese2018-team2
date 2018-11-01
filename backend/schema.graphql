@@ -4,6 +4,7 @@ type User {
   firstname: String!
   lastname: String!
   phone: String
+  likedJobs: [Job]
 }
 
 type Organization {
@@ -17,6 +18,7 @@ type Job {
   title: String!
   description: String!
   organization: Organization!
+  userLikes: [User]
 }
 
 input CreateJobInput {
@@ -33,6 +35,8 @@ type Mutation {
   updateJob(id: ID!, title: String, description: String): Job!
   deleteJob(job: ID!): Boolean!
 
+  likeJob(jobId: String!): Boolean!
+
   createOrganization(name: String!): Organization!
 }
 
@@ -40,4 +44,5 @@ type Query {
   jobs(id: String): [Job]!
   organizations: [Organization]!
   me: User!
+  myLikes: [Job]
 }

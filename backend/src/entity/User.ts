@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { Job } from "./Job";
 
 @Entity("users")
 export class User {
@@ -14,9 +21,13 @@ export class User {
   @Column("text")
   phone: string;
 
-  @Column("text")
+  @Column({ type: "text", unique: true })
   email: string;
 
   @Column("text")
   password: string;
+
+  @ManyToMany(type => Job, job => job.userLikes)
+  @JoinTable({ name: "users_liked_jobs_jobs" })
+  likedJobs: Job[];
 }
