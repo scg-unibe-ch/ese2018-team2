@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Card} from "semantic-ui-react";
+import {Card, Header, Loader} from "semantic-ui-react";
+import ApolloError from 'apollo-boost'
 
 interface StudentActivitiesProps {
     job: {
@@ -10,11 +11,28 @@ interface StudentActivitiesProps {
             id: string,
             name: string
         }
-    };
-
+    },
+    loading: boolean,
+    error: ApolloError
 }
 
-const StudentActivity: React.SFC<StudentActivitiesProps> = ({job}) => {
+const StudentActivity: React.SFC<StudentActivitiesProps> = ({job, loading, error}) => {
+
+    if (loading) {
+        return (
+            <Card>
+                <Loader/>
+            </Card>
+        );
+    }
+    if (error) {
+        return (
+            <Card>
+                <Header as="h3">Ooops</Header>
+            </Card>
+        );
+    }
+
     return (
         <Card>
             <Card.Content>
