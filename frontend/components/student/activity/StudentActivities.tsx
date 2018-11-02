@@ -26,55 +26,27 @@ interface StudentActivitiesProps {
 }
 
 export const GET_ACTIVITIES_JOBS = gql`
-query StudentActivities {
-    jobs {
-      id
-      title
-      description
-      organization {
-        id
-        name
+    query StudentActivities {
+        jobs {
+          id
+          title
+          description
+          organization {
+            id
+            name
+          }
+        }
       }
-    }
-  }
 `;
 
 
 const StudentActivities: React.SFC<StudentActivitiesProps> = ({router, loading, error, data}) => {
-
-    if (loading) {
-        return (
-            <Segment>
-                <Header as="h3">Recommended Jobs</Header>
-                <Card.Group itemsPerRow={3} centered>
-                    <Card><Loader/></Card>
-                    <Card><Loader/></Card>
-                    <Card><Loader/></Card>
-                </Card.Group>
-            </Segment>
-        )
-    }
-
-    if (error) {
-        return (
-            <Segment>
-                <Header as="h3">Recommended Jobs</Header>
-                <Card.Group itemsPerRow={3} centered>
-                    <Card.Header>Ooops</Card.Header>
-                    <Card><Header as="h3">Ooops</Header></Card>
-                    <Card><Header as="h3">Ooops</Header></Card>
-                </Card.Group>
-            </Segment>
-        )
-    }
-
-
     return (
         <Segment>
             <Header>My Activities</Header>
             <Card.Group itemsPerRow={3} centered>
                 {data.jobs.map(job => (
-                    <StudentActivity key={job.id} job={job}/>
+                    <StudentActivity key={job.id} job={job} loading={loading} error={error}/>
                 ))}
             </Card.Group>
         </Segment>
