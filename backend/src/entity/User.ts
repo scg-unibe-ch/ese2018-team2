@@ -27,6 +27,7 @@ export class User {
   @Column("text")
   password: string;
 
+  @ManyToMany(type => Job, job => job.usersLiked)
   @JoinTable()
   likedJobs: Promise<Job[]>;
 }
