@@ -42,6 +42,11 @@ createConnection({
     .delete()
     .from(Organization)
     .execute();
+  await connection
+    .createQueryBuilder()
+    .delete()
+    .from(User)
+    .execute();
 
   const exampleOrgs = ["Organization 1", "Organization 2", "Organization 3"];
   const orgs = [];
