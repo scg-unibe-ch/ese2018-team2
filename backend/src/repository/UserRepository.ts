@@ -2,12 +2,10 @@ import { Connection, Repository } from "typeorm";
 import bcrypt from "bcryptjs";
 import { User } from "../entity/User";
 import { Job } from "../entity/Job";
-import { Like } from "../entity/Like";
 
 export class UserRepository {
   private users: Repository<User>;
   private jobs: Repository<Job>;
-  private likes: Repository<Like>;
 
   private checkAuth(session: Express.Session) {
     if (!session.user) {
@@ -18,7 +16,6 @@ export class UserRepository {
   constructor(connection: Connection) {
     this.users = connection.getRepository(User);
     this.jobs = connection.getRepository(Job);
-    this.likes = connection.getRepository(Like);
   }
 
   async login(email: string, password: string, session: Express.Session) {
@@ -42,20 +39,38 @@ export class UserRepository {
     return this.users.findOneOrFail(session.user.id);
   }
 
-  async likeJob(userId: string, jobId: string, session: Express.Session) {
+  async likeJob(jobId: string, session: Express.Session) {
     this.checkAuth(session);
 
-    const like = new Like();
-    like.userId = jobId.valueOf();
-    like.userId = userId.valueOf();
+    const user = await this.users.findOneOrFail(session.user.id);
+    const job = await this.jobs.findOneOrFail(jobId);
 
-    await this.likes.create(like);
+    if (typeof user.likedJobs == "undefined") {
+      user.likedJobs = [job];
+    } else {
+      user.likedJobs.push(job);
+    }
+
+    if (typeof job.userLikes == "undefined") {
+      job.userLikes = [user];
+    } else {
+      job.userLikes.push(user);
+    }
+
+    await this.users.manager.save(user);
+    await this.jobs.manager.save(job);
 
     return true;
   }
 
-  async myLikes(session: Express.Session) {
+  async getMyLikes(session: Express.Session) {
     this.checkAuth(session);
-    return this.likes.find({ userId: session.user.userId });
+
+    const likes = await this.users
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.likedJobs", "job")
+      .getMany();
+
+    return likes;
   }
 }
