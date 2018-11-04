@@ -37,7 +37,4 @@ export class Job {
 
   @JoinTable()
   roles: Promise<Role[]>;
-
-  @ManyToMany(type => User, user => user.likedJobs)
-  usersLiked: Promise<User[]>;
 }
