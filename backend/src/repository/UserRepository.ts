@@ -1,23 +1,12 @@
-import {
-  Connection,
-  createQueryBuilder,
-  getConnection,
-  getManager,
-  Repository
-} from "typeorm";
+import { Connection, getConnection, Repository } from "typeorm";
 import bcrypt from "bcryptjs";
 import { User } from "../entity/User";
 import { Job } from "../entity/Job";
+import Utils from "./Utils";
 
 export class UserRepository {
   private users: Repository<User>;
   private jobs: Repository<Job>;
-
-  private checkAuth(session: Express.Session) {
-    if (!session.user) {
-      throw new Error("Please log in");
-    }
-  }
 
   constructor(connection: Connection) {
     this.users = connection.getRepository(User);
@@ -41,12 +30,12 @@ export class UserRepository {
   }
 
   async getMe(session: Express.Session) {
-    this.checkAuth(session);
+    Utils.enforceAuth(session);
     return this.users.findOneOrFail(session.user.id);
   }
 
   async likeJob(jobId: string, session: Express.Session) {
-    this.checkAuth(session);
+    Utils.enforceAuth(session);
 
     const user = await this.users.findOneOrFail(session.user.id);
     const job = await this.jobs.findOneOrFail(jobId);

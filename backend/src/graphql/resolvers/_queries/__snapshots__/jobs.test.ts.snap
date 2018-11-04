@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Get jobs should return a job 1`] = `
+exports[`Get likedJobs should return a job 1`] = `
 Object {
   "data": Object {
     "jobs": Array [
@@ -17,7 +17,7 @@ Object {
 }
 `;
 
-exports[`Get jobs should return an empty list 1`] = `
+exports[`Get likedJobs should return an empty list 1`] = `
 Object {
   "data": Object {
     "jobs": Array [],
