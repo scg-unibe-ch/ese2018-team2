@@ -18,7 +18,7 @@ type Job {
   title: String!
   description: String!
   organization: Organization!
-  userLikes: [User]
+  usersLiked: [User]
 }
 
 input CreateJobInput {
@@ -44,5 +44,4 @@ type Query {
   jobs(id: String): [Job]!
   organizations: [Organization]!
   me: User!
-  myLikes: [Job]
 }

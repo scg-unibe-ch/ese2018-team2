@@ -39,5 +39,5 @@ export class Job {
   roles: Promise<Role[]>;
 
   @ManyToMany(type => User, user => user.likedJobs)
-  userLikes: User[];
+  usersLiked: Promise<User[]>;
 }

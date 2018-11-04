@@ -21,8 +21,6 @@ export class JobRepository {
 
   // TODO create interface for argument type
   getJobs(args: any): Promise<Job[]> {
-    console.log(args);
-
     if (args.id) {
       return this.jobs.findByIds([args.id]);
     }

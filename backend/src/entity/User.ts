@@ -27,7 +27,17 @@ export class User {
   @Column("text")
   password: string;
 
-  @ManyToMany(type => Job, job => job.userLikes)
-  @JoinTable({ name: "users_liked_jobs_jobs" })
-  likedJobs: Job[];
+  @ManyToMany(type => Job, job => job.usersLiked, { eager: true })
+  @JoinTable({
+    name: "like",
+    joinColumn: {
+      name: "userId",
+      referencedColumnName: "id"
+    },
+    inverseJoinColumn: {
+      name: "jobId",
+      referencedColumnName: "id"
+    }
+  })
+  likedJobs: Promise<Job[]>;
 }
