@@ -4,7 +4,7 @@ type User {
   firstname: String!
   lastname: String!
   phone: String
-  likedJobs: [Job]
+  bookmarkedJobs: [Job]
 }
 
 type Organization {
@@ -18,7 +18,7 @@ type Job {
   title: String!
   description: String!
   organization: Organization!
-  usersLiked: [User]
+  usersBookmarked: [User]
 }
 
 input CreateJobInput {
@@ -36,6 +36,7 @@ type Mutation {
   deleteJob(job: ID!): Boolean!
 
   bookmarkJob(jobId: String!): Boolean!
+  unbookmarkJob(jobId: String!): Boolean!
 
   createOrganization(name: String!): Organization!
 }

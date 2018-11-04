@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Init1541361241225 implements MigrationInterface {
+export class Init1541366395158 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TABLE "organizations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, CONSTRAINT "PK_6b031fcd0863e3f6b44230163f9" PRIMARY KEY ("id"))`
@@ -15,30 +15,30 @@ export class Init1541361241225 implements MigrationInterface {
       `CREATE TABLE "roles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" text NOT NULL, "description" text NOT NULL, CONSTRAINT "PK_c1433d71a4838793a49dcad46ab" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
-      `CREATE TABLE "users_liked_jobs_jobs" ("usersId" uuid NOT NULL, "jobsId" uuid NOT NULL, CONSTRAINT "PK_ee50f345ff14ded57528d91b9ee" PRIMARY KEY ("usersId", "jobsId"))`
+      `CREATE TABLE "bookmarks" ("usersId" uuid NOT NULL, "jobsId" uuid NOT NULL, CONSTRAINT "PK_59b0563d7b6f7758e9f369bb324" PRIMARY KEY ("usersId", "jobsId"))`
     );
     await queryRunner.query(
       `ALTER TABLE "jobs" ADD CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9" FOREIGN KEY ("organizationId") REFERENCES "organizations"("id")`
     );
     await queryRunner.query(
-      `ALTER TABLE "users_liked_jobs_jobs" ADD CONSTRAINT "FK_360691f29fa36bb2e80ad064222" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE`
+      `ALTER TABLE "bookmarks" ADD CONSTRAINT "FK_b0075fdec79957795cd75fb7bb9" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE`
     );
     await queryRunner.query(
-      `ALTER TABLE "users_liked_jobs_jobs" ADD CONSTRAINT "FK_bc34aec00aeedb3450526dda646" FOREIGN KEY ("jobsId") REFERENCES "jobs"("id") ON DELETE CASCADE`
+      `ALTER TABLE "bookmarks" ADD CONSTRAINT "FK_4d0391697f8d396f21846c8784a" FOREIGN KEY ("jobsId") REFERENCES "jobs"("id") ON DELETE CASCADE`
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
-      `ALTER TABLE "users_liked_jobs_jobs" DROP CONSTRAINT "FK_bc34aec00aeedb3450526dda646"`
+      `ALTER TABLE "bookmarks" DROP CONSTRAINT "FK_4d0391697f8d396f21846c8784a"`
     );
     await queryRunner.query(
-      `ALTER TABLE "users_liked_jobs_jobs" DROP CONSTRAINT "FK_360691f29fa36bb2e80ad064222"`
+      `ALTER TABLE "bookmarks" DROP CONSTRAINT "FK_b0075fdec79957795cd75fb7bb9"`
     );
     await queryRunner.query(
       `ALTER TABLE "jobs" DROP CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9"`
     );
-    await queryRunner.query(`DROP TABLE "users_liked_jobs_jobs"`);
+    await queryRunner.query(`DROP TABLE "bookmarks"`);
     await queryRunner.query(`DROP TABLE "roles"`);
     await queryRunner.query(`DROP TABLE "jobs"`);
     await queryRunner.query(`DROP TABLE "users"`);

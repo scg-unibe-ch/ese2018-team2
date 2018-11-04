@@ -28,6 +28,8 @@ export class User {
   password: string;
 
   @ManyToMany(type => Job, job => job.usersBookmarked)
-  @JoinTable()
+  @JoinTable({
+    name: "bookmarks"
+  })
   bookmarkedJobs: Promise<Job[]>;
 }

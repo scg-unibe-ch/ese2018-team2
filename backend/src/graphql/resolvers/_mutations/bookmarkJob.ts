@@ -1,6 +1,6 @@
 import { MutationResolvers } from "../../__generated__/graphqlgen";
 
-const bookmarkJob: MutationResolvers.LikeJobResolver = (_, args, ctx) => {
+const bookmarkJob: MutationResolvers.BookmarkJobResolver = (_, args, ctx) => {
   return ctx.userRepository.bookmarkJob(args.jobId, ctx.session);
 };
 

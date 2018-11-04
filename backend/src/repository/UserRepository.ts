@@ -37,14 +37,23 @@ export class UserRepository {
   async bookmarkJob(jobId: string, session: Express.Session) {
     Utils.enforceAuth(session);
 
-    const user = await this.users.findOneOrFail(session.user.id);
-    const job = await this.jobs.findOneOrFail(jobId);
+    await getConnection()
+      .createQueryBuilder()
+      .relation(User, "bookmarkedJobs")
+      .of(session.user.id)
+      .add(jobId);
+
+    return true;
+  }
+
+  async unbookmarkJob(jobId: string, session: Express.Session) {
+    Utils.enforceAuth(session);
 
     await getConnection()
       .createQueryBuilder()
       .relation(User, "bookmarkedJobs")
-      .of(user)
-      .add(job);
+      .of(session.user.id)
+      .remove(jobId);
 
     return true;
   }
