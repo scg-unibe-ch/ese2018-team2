@@ -8,7 +8,7 @@ import { Mutation } from "react-apollo";
 import { GET_ALL_JOBS } from "../../../pages/jobs";
 
 /*const CREATE_JOB = gql`
-  mutation CreateJob($id: ID!, $title:String!, $description:) {}
+  mutation CreateJob($userId: ID!, $title:String!, $description:) {}
 `*/
 
 interface NewJobFormProps {
