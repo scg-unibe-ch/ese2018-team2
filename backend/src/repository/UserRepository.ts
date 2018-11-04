@@ -34,7 +34,7 @@ export class UserRepository {
     return this.users.findOneOrFail(session.user.id);
   }
 
-  async likeJob(jobId: string, session: Express.Session) {
+  async bookmarkJob(jobId: string, session: Express.Session) {
     Utils.enforceAuth(session);
 
     const user = await this.users.findOneOrFail(session.user.id);
@@ -42,7 +42,7 @@ export class UserRepository {
 
     await getConnection()
       .createQueryBuilder()
-      .relation(User, "likedJobs")
+      .relation(User, "bookmarkedJobs")
       .of(user)
       .add(job);
 

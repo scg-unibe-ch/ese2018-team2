@@ -5,7 +5,7 @@ import deleteJob from "./deleteJob";
 import login from "./login";
 import logout from "./logout";
 import updateJob from "./updateJob";
-import likeJob from "./likeJob";
+import bookmarkJob from "./bookmarkJob";
 
 export const Mutation: MutationResolvers.Type = {
   createJob,
@@ -14,7 +14,7 @@ export const Mutation: MutationResolvers.Type = {
   createOrganization,
   login,
   logout,
-  likeJob
+  likeJob: bookmarkJob
 };
 
 export default Mutation;
