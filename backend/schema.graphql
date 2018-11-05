@@ -35,8 +35,7 @@ type Mutation {
   updateJob(id: ID!, title: String, description: String): Job!
   deleteJob(job: ID!): Boolean!
 
-  bookmarkJob(jobId: String!): Boolean!
-  unbookmarkJob(jobId: String!): Boolean!
+  bookmarkJob(jobId: String!, add: Boolean!): Boolean!
 
   createOrganization(name: String!): Organization!
 }

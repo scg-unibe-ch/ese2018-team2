@@ -15,8 +15,7 @@ export const Mutation: MutationResolvers.Type = {
   createOrganization,
   login,
   logout,
-  bookmarkJob,
-  unbookmarkJob
+  bookmarkJob
 };
 
 export default Mutation;

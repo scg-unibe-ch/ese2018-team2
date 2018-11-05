@@ -34,26 +34,22 @@ export class UserRepository {
     return this.users.findOneOrFail(session.user.id);
   }
 
-  async bookmarkJob(jobId: string, session: Express.Session) {
+  async bookmarkJob(jobId: string, add: boolean, session: Express.Session) {
     Utils.enforceAuth(session);
 
-    await getConnection()
-      .createQueryBuilder()
-      .relation(User, "bookmarkedJobs")
-      .of(session.user.id)
-      .add(jobId);
-
-    return true;
-  }
-
-  async unbookmarkJob(jobId: string, session: Express.Session) {
-    Utils.enforceAuth(session);
-
-    await getConnection()
-      .createQueryBuilder()
-      .relation(User, "bookmarkedJobs")
-      .of(session.user.id)
-      .remove(jobId);
+    if (add) {
+      await getConnection()
+        .createQueryBuilder()
+        .relation(User, "bookmarkedJobs")
+        .of(session.user.id)
+        .add(jobId);
+    } else if (!add) {
+      await getConnection()
+        .createQueryBuilder()
+        .relation(User, "bookmarkedJobs")
+        .of(session.user.id)
+        .remove(jobId);
+    }
 
     return true;
   }
