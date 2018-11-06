@@ -16,12 +16,13 @@ import { Role } from "./entity/Role";
 import session from "express-session";
 import { UserRepository } from "./repository/UserRepository";
 import { Init1541366395158 } from "./migration/1541366395158-Init";
+import { Application } from "./entity/Application";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User, Role],
+  entities: [Job, Organization, User, Role, Application],
   migrations: [Init1541366395158],
   logging: true
 }).then(async connection => {
