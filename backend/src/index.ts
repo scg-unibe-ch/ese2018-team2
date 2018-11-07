@@ -15,15 +15,16 @@ import config from "./config";
 import { Role } from "./entity/Role";
 import session from "express-session";
 import { UserRepository } from "./repository/UserRepository";
-import { Init1541366395158 } from "./migration/1541366395158-Init";
 import { Application } from "./entity/Application";
+import { ApplicationRepository } from "./repository/ApplicationRepository";
+import { Init1541547194885 } from "./migration/1541547194885-Init";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
   entities: [Job, Organization, User, Role, Application],
-  migrations: [Init1541366395158],
+  migrations: [Init1541547194885],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -80,12 +81,14 @@ createConnection({
   await connection.getRepository(User).save(admin);
 
   const userRepository = new UserRepository(connection);
+  const applicationRepository = new ApplicationRepository(connection);
 
   // @ts-ignore
   const context = ({ request }) => ({
     jobRepository,
     organizationRepository,
     userRepository,
+    applicationRepository,
     session: request.session
   });
 

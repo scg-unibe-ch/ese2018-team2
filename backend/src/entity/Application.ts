@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Job } from "./Job";
-import ApplicationStatus from "./ApplicationStatus";
+import ApplicationState from "./ApplicationState";
 import { User } from "./User";
 
 @Entity("applications")
@@ -10,10 +10,10 @@ export class Application {
 
   @Column({
     type: "enum",
-    enum: ApplicationStatus,
-    default: ApplicationStatus.PENDING
+    enum: ApplicationState,
+    default: ApplicationState.PENDING
   })
-  state: ApplicationStatus;
+  state: ApplicationState;
 
   @ManyToOne(type => User)
   user: User;

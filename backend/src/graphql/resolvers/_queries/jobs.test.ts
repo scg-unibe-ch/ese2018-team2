@@ -6,6 +6,7 @@ import { Context, Job } from "../../../types";
 import JobRepository from "../../../repository/JobRepository";
 import { OrganizationRepository } from "../../../repository/OrganizationRepository";
 import { UserRepository } from "../../../repository/UserRepository";
+import { ApplicationRepository } from "../../../repository/ApplicationRepository";
 
 describe("Get likedJobs", () => {
   const schema = makeExecutableSchema({
@@ -19,7 +20,8 @@ describe("Get likedJobs", () => {
         getJobs: () => []
       })))(),
       organizationRepository: new (jest.fn<OrganizationRepository>())(),
-      userRepository: new (jest.fn<UserRepository>())()
+      userRepository: new (jest.fn<UserRepository>())(),
+      applicationRepository: new (jest.fn<ApplicationRepository>())()
     };
 
     const query = `
@@ -50,7 +52,8 @@ describe("Get likedJobs", () => {
         getJobs
       })))(),
       organizationRepository: new (jest.fn<OrganizationRepository>())(),
-      userRepository: new (jest.fn<UserRepository>())()
+      userRepository: new (jest.fn<UserRepository>())(),
+      applicationRepository: new (jest.fn<ApplicationRepository>())()
     };
 
     const expectedId = "123";

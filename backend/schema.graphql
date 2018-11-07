@@ -21,6 +21,19 @@ type Job {
   usersBookmarked: [User]
 }
 
+type Application {
+  id: ID!
+  state: ApplicationState!
+  user: User!
+  job: Job!
+}
+
+enum ApplicationState {
+  PENDING
+  DECLINED
+  APPROVED
+}
+
 input CreateJobInput {
   title: String!
   description: String = ""
@@ -38,11 +51,18 @@ type Mutation {
   addBookmark(jobId: String!): Boolean!
   removeBookmark(jobId: String!): Boolean!
 
+  apply(jobId: String!): Boolean!
+  approve(applicationId: String!): Boolean!
+
   createOrganization(name: String!): Organization!
 }
 
 type Query {
   jobs(id: String): [Job]!
+
   organizations: [Organization]!
+
   me: User!
+
+  applications(applicationId: String): [Application]!
 }

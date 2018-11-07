@@ -34,7 +34,7 @@ export class UserRepository {
     return this.users.findOneOrFail(session.user.id);
   }
 
-  async addBookmark(jobId: string, session: Express.Session) {
+  async addBookmark(jobId: string, session: Express.Session): Promise<any> {
     Utils.enforceAuth(session);
 
     await getConnection()
@@ -46,7 +46,7 @@ export class UserRepository {
     return true;
   }
 
-  async removeBookmark(jobId: string, session: Express.Session) {
+  async removeBookmark(jobId: string, session: Express.Session): Promise<any> {
     Utils.enforceAuth(session);
 
     await getConnection()

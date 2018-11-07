@@ -1,11 +1,13 @@
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import { UserRepository } from "./repository/UserRepository";
+import { ApplicationRepository } from "./repository/ApplicationRepository";
 
 export interface Context {
   jobRepository: JobRepository;
   organizationRepository: OrganizationRepository;
   userRepository: UserRepository;
+  applicationRepository: ApplicationRepository;
   session?: Express.Session;
 }
 
@@ -29,3 +31,18 @@ export interface User {
   email: string;
   phone: string;
 }
+
+export interface Application {
+  id: string;
+  state: ApplicationState;
+  user: User;
+  job: Job;
+}
+
+type ApplicationState = "PENDING" | "DECLINED" | "APPROVED";
+
+/*export enum ApplicationState {
+  PENDING,
+  DECLINED,
+  APPROVED
+}*/
