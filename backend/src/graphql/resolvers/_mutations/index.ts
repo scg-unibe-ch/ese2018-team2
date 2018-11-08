@@ -9,6 +9,7 @@ import addBookmark from "./addBookmark";
 import removeBookmark from "./removeBookmark";
 import approve from "./approve";
 import apply from "./apply";
+import reject from "./reject";
 
 export const Mutation: MutationResolvers.Type = {
   createJob,
@@ -20,7 +21,8 @@ export const Mutation: MutationResolvers.Type = {
   addBookmark,
   removeBookmark,
   apply,
-  approve
+  approve,
+  reject
 };
 
 export default Mutation;

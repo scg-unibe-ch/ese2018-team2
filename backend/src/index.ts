@@ -32,6 +32,8 @@ createConnection({
 
   const jobRepository = new JobRepository(connection);
   const organizationRepository = new OrganizationRepository(connection);
+  const userRepository = new UserRepository(connection);
+  const applicationRepository = new ApplicationRepository(connection);
 
   // SEED TODO env-variable for seeding
   await connection
@@ -89,9 +91,6 @@ createConnection({
   admin.phone = "+41 123 456 34 34";
 
   await connection.getRepository(User).save(admin);
-
-  const userRepository = new UserRepository(connection);
-  const applicationRepository = new ApplicationRepository(connection);
 
   // @ts-ignore
   const context = ({ request }) => ({

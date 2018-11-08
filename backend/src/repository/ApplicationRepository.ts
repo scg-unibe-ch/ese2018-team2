@@ -48,4 +48,15 @@ export class ApplicationRepository {
 
     return true;
   }
+
+  async reject(applicationId: string, session: Express.Session): Promise<any> {
+    Utils.enforceAuth(session);
+
+    await this.applications.update(
+      { id: applicationId },
+      { state: ApplicationState.DECLINED }
+    );
+
+    return true;
+  }
 }

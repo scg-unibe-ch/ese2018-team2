@@ -53,6 +53,7 @@ type Mutation {
 
   apply(jobId: String!): Boolean!
   approve(applicationId: String!): Boolean!
+  reject(applicationId: String!): Boolean!
 
   createOrganization(name: String!): Organization!
 }
