@@ -4,11 +4,13 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  OneToMany
 } from "typeorm";
 import { Organization } from "./Organization";
 import { Role } from "./Role";
 import { User } from "./User";
+import { Application } from "./Application";
 
 @Entity("jobs")
 export class Job {
@@ -40,4 +42,7 @@ export class Job {
 
   @ManyToMany(type => User, user => user.bookmarkedJobs)
   usersBookmarked: Promise<User[]>;
+
+  @OneToMany(type => Application, application => application.job)
+  applications: Promise<Application[]>;
 }

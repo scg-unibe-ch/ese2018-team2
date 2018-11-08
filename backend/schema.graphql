@@ -64,5 +64,5 @@ type Query {
 
   me: User!
 
-  applications(applicationId: String): [Application]!
+  applications(applicationId: String): [Application]
 }

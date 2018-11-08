@@ -3,9 +3,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Job } from "./Job";
+import { Application } from "./Application";
 
 @Entity("users")
 export class User {
@@ -32,4 +34,7 @@ export class User {
     name: "bookmarks"
   })
   bookmarkedJobs: Promise<Job[]>;
+
+  @OneToMany(type => Application, application => application.user)
+  applications: Promise<Application[]>;
 }

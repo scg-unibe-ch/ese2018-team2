@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { Job } from "./Job";
 import ApplicationState from "./ApplicationState";
 import { User } from "./User";
@@ -16,8 +22,10 @@ export class Application {
   state: ApplicationState;
 
   @ManyToOne(type => User)
+  @JoinColumn()
   user: User;
 
   @ManyToOne(type => Job)
+  @JoinColumn()
   job: Job;
 }

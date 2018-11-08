@@ -17,14 +17,14 @@ import session from "express-session";
 import { UserRepository } from "./repository/UserRepository";
 import { Application } from "./entity/Application";
 import { ApplicationRepository } from "./repository/ApplicationRepository";
-import { Init1541547194885 } from "./migration/1541547194885-Init";
+import { Init1541694746283 } from "./migration/1541694746283-Init";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
   entities: [Job, Organization, User, Role, Application],
-  migrations: [Init1541547194885],
+  migrations: [Init1541694746283],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -48,6 +48,16 @@ createConnection({
     .createQueryBuilder()
     .delete()
     .from(User)
+    .execute();
+  await connection
+    .createQueryBuilder()
+    .delete()
+    .from("bookmarks")
+    .execute();
+  await connection
+    .createQueryBuilder()
+    .delete()
+    .from(Application)
     .execute();
 
   const exampleOrgs = ["Organization 1", "Organization 2", "Organization 3"];

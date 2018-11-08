@@ -39,8 +39,4 @@ export interface Application {
   job: Job;
 }
 
-export enum ApplicationState {
-  PENDING,
-  DECLINED,
-  APPROVED
-}
+type ApplicationState = "PENDING" | "DECLINED" | "APPROVED";

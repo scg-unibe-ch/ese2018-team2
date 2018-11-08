@@ -3,6 +3,7 @@ import { Application } from "../entity/Application";
 import Utils from "./Utils";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
+import ApplicationState from "../entity/ApplicationState";
 
 export class ApplicationRepository {
   private connection: Connection;
@@ -19,24 +20,32 @@ export class ApplicationRepository {
 
   getApplications(args: any, session: Express.Session): Promise<Application[]> {
     Utils.enforceAuth(session);
-    if (args.id) {
-      return this.applications.findByIds([args.id]);
-    }
 
-    return this.applications.find();
+    return this.applications
+      .createQueryBuilder("applications")
+      .leftJoinAndSelect("applications.job", "jobs")
+      .leftJoinAndSelect("applications.user", "users")
+      .getMany();
   }
 
   async apply(jobId: string, session: Express.Session): Promise<any> {
     Utils.enforceAuth(session);
-    const newApplication = new Application();
-    newApplication.job = await this.jobs.findOneOrFail(jobId);
-    newApplication.user = await this.users.findOneOrFail(session.user.id);
-    await this.applications.insert(newApplication);
+    const application = new Application();
+    application.job = await this.jobs.findOneOrFail(jobId);
+    application.user = await this.users.findOneOrFail(session.user.id);
+    await this.applications.insert(application);
+    console.log(application);
     return true;
   }
 
   async approve(applicationId: string, session: Express.Session): Promise<any> {
     Utils.enforceAuth(session);
+
+    await this.applications.update(
+      { id: applicationId },
+      { state: ApplicationState.APPROVED }
+    );
+
     return true;
   }
 }
