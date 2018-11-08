@@ -54,7 +54,7 @@ export class ApplicationRepository {
 
     await this.applications.update(
       { id: applicationId },
-      { state: ApplicationState.DECLINED }
+      { state: ApplicationState.REJECTED }
     );
 
     return true;

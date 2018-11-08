@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Init1541694746283 implements MigrationInterface {
+export class Init1541716854454 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TABLE "organizations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, CONSTRAINT "PK_6b031fcd0863e3f6b44230163f9" PRIMARY KEY ("id"))`
@@ -12,7 +12,7 @@ export class Init1541694746283 implements MigrationInterface {
       `CREATE TABLE "jobs" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" text NOT NULL, "description" text NOT NULL, "salary" float NOT NULL, "start" date NOT NULL, "end" TIMESTAMP, "organizationId" uuid, CONSTRAINT "PK_cf0a6c42b72fcc7f7c237def345" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
-      `CREATE TYPE "applications_state_enum" AS ENUM('PENDING', 'DECLINED', 'APPROVED')`
+      `CREATE TYPE "applications_state_enum" AS ENUM('PENDING', 'REJECTED', 'APPROVED')`
     );
     await queryRunner.query(
       `CREATE TABLE "applications" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "state" "applications_state_enum" NOT NULL DEFAULT 'PENDING', "userId" uuid, "jobId" uuid, CONSTRAINT "PK_938c0a27255637bde919591888f" PRIMARY KEY ("id"))`

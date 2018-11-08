@@ -30,7 +30,7 @@ type Application {
 
 enum ApplicationState {
   PENDING
-  DECLINED
+  REJECTED
   APPROVED
 }
 
