@@ -4,7 +4,7 @@ type User {
   firstname: String!
   lastname: String!
   phone: String
-  bookmarkedJobs: [Job]
+  bookmarkedJobs: [Job]!
 }
 
 type Organization {
@@ -65,5 +65,5 @@ type Query {
 
   me: User!
 
-  applications(applicationId: String): [Application]
+  applications(applicationId: String): [Application]!
 }
