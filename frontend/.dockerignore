@@ -1,5 +1,4 @@
-*
-!components
-!pages
-!package.json
-!yarn.lock
+node_modules
+.next
+__generated__
+nodemon.json
