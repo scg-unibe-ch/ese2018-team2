@@ -4,6 +4,7 @@ import Utils from "./Utils";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
 import ApplicationState from "../entity/ApplicationState";
+import enforceAuth from "./Utils";
 
 export class ApplicationRepository {
   private connection: Connection;
@@ -19,7 +20,7 @@ export class ApplicationRepository {
   }
 
   getApplications(args: any, session: Express.Session): Promise<Application[]> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
 
     return this.applications
       .createQueryBuilder("applications")
@@ -29,7 +30,8 @@ export class ApplicationRepository {
   }
 
   async apply(jobId: string, session: Express.Session): Promise<any> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
+
     const application = new Application();
     application.job = await this.jobs.findOneOrFail(jobId);
     application.user = await this.users.findOneOrFail(session.user.id);
@@ -39,7 +41,7 @@ export class ApplicationRepository {
   }
 
   async approve(applicationId: string, session: Express.Session): Promise<any> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
 
     await this.applications.update(
       { id: applicationId },
@@ -50,7 +52,7 @@ export class ApplicationRepository {
   }
 
   async reject(applicationId: string, session: Express.Session): Promise<any> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
 
     await this.applications.update(
       { id: applicationId },

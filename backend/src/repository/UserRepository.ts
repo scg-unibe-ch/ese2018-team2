@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { User } from "../entity/User";
 import { Job } from "../entity/Job";
 import Utils from "./Utils";
+import enforceAuth from "./Utils";
 
 export class UserRepository {
   private users: Repository<User>;
@@ -30,12 +31,12 @@ export class UserRepository {
   }
 
   async getMe(session: Express.Session) {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
     return this.users.findOneOrFail(session.user.id);
   }
 
   async addBookmark(jobId: string, session: Express.Session): Promise<any> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
 
     await getConnection()
       .createQueryBuilder()
@@ -47,7 +48,7 @@ export class UserRepository {
   }
 
   async removeBookmark(jobId: string, session: Express.Session): Promise<any> {
-    Utils.enforceAuth(session);
+    enforceAuth(session);
 
     await getConnection()
       .createQueryBuilder()
