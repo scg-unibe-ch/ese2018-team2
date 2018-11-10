@@ -32,7 +32,7 @@ export class JobApplicationRepository {
       .getMany();
   }
 
-  async apply(jobId: string, session: Express.Session): Promise<any> {
+  async applyForJob(jobId: string, session: Express.Session): Promise<any> {
     enforceAuth(session);
 
     const application = new JobApplication();
@@ -43,7 +43,10 @@ export class JobApplicationRepository {
     return true;
   }
 
-  async approve(applicationId: string, session: Express.Session): Promise<any> {
+  async approveJobApplication(
+    applicationId: string,
+    session: Express.Session
+  ): Promise<any> {
     enforceAuth(session);
 
     await this.applications.update(
@@ -54,7 +57,10 @@ export class JobApplicationRepository {
     return true;
   }
 
-  async reject(applicationId: string, session: Express.Session): Promise<any> {
+  async rejectJobApplication(
+    applicationId: string,
+    session: Express.Session
+  ): Promise<any> {
     enforceAuth(session);
 
     await this.applications.update(

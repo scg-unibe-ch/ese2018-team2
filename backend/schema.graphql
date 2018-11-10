@@ -51,9 +51,9 @@ type Mutation {
   addBookmark(jobId: String!): Boolean!
   removeBookmark(jobId: String!): Boolean!
 
-  apply(jobId: String!): Boolean!
-  approve(applicationId: String!): Boolean!
-  reject(applicationId: String!): Boolean!
+  applyForJob(jobId: String!): Boolean!
+  approveJobApplication(applicationId: String!): Boolean!
+  rejectJobApplication(applicationId: String!): Boolean!
 
   createOrganization(name: String!): Organization!
 }

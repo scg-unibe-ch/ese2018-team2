@@ -7,9 +7,9 @@ import logout from "./logout";
 import updateJob from "./updateJob";
 import addBookmark from "./addBookmark";
 import removeBookmark from "./removeBookmark";
-import approve from "./approve";
-import apply from "./apply";
-import reject from "./reject";
+import applyForJob from "./applyForJob";
+import approveJobApplication from "./approveJobApplication";
+import rejectJobApplication from "./rejectJobApplication";
 
 export const Mutation: MutationResolvers.Type = {
   createJob,
@@ -20,9 +20,9 @@ export const Mutation: MutationResolvers.Type = {
   logout,
   addBookmark,
   removeBookmark,
-  apply,
-  approve,
-  reject
+  applyForJob,
+  approveJobApplication,
+  rejectJobApplication
 };
 
 export default Mutation;
