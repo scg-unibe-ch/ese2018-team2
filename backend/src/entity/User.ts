@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Job } from "./Job";
-import { Application } from "./Application";
+import { JobApplication } from "./JobApplication";
 
 @Entity("users")
 export class User {
@@ -35,6 +35,6 @@ export class User {
   })
   bookmarkedJobs: Promise<Job[]>;
 
-  @OneToMany(type => Application, application => application.user)
-  applications: Promise<Application[]>;
+  @OneToMany(type => JobApplication, application => application.user)
+  applications: Promise<JobApplication[]>;
 }

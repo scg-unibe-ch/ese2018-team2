@@ -6,20 +6,20 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Job } from "./Job";
-import ApplicationState from "./ApplicationState";
+import JobApplicationState from "./JobApplicationState";
 import { User } from "./User";
 
 @Entity("applications")
-export class Application {
+export class JobApplication {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column({
     type: "enum",
-    enum: ApplicationState,
-    default: ApplicationState.PENDING
+    enum: JobApplicationState,
+    default: JobApplicationState.PENDING
   })
-  state: ApplicationState;
+  state: JobApplicationState;
 
   @ManyToOne(type => User)
   @JoinColumn()

@@ -1,13 +1,13 @@
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import { UserRepository } from "./repository/UserRepository";
-import { ApplicationRepository } from "./repository/ApplicationRepository";
+import { JobApplicationRepository } from "./repository/JobApplicationRepository";
 
 export interface Context {
   jobRepository: JobRepository;
   organizationRepository: OrganizationRepository;
   userRepository: UserRepository;
-  applicationRepository: ApplicationRepository;
+  applicationRepository: JobApplicationRepository;
   session?: Express.Session;
 }
 
@@ -32,11 +32,11 @@ export interface User {
   phone: string;
 }
 
-export interface Application {
+export interface JobApplication {
   id: string;
-  state: ApplicationState;
+  state: JobApplicationState;
   user: User;
   job: Job;
 }
 
-type ApplicationState = "PENDING" | "REJECTED" | "APPROVED";
+type JobApplicationState = "PENDING" | "REJECTED" | "APPROVED";

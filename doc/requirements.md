@@ -35,4 +35,4 @@
 * High availability
 * Easy to use UI
 * Appealing UI
-* Fast Application
+* Fast JobApplication

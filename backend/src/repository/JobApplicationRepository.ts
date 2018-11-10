@@ -1,25 +1,28 @@
 import { Connection, Repository } from "typeorm";
-import { Application } from "../entity/Application";
+import { JobApplication } from "../entity/JobApplication";
 import Utils from "./Utils";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
-import ApplicationState from "../entity/ApplicationState";
+import JobApplicationState from "../entity/JobApplicationState";
 import enforceAuth from "./Utils";
 
-export class ApplicationRepository {
+export class JobApplicationRepository {
   private connection: Connection;
-  private applications: Repository<Application>;
+  private applications: Repository<JobApplication>;
   private jobs: Repository<Job>;
   private users: Repository<User>;
 
   constructor(connection: Connection) {
     this.connection = connection;
-    this.applications = connection.getRepository(Application);
+    this.applications = connection.getRepository(JobApplication);
     this.jobs = connection.getRepository(Job);
     this.users = connection.getRepository(User);
   }
 
-  getApplications(args: any, session: Express.Session): Promise<Application[]> {
+  getApplications(
+    args: any,
+    session: Express.Session
+  ): Promise<JobApplication[]> {
     enforceAuth(session);
 
     return this.applications
@@ -32,7 +35,7 @@ export class ApplicationRepository {
   async apply(jobId: string, session: Express.Session): Promise<any> {
     enforceAuth(session);
 
-    const application = new Application();
+    const application = new JobApplication();
     application.job = await this.jobs.findOneOrFail(jobId);
     application.user = await this.users.findOneOrFail(session.user.id);
     await this.applications.insert(application);
@@ -45,7 +48,7 @@ export class ApplicationRepository {
 
     await this.applications.update(
       { id: applicationId },
-      { state: ApplicationState.APPROVED }
+      { state: JobApplicationState.APPROVED }
     );
 
     return true;
@@ -56,7 +59,7 @@ export class ApplicationRepository {
 
     await this.applications.update(
       { id: applicationId },
-      { state: ApplicationState.REJECTED }
+      { state: JobApplicationState.REJECTED }
     );
 
     return true;

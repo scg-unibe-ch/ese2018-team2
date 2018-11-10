@@ -15,16 +15,16 @@ import config from "./config";
 import { Role } from "./entity/Role";
 import session from "express-session";
 import { UserRepository } from "./repository/UserRepository";
-import { Application } from "./entity/Application";
-import { ApplicationRepository } from "./repository/ApplicationRepository";
-import { Init1541716854454 } from "./migration/1541716854454-Init";
+import { JobApplication } from "./entity/JobApplication";
+import { JobApplicationRepository } from "./repository/JobApplicationRepository";
+import { Init1541850283599 } from "./migration/1541850283599-Init";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User, Role, Application],
-  migrations: [Init1541716854454],
+  entities: [Job, Organization, User, Role, JobApplication],
+  migrations: [Init1541850283599],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -33,7 +33,7 @@ createConnection({
   const jobRepository = new JobRepository(connection);
   const organizationRepository = new OrganizationRepository(connection);
   const userRepository = new UserRepository(connection);
-  const applicationRepository = new ApplicationRepository(connection);
+  const applicationRepository = new JobApplicationRepository(connection);
 
   // SEED TODO env-variable for seeding
   await connection
@@ -59,7 +59,7 @@ createConnection({
   await connection
     .createQueryBuilder()
     .delete()
-    .from(Application)
+    .from(JobApplication)
     .execute();
 
   const exampleOrgs = ["Organization 1", "Organization 2", "Organization 3"];

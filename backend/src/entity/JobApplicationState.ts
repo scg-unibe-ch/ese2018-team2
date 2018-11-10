@@ -1,7 +1,7 @@
-export enum ApplicationState {
+export enum JobApplicationState {
   PENDING = "PENDING",
   REJECTED = "REJECTED",
   APPROVED = "APPROVED"
 }
 
-export default ApplicationState;
+export default JobApplicationState;

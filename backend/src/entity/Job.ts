@@ -10,7 +10,7 @@ import {
 import { Organization } from "./Organization";
 import { Role } from "./Role";
 import { User } from "./User";
-import { Application } from "./Application";
+import { JobApplication } from "./JobApplication";
 
 @Entity("jobs")
 export class Job {
@@ -43,6 +43,6 @@ export class Job {
   @ManyToMany(type => User, user => user.bookmarkedJobs)
   usersBookmarked: Promise<User[]>;
 
-  @OneToMany(type => Application, application => application.job)
-  applications: Promise<Application[]>;
+  @OneToMany(type => JobApplication, application => application.job)
+  applications: Promise<JobApplication[]>;
 }

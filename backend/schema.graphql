@@ -21,14 +21,14 @@ type Job {
   usersBookmarked: [User]
 }
 
-type Application {
+type JobApplication {
   id: ID!
-  state: ApplicationState!
+  state: JobApplicationState!
   user: User!
   job: Job!
 }
 
-enum ApplicationState {
+enum JobApplicationState {
   PENDING
   REJECTED
   APPROVED
@@ -65,5 +65,5 @@ type Query {
 
   me: User!
 
-  applications(applicationId: String): [Application]!
+  applications(applicationId: String): [JobApplication]!
 }
