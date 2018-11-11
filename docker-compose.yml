@@ -15,3 +15,14 @@ services:
       - "4000:4000"
     environment:
       - DATABASE_URL=postgres://postgres@postgres/postgres
+  frontend:
+    container_name: "Frontend"
+    links:
+      - backend
+    build:
+      dockerfile: Dockerfile
+      context: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

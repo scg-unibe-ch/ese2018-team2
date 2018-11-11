@@ -18,11 +18,11 @@ Ensure the following tools are installed:
 * [Docker](https://www.docker.com)
 * [Docker Compose](https://docs.docker.com/compose/)
 
-To run the project use `docker-compose up -d`.
+To run this project use `docker-compose build` then `docker-compose up -d`.
 
 After docker-compose finished you can browse the following urls:
 
-* ~~[front end: http://localhost:3000](http://localhost:3000)~~ (Currently not available)
+* [front end: http://localhost:3000](http://localhost:3000)
 * [back end: http://localhost:4000](http://localhost:4000)
 
 The PostgreSQL instance runs on *localhost:5432*.
