@@ -37,3 +37,5 @@ This project uses a number of different technologies. Most prominent are:
 * [Apollo Client](https://www.apollographql.com/docs/react/): A GraphQL client which can be used with React. React components are connected with the GraphQL-API with this library.
 * [Next.js](https://nextjs.org): A React framework for server side rendered pages. The front end is based on Next.js.
 * [Docker](https://www.docker.com): To encapsulate front end, back end and make the developer experience a bit nicer.
+* [PostgreSQL](https://www.postgresql.org): Used as the main data store.
+* [redis](https://redis.io): Used to store sessions.

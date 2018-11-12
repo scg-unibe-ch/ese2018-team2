@@ -1,5 +1,9 @@
 version: '3'
 services:
+  redis:
+    image: "redis:5.0.1-alpine"
+    ports:
+      - "6379:6379"
   postgres:
     container_name: "PostgreSQL-database"
     image: "postgres:10.5-alpine"
@@ -9,12 +13,14 @@ services:
     container_name: "Backend"
     links:
       - postgres
+      - redis
     build:
       context: backend
     ports:
       - "4000:4000"
     environment:
       - DATABASE_URL=postgres://postgres@postgres/postgres
+      - REDIS_URL=redis://redis:6379
   frontend:
     container_name: "Frontend"
     links:
