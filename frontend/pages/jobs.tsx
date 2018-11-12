@@ -1,9 +1,16 @@
-import {ApolloError} from "apollo-boost";
+import { ApolloError } from "apollo-boost";
 import gql from "graphql-tag";
 import React from "react";
-import {Query} from "react-apollo";
+import { Query } from "react-apollo";
 import "semantic-ui-css/semantic.min.css";
-import {Button, Container, Header, Item, Segment} from "semantic-ui-react";
+import {
+  Container,
+  Header,
+  Item,
+  Segment,
+  Button,
+  Popup
+} from "semantic-ui-react";
 import JobItem from "../components/joblist/JobItem";
 import NavBar from "../components/layout/header/NavBar";
 import Link from "next/link";
@@ -14,7 +21,7 @@ export const GET_ALL_JOBS = gql`
       id
       title
       description
-      organization {  
+      organization {
         id
         name
       }

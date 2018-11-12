@@ -1,15 +1,16 @@
 import * as React from "react";
 import NavBar from "../components/layout/header/NavBar";
 import "semantic-ui-css/semantic.min.css";
-import {Container} from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 import withAuthorization from "../components/Auth/withAuthorization";
-import StudentDashboard from "../components/student/dashboard/StudentDashboard";
+import Me from "../components/Auth/Me";
 
 const page = () => (
   <React.Fragment>
     <NavBar />
     <Container>
-      <StudentDashboard/>
+      <Header as={"h1"}>Dashboard</Header>
+      <Me />
     </Container>
   </React.Fragment>
 );

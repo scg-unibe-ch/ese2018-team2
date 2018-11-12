@@ -9,7 +9,7 @@ import { Job } from "./Job";
 import JobApplicationState from "./JobApplicationState";
 import { User } from "./User";
 
-@Entity("applications")
+@Entity("jobApplications")
 export class JobApplication {
   @PrimaryGeneratedColumn("uuid")
   id: string;

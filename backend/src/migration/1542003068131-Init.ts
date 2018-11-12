@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Init1541851040206 implements MigrationInterface {
+export class Init1542003068131 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TABLE "organizations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, CONSTRAINT "PK_6b031fcd0863e3f6b44230163f9" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
-      `CREATE TYPE "applications_state_enum" AS ENUM('PENDING', 'REJECTED', 'APPROVED')`
+      `CREATE TYPE "jobApplications_state_enum" AS ENUM('PENDING', 'REJECTED', 'APPROVED')`
     );
     await queryRunner.query(
-      `CREATE TABLE "applications" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "state" "applications_state_enum" NOT NULL DEFAULT 'PENDING', "userId" uuid, "jobId" uuid, CONSTRAINT "PK_938c0a27255637bde919591888f" PRIMARY KEY ("id"))`
+      `CREATE TABLE "jobApplications" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "state" "jobApplications_state_enum" NOT NULL DEFAULT 'PENDING', "userId" uuid, "jobId" uuid, CONSTRAINT "PK_7de019fff1d3968233e5d354dbe" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
       `CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "firstname" text NOT NULL, "lastname" text NOT NULL, "phone" text NOT NULL, "email" text NOT NULL, "password" text NOT NULL, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`
@@ -24,10 +24,10 @@ export class Init1541851040206 implements MigrationInterface {
       `CREATE TABLE "bookmarks" ("usersId" uuid NOT NULL, "jobsId" uuid NOT NULL, CONSTRAINT "PK_59b0563d7b6f7758e9f369bb324" PRIMARY KEY ("usersId", "jobsId"))`
     );
     await queryRunner.query(
-      `ALTER TABLE "applications" ADD CONSTRAINT "FK_90ad8bec24861de0180f638b9cc" FOREIGN KEY ("userId") REFERENCES "users"("id")`
+      `ALTER TABLE "jobApplications" ADD CONSTRAINT "FK_14cbb9979268be97fbbcbcc156d" FOREIGN KEY ("userId") REFERENCES "users"("id")`
     );
     await queryRunner.query(
-      `ALTER TABLE "applications" ADD CONSTRAINT "FK_f6ebb8bc5061068e4dd97df3c77" FOREIGN KEY ("jobId") REFERENCES "jobs"("id")`
+      `ALTER TABLE "jobApplications" ADD CONSTRAINT "FK_4fd9e5d5ddcf14514eb36e7d44e" FOREIGN KEY ("jobId") REFERENCES "jobs"("id")`
     );
     await queryRunner.query(
       `ALTER TABLE "jobs" ADD CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9" FOREIGN KEY ("organizationId") REFERENCES "organizations"("id")`
@@ -51,17 +51,17 @@ export class Init1541851040206 implements MigrationInterface {
       `ALTER TABLE "jobs" DROP CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9"`
     );
     await queryRunner.query(
-      `ALTER TABLE "applications" DROP CONSTRAINT "FK_f6ebb8bc5061068e4dd97df3c77"`
+      `ALTER TABLE "jobApplications" DROP CONSTRAINT "FK_4fd9e5d5ddcf14514eb36e7d44e"`
     );
     await queryRunner.query(
-      `ALTER TABLE "applications" DROP CONSTRAINT "FK_90ad8bec24861de0180f638b9cc"`
+      `ALTER TABLE "jobApplications" DROP CONSTRAINT "FK_14cbb9979268be97fbbcbcc156d"`
     );
     await queryRunner.query(`DROP TABLE "bookmarks"`);
     await queryRunner.query(`DROP TABLE "roles"`);
     await queryRunner.query(`DROP TABLE "jobs"`);
     await queryRunner.query(`DROP TABLE "users"`);
-    await queryRunner.query(`DROP TABLE "applications"`);
-    await queryRunner.query(`DROP TYPE "applications_state_enum"`);
+    await queryRunner.query(`DROP TABLE "jobApplications"`);
+    await queryRunner.query(`DROP TYPE "jobApplications_state_enum"`);
     await queryRunner.query(`DROP TABLE "organizations"`);
   }
 }

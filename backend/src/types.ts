@@ -39,4 +39,4 @@ export interface JobApplication {
   job: Job;
 }
 
-type JobApplicationState = "PENDING" | "REJECTED" | "APPROVED";
+export type JobApplicationState = "PENDING" | "REJECTED" | "APPROVED";
