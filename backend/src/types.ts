@@ -30,6 +30,7 @@ export interface User {
   lastname: string;
   email: string;
   phone: string;
+  admin: boolean;
 }
 
 export interface JobApplication {

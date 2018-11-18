@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import { Job } from "./Job";
 import { JobApplication } from "./JobApplication";
+import { default_type } from "mime";
 
 @Entity("users")
 export class User {
@@ -36,6 +37,9 @@ export class User {
   @Column("bigint")
   @Generated("increment")
   sequenceNumber: number;
+
+  @Column({ type: "boolean", default: false })
+  admin: boolean;
 
   @CreateDateColumn({ type: "timestamp with time zone" })
   createdAt: Date;

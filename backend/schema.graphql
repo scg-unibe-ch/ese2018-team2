@@ -5,6 +5,7 @@ type User {
   lastname: String!
   phone: String
   bookmarkedJobs: [Job]!
+  admin: Boolean!
 }
 
 type Organization {
