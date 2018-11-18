@@ -4,4 +4,15 @@ export function enforceAuth(session: Express.Session) {
   }
 }
 
+/**
+ * Returns either null or the id of a user.
+ * @param session Provided session
+ */
+export function getUserId(session: Express.Session): string | null {
+  if (!session.user) {
+    return null;
+  }
+  return session.user.id
+}
+
 export default enforceAuth;

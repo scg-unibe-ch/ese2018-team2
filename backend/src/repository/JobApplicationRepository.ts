@@ -1,6 +1,6 @@
 import { Connection, Repository } from "typeorm";
 import { JobApplication } from "../entity/JobApplication";
-import Utils from "./Utils";
+import Utils, { getUserId } from "./Utils";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
 import JobApplicationState from "../entity/JobApplicationState";
@@ -69,5 +69,26 @@ export class JobApplicationRepository {
     );
 
     return true;
+  }
+
+  /**
+   * Check if current user already applied to a specific job
+   * @param jobId Job to check
+   * @param session 
+   */
+  async isApplied(jobId: string, session: Express.Session): Promise<boolean> {
+    // If userId is not defined, immediatly return false
+    // This only works, when
+    if (!session) {
+      return false;
+    }
+
+    const result = await this.applications
+      .createQueryBuilder("jobApplications")
+      .where('"userId" = :userId', { userId: getUserId(session) })
+      .andWhere('"jobId" = :jobId', { jobId })
+      .getOne();
+
+    return result != null;
   }
 }
