@@ -3,6 +3,7 @@ import { Form, Button, Confirm } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import JobDeleteButton from "./JobDeleteButton";
+import ApplyButton from "../../student/ApplyButton";
 
 interface JobFormProps {
   data: {
@@ -55,6 +56,7 @@ class JobFormComponent extends React.Component<JobFormProps> {
             Save
           </Button>
           <JobDeleteButton job={data} />
+          <ApplyButton jobId={data.id}/>
         </Form>
       </React.Fragment>
     );
