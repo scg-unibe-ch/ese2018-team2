@@ -5,7 +5,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
-  OneToMany
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn,
+  Generated
 } from "typeorm";
 import { Organization } from "./Organization";
 import { Role } from "./Role";
@@ -30,6 +34,19 @@ export class Job {
 
   @Column("float")
   salary: number;
+
+  @Column("bigint")
+  @Generated("increment")
+  sequenceNumber: number;
+
+  @CreateDateColumn({ type: "timestamp with time zone" })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: "timestamp with time zone" })
+  updatedAt: Date;
+
+  @VersionColumn()
+  version: number;
 
   @Column("date")
   start: Date;

@@ -3,7 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn,
+  Generated
 } from "typeorm";
 import { Job } from "./Job";
 import JobApplicationState from "./JobApplicationState";
@@ -20,6 +24,19 @@ export class JobApplication {
     default: JobApplicationState.PENDING
   })
   state: JobApplicationState;
+
+  @Column("bigint")
+  @Generated("increment")
+  sequenceNumber: number;
+
+  @CreateDateColumn({ type: "timestamp with time zone" })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: "timestamp with time zone" })
+  updatedAt: Date;
+
+  @VersionColumn()
+  version: number;
 
   @ManyToOne(type => User)
   @JoinColumn()
