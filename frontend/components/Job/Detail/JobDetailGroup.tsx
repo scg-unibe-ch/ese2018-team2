@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { Container, Dimmer, Header, Loader, Segment } from "semantic-ui-react";
 import JobForm from "./JobForm";
+import * as React from "react";
 
 interface JobDetailGroupComponentProps {
   loading: boolean;

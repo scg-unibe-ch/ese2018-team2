@@ -23,59 +23,62 @@ export const GET_ALL_JOBS = gql`
 `;
 
 interface AllJobs {
-  jobs: {
-    id: string;
-    title: string;
-    description: string;
-    organization: { id: string; name };
-  }[];
+    jobs: {
+        id: string;
+        title: string;
+        description: string;
+        organization: { id: string; name };
+    }[];
 }
 
 interface JobPageProps {
-  loading: boolean;
-  error: ApolloError;
-  data: AllJobs;
+    loading: boolean;
+    error: ApolloError;
+    data: AllJobs;
 }
 
-export const JobPage: React.SFC<JobPageProps> = ({ loading, error, data }) => {
-  // TODO: handle loading
-  if (loading) {
-    return <p>Loading</p>;
-  }
+export const JobPage: React.SFC<JobPageProps> = ({loading, error, data}) => {
+    // TODO: handle loading
+    if (loading) {
+        return <p>Loading</p>;
+    }
 
-  // TODO: handle error
-  if (error) {
-    return <p>error.message</p>;
-  }
+    // TODO: handle error
+    if (error) {
 
-  return (
-    <React.Fragment>
-      <NavBar />
-      <Container>
-        <Segment>
-          <Header as={"h1"} dividing>
-            Jobs
-          </Header>
+        return <p>error.message</p>;
+    }
 
-          <Link href={"/jobs/create"} passHref>
-            <Button icon={"plus"} as={"a"} />
-          </Link>
+    return (
+        <React.Fragment>
+            <NavBar/>
+            <Container>
+                <Segment>
+                    <Header as={"h1"} dividing>
+                        Jobs
+                    </Header>
 
-          <Item.Group divided>
-            {data.jobs.map(job => (
-              <JobItem key={job.id} job={job} />
-            ))}
-          </Item.Group>
-        </Segment>
-      </Container>
-    </React.Fragment>
-  );
+                    <Link href={"/jobs/create"} passHref>
+                        <Button icon={"plus"} as={"a"}/>
+                    </Link>
+
+                    <Item.Group divided>
+                        {data.jobs.map(job => (
+                            <JobItem key={job.id} job={job}/>
+                        ))}
+                    </Item.Group>
+                </Segment>
+            </Container>
+        </React.Fragment>
+    );
 };
 
 export default () => (
-  <Query query={GET_ALL_JOBS}>
-    {({ loading, error, data }) => (
-      <JobPage data={data} error={error} loading={loading} />
-    )}
-  </Query>
+    <React.Fragment>
+        <Query query={GET_ALL_JOBS}>
+            {({loading, error, data}) => (
+                <JobPage data={data} error={error} loading={loading}/>
+            )}
+        </Query>
+    </React.Fragment>
 );

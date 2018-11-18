@@ -25,6 +25,18 @@ export class JobApplicationRepository {
   ): Promise<JobApplication[]> {
     enforceAuth(session);
 
+    console.log(
+      "" + "" + "ags.applicationId: " + args.applicationId + "" + "" + ""
+    );
+    if (args.applicationId) {
+      return this.applications
+        .createQueryBuilder("applications")
+        .where("applications.id = :id", { id: args.applicationId })
+        .leftJoinAndSelect("applications.job", "jobs")
+        .leftJoinAndSelect("applications.user", "users")
+        .getMany();
+    }
+
     return this.applications
       .createQueryBuilder("applications")
       .leftJoinAndSelect("applications.job", "jobs")
