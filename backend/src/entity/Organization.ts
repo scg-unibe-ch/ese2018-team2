@@ -6,9 +6,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   VersionColumn,
-  Generated
+  Generated,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { Job } from "./Job";
+import { User } from "./User";
 
 @Entity("organizations")
 export class Organization {
@@ -30,6 +33,10 @@ export class Organization {
 
   @VersionColumn()
   version: number;
+
+  @ManyToMany(type => User, user => user.employer)
+  @JoinTable({ name: "organisation_staff" })
+  employee: Promise<User[]>;
 
   @OneToMany(type => Job, job => job.organization)
   jobs: Promise<Job[]>;

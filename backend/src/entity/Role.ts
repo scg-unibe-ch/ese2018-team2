@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, Generated } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Generated,
+  ManyToMany
+} from "typeorm";
+import { User } from "./User";
 
 @Entity("roles")
 export class Role {
@@ -14,4 +21,7 @@ export class Role {
 
   @Column("text")
   description: string;
+
+  @ManyToMany(type => User, user => user.roles)
+  matchingStudents: Promise<User[]>;
 }

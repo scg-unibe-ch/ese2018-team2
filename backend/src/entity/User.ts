@@ -1,17 +1,20 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
+  Generated,
   JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
-  VersionColumn,
-  Generated
+  VersionColumn
 } from "typeorm";
 import { Job } from "./Job";
 import { JobApplication } from "./JobApplication";
+import { Organization } from "./Organization";
+import { type } from "os";
+import { Role } from "./Role";
 
 @Entity("users")
 export class User {
@@ -37,6 +40,9 @@ export class User {
   @Generated("increment")
   sequenceNumber: number;
 
+  @Column({ type: "boolean", default: false })
+  siteAdmin: boolean;
+
   @CreateDateColumn({ type: "timestamp with time zone" })
   createdAt: Date;
 
@@ -54,4 +60,11 @@ export class User {
 
   @OneToMany(type => JobApplication, application => application.user)
   applications: Promise<JobApplication[]>;
+
+  @ManyToMany(type => Organization, organisation => organisation.employee)
+  employer: Promise<Organization[]>;
+
+  @ManyToMany(type => Role, role => role.matchingStudents)
+  @JoinTable({ name: "user_roles" })
+  roles: Promise<Role[]>;
 }

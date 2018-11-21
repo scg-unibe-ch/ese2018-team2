@@ -5,12 +5,15 @@ type User {
   lastname: String!
   phone: String
   bookmarkedJobs: [Job]!
+  employer: [Organization]
+  siteAdmin: Boolean!
 }
 
 type Organization {
   id: ID!
   name: String!
   jobs: [Job]!
+  employees: [User]!
 }
 
 type Job {
@@ -26,6 +29,12 @@ type JobApplication {
   state: JobApplicationState!
   user: User!
   job: Job!
+}
+
+type Role {
+  id: ID!
+  title: String!
+  description: String!
 }
 
 enum JobApplicationState {
@@ -56,6 +65,8 @@ type Mutation {
   rejectJobApplication(applicationId: String!): Boolean!
 
   createOrganization(name: String!): Organization!
+
+  createRole(title: String!, description: String!): Role!
 }
 
 type Query {
@@ -66,4 +77,6 @@ type Query {
   me: User!
 
   applications(applicationId: String): [JobApplication]!
+
+  roles(id: String, title: String): [Role]!
 }

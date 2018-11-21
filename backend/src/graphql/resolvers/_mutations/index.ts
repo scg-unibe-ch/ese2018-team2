@@ -10,12 +10,14 @@ import removeBookmark from "./removeBookmark";
 import applyForJob from "./applyForJob";
 import approveJobApplication from "./approveJobApplication";
 import rejectJobApplication from "./rejectJobApplication";
+import createRole from "./createRole";
 
 export const Mutation: MutationResolvers.Type = {
   createJob,
   updateJob,
   deleteJob,
   createOrganization,
+  createRole,
   login,
   logout,
   addBookmark,
