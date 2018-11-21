@@ -24,6 +24,19 @@ type Job {
   applied: Boolean!
 }
 
+type JobConnection {
+  nodes: [Job!]!
+  pageInfo: JobPageInfo!
+  totalCount: Int!
+}
+
+type JobPageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
 type JobApplication {
   id: ID!
   state: JobApplicationState!
@@ -31,16 +44,16 @@ type JobApplication {
   job: Job!
 }
 
-type Role {
-  id: ID!
-  title: String!
-  description: String!
-}
-
 enum JobApplicationState {
   PENDING
   REJECTED
   APPROVED
+}
+
+type Role {
+  id: ID!
+  title: String!
+  description: String!
 }
 
 input CreateJobInput {
@@ -70,7 +83,7 @@ type Mutation {
 }
 
 type Query {
-  jobs(id: String): [Job]!
+  jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
   organizations: [Organization]!
 

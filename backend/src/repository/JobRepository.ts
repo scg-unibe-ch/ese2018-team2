@@ -1,6 +1,7 @@
 import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
 import { Organization } from "../entity/Organization";
+import { JobConnection } from "src/types";
 
 export interface JobUpdateArgs {
   id: string;
@@ -20,12 +21,21 @@ export class JobRepository {
   }
 
   // TODO create interface for argument type
-  getJobs(args: any): Promise<Job[]> {
-    if (args.id) {
+  getJobs(first: number, last: number, after: string, before: string): JobConnection {
+    /*if (args.id) {
       return this.jobs.findByIds([args.id]);
-    }
+    }*/
 
-    return this.jobs.find();
+    return {
+      nodes: [],
+      pageInfo: {
+        endCursor: null,
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: null
+      },
+      totalCount: 0,
+    }
   }
 
   async createJob(args: any): Promise<Job> {
