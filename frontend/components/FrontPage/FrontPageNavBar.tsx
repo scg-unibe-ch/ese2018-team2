@@ -13,9 +13,8 @@ interface FrontPageNavBarState {
 
 class FrontPageNavBar extends React.Component<FrontPageNavBarProps, FrontPageNavBarState> {
 
-    state = { activeItem: 'students'};
+    state = {activeItem: 'students'};
 
-    handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
     render() {
         const {activeItem} = this.state;
@@ -32,9 +31,7 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps, FrontPageNav
                     <Grid.Column>
                         <Grid columns={2}>
                             <Grid.Column>
-                                    <Link href={"http://www.helargehadroncolliderdestroyedtheworldyet.com"}>
-                                        <Image centered src={"../static/logo_04.png"}/>
-                                    </Link>
+                                <Image centered src={"../static/logo_04.png"}/>
                             </Grid.Column>
                         </Grid>
                     </Grid.Column>
@@ -54,30 +51,30 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps, FrontPageNav
                 </Grid>
                 <Container>
                     <Menu pointing secondary widths={2}>
-                        <Menu.Item
-                            name='students'
-                            active={activeItem === 'students'}
-                            onClick={this.handleItemClick}
-                        >
-                            <Header as='h1' icon>
-                                <Icon name='student'/>
-                                For Students
-                                <Header.Subheader>Manage your account settings and set e-mail
-                                    preferences.</Header.Subheader>
-                            </Header>
-                        </Menu.Item>
-                        <Menu.Item
-                            name='business'
-                            active={activeItem === 'business'}
-                            onClick={this.handleItemClick}
-                        >
-                            <Header as='h1' icon>
-                                <Icon name='building'/>
-                                For Business
-                                <Header.Subheader>Manage your account settings and set e-mail
-                                    preferences.</Header.Subheader>
-                            </Header>
-                        </Menu.Item>
+                        <Link href={"/"}>
+                            <Menu.Item
+                                active={this.props.router.asPath === "/"}
+                            >
+                                <Header as='h1' icon>
+                                    <Icon name='student'/>
+                                    For Students
+                                    <Header.Subheader>Manage your account settings and set e-mail
+                                        preferences.</Header.Subheader>
+                                </Header>
+                            </Menu.Item>
+                        </Link>
+                        <Link href={"/business"}>
+                            <Menu.Item
+                                active={this.props.router.asPath === "/business"}
+                            >
+                                <Header as='h1' icon>
+                                    <Icon name='building'/>
+                                    For Business
+                                    <Header.Subheader>Manage your account settings and set e-mail
+                                        preferences.</Header.Subheader>
+                                </Header>
+                            </Menu.Item>
+                        </Link>
                     </Menu>
                 </Container>
             </React.Fragment>
