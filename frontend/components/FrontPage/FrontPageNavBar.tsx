@@ -32,9 +32,11 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps> {
                         <Menu secondary fluid stackable text>
                             <Menu.Menu position={"right"}>
                                 <Select defaultValue={languageOptions[0].text} options={languageOptions}/>
-                                <Menu.Item>
-                                    <Button>Log in</Button>
-                                </Menu.Item>
+                                <Link href={"/login"}>
+                                    <Menu.Item>
+                                        <Button>Log in</Button>
+                                    </Menu.Item>
+                                </Link>
                                 <Menu.Item>
                                     <Button>Register</Button>
                                 </Menu.Item>
