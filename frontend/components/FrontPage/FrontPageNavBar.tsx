@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Container, Grid, Header, Icon, Image, Menu, Segment, Select} from "semantic-ui-react";
+import {Button, Container, Grid, Header, Icon, Image, Menu, Select} from "semantic-ui-react";
 import {SingletonRouter, withRouter} from "next/router";
 import Link from "next/link";
 
@@ -7,17 +7,10 @@ interface FrontPageNavBarProps {
     router?: SingletonRouter;
 }
 
-interface FrontPageNavBarState {
-    activeItem: String;
-}
 
-class FrontPageNavBar extends React.Component<FrontPageNavBarProps, FrontPageNavBarState> {
-
-    state = {activeItem: 'students'};
-
+class FrontPageNavBar extends React.Component<FrontPageNavBarProps> {
 
     render() {
-        const {activeItem} = this.state;
 
         const languageOptions = [
             {key: 'gb', value: 'gb', flag: 'gb', text: 'English'},
@@ -78,8 +71,7 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps, FrontPageNav
                     </Menu>
                 </Container>
             </React.Fragment>
-        )
-            ;
+        );
     }
 }
 
