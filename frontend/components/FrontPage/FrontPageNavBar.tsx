@@ -4,7 +4,7 @@ import {SingletonRouter, withRouter} from "next/router";
 import Link from "next/link";
 
 interface FrontPageNavBarProps {
-    router?: SingletonRouter;
+    router: SingletonRouter;
 }
 
 
@@ -33,13 +33,9 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps> {
                             <Menu.Menu position={"right"}>
                                 <Select defaultValue={languageOptions[0].text} options={languageOptions}/>
                                 <Link href={"/login"}>
-                                    <Menu.Item>
-                                        <Button>Log in</Button>
-                                    </Menu.Item>
+                                    <Button>Log in</Button>
                                 </Link>
-                                <Menu.Item>
-                                    <Button>Register</Button>
-                                </Menu.Item>
+                                <Button>Register</Button>
                             </Menu.Menu>
                         </Menu>
                     </Grid.Column>
