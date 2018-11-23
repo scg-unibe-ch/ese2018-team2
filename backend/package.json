@@ -18,7 +18,7 @@
   },
   "scripts": {
     "postinstall": "yarn run schema:generate",
-    "dev": "concurrently -k \"nodemon dist/index.js\" \"tsc -w\" \"nodemon -e graphql --exec 'yarn run schema:generate'\"",
+    "dev": "concurrently -k \"nodemon dist/src/index.js\" \"tsc -w\" \"nodemon -e graphql --exec 'yarn run schema:generate'\"",
     "build": "yarn run schema:generate && tsc",
     "prettier": "prettier --write './**/*.{ts,json,graphql}'",
     "schema:generate": "graphqlgen",
