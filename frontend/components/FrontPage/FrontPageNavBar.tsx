@@ -40,12 +40,11 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps> {
                         </Menu>
                     </Grid.Column>
                 </Grid>
+
                 <Container>
                     <Menu pointing secondary widths={2}>
                         <Link href={"/"}>
-                            <Menu.Item
-                                active={this.props.router.asPath === "/"}
-                            >
+                            <Menu.Item active={this.props.router.asPath === "/"}>
                                 <Header as='h1' icon>
                                     <Icon name='student'/>
                                     For Students
@@ -55,9 +54,7 @@ class FrontPageNavBar extends React.Component<FrontPageNavBarProps> {
                             </Menu.Item>
                         </Link>
                         <Link href={"/business"}>
-                            <Menu.Item
-                                active={this.props.router.asPath === "/business"}
-                            >
+                            <Menu.Item active={this.props.router.asPath === "/business"}>
                                 <Header as='h1' icon>
                                     <Icon name='building'/>
                                     For Business

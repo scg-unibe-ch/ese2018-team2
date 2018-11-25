@@ -1,8 +1,7 @@
 import React from "react";
-import {Button, Dropdown, Image, Input, Menu} from "semantic-ui-react";
+import {Dropdown, Image, Input, Menu} from "semantic-ui-react";
 import {SingletonRouter, withRouter} from "next/router";
 import StudentActionsDropdown from "./StudentActionsDropdown";
-import Link from "next/link";
 
 
 interface UserNavBarProps {
@@ -29,22 +28,29 @@ const StudentNavBar: React.SFC<UserNavBarProps> = ({router}) => {
             </Menu.Item>
 
             <Menu.Item href={"/dashboard"} active={router.asPath === "/dashboard"}>
-                Home
+                Dashboard
             </Menu.Item>
 
             <Menu.Item href={"/jobs"} active={router.asPath === "/jobs"}>
                 Job Catalog
             </Menu.Item>
 
+            <Menu.Item href={"/dashboard"}>
+                My Shifts
+            </Menu.Item>
+
+            <Menu.Item href={"/dashboard"}>
+                Profile
+            </Menu.Item>
 
             <Menu.Menu position={"right"}>
                 <Menu.Item>
                     <Dropdown floating defaultValue={'gb'} options={languageOptions}/>
                 </Menu.Item>
-                <Menu.Item href={"/login"}>
-                    <Button>Log in</Button>
+
+                <Menu.Item>
+                    <StudentActionsDropdown/>
                 </Menu.Item>
-                <Menu.Item>Register</Menu.Item>
             </Menu.Menu>
         </Menu>
     );

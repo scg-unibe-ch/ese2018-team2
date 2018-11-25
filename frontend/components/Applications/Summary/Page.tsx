@@ -7,7 +7,7 @@ import ApplicationList from "../ApplicationList";
 export default withRouter(props => {
     return (
         <div>
-            <NavBar />
+            <FrontPageNavBar />
             <Container>
                 <ApplicationList/>
             </Container>

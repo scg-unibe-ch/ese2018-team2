@@ -1,11 +1,10 @@
 import {SingletonRouter} from "next/router";
 import * as React from "react";
-import {Card, Header, Loader, Segment} from "semantic-ui-react";
+import {Card, Header, Segment} from "semantic-ui-react";
 import {ApolloError} from "apollo-boost";
 import gql from "graphql-tag";
 import {Query} from "react-apollo";
 import StudentActivity from "./StudentActivity";
-import StudentJobCard from "../StudentJobCard";
 
 
 interface ActivitiesJobs {

@@ -5,8 +5,8 @@ import {Query} from "react-apollo";
 import "semantic-ui-css/semantic.min.css";
 import {Button, Container, Header, Item, Segment} from "semantic-ui-react";
 import JobItem from "../components/joblist/JobItem";
-import NavBar from "../components/layout/header/NavBar";
 import Link from "next/link";
+import FrontPageNavBar from "../components/FrontPage/FrontPageNavBar";
 
 export const GET_ALL_JOBS = gql`
   query AllJobs {
@@ -51,7 +51,7 @@ export const JobPage: React.SFC<JobPageProps> = ({loading, error, data}) => {
 
     return (
         <React.Fragment>
-            <NavBar/>
+            <FrontPageNavBar/>
             <Container>
                 <Segment>
                     <Header as={"h1"} dividing>
