@@ -15,12 +15,24 @@ done
 
 clear
 
+yarn;
+
+clear;
+
+yarn run clean;
+
+clear;
+
+yarn run build;
+
+clear;
+
 ./node_modules/.bin/ts-node node_modules/.bin/typeorm migration:run;
 
-clear
+clear;
 
-yarn seed
+yarn seed;
 
-clear
+clear;
 
-yarn dev
+yarn dev;
