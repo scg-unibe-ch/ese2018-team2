@@ -3,5 +3,5 @@ export default {
   firstname: "Yannik",
   lastname: "Dällenbach",
   phone: "+41 123 456 34 34",
-  siteAdmin: true
+  siteAdmin: false
 };

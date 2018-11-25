@@ -10,6 +10,7 @@ RUN yarn build
 FROM node:8.12.0-alpine AS release
 
 WORKDIR /app
+COPY --from=build /app/static ./static/
 COPY --from=build /app/package.json .
 COPY --from=build /app/yarn.lock .
 COPY --from=build /app/.next/ ./.next/

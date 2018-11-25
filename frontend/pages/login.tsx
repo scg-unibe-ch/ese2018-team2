@@ -1,18 +1,19 @@
 import React from "react";
+import "semantic-ui-css/semantic.min.css";
+import { Container } from "semantic-ui-react";
 import Login from "../components/Auth/Login";
-import {Image, Grid} from "semantic-ui-react";
+import NavBar from "../components/Frame/NavBar";
+import Router from "next/router";
 
 export default () => (
-    <React.Fragment>
-        <Grid columns={2}>
-            <Grid.Column>
-                <Grid columns={2}>
-                    <Grid.Column>
-                        <Image centered src={"../static/logo_04.png"}/>
-                    </Grid.Column>
-                </Grid>
-            </Grid.Column>
-        </Grid>
-        <Login/>
-    </React.Fragment>
-)
+  <React.Fragment>
+    <NavBar />
+    <Container>
+      <Login
+        handleSuccess={async () => {
+          await Router.replace("/");
+        }}
+      />
+    </Container>
+  </React.Fragment>
+);

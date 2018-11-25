@@ -7,6 +7,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <link rel="stylesheet" href="/_next/static/style.css" />
+          <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
         </Head>
         <body>
           <Main />
