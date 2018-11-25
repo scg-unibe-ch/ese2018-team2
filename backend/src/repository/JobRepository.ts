@@ -122,7 +122,7 @@ export class JobRepository {
 
     // check if cursor exists
     if (
-      (await this.jobs.findByIds([decodeCursor(after || before)])).length === 0
+      (before || after) && (await this.jobs.findByIds([decodeCursor(after || before)])).length === 0
     ) {
       return {
         nodes: result,
