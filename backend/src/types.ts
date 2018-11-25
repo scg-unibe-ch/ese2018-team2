@@ -26,6 +26,18 @@ export interface Job {
   organization: any;
 }
 
+export interface JobConnection {
+  nodes: Job[]
+  pageInfo: JobPageInfo
+  totalCount: number
+}
+export interface JobPageInfo {
+  endCursor: string | null
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+}
+
 export interface Role {
   id: string;
   title: string;

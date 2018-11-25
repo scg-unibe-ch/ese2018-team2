@@ -1,3 +1,4 @@
+import { JobConnection } from "src/types";
 import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
 import { Organization } from "../entity/Organization";
@@ -7,6 +8,16 @@ export interface JobUpdateArgs {
   title: string;
   description: string;
 }
+
+interface CursorOpts {
+  seq: number;
+  count: number;
+  edge: string;
+}
+
+const encodeCursor = (options: string) =>
+  Buffer.from(options).toString("base64");
+const decodeCursor = (src: string) => Buffer.from(src, "base64").toString();
 
 export class JobRepository {
   private connection: Connection;
@@ -20,12 +31,142 @@ export class JobRepository {
   }
 
   // TODO create interface for argument type
-  getJobs(args: any): Promise<Job[]> {
-    if (args.id) {
-      return this.jobs.findByIds([args.id]);
+  async getJobs(
+    first: number,
+    last: number,
+    after: string,
+    before: string
+  ): Promise<JobConnection> {
+    first = first || 10;
+
+    const pageSize = first || last || 10;
+
+    const getJobsAfter = async (job: string, howManyJobs: number) => {
+      if (howManyJobs < 0) {
+        throw new Error("first has to be positive");
+      }
+
+      const sequenceOfAfterEdge = (await this.jobs.findOne(job)).sequenceNumber;
+
+      return this.jobs
+        .createQueryBuilder("job")
+        .limit(howManyJobs)
+        .addOrderBy("job.sequenceNumber")
+        .where("job.sequenceNumber > :seq", { seq: sequenceOfAfterEdge })
+        .getMany();
+    };
+
+    const hasNextPage = async (job: string, howManyJobs: number) => {
+      if (howManyJobs < 0) {
+        throw new Error("first has to be positive");
+      }
+
+      const sequenceOfAfterEdge = (await this.jobs.findOne(job)).sequenceNumber;
+
+      return (
+        (await this.jobs
+          .createQueryBuilder("job")
+          .limit(howManyJobs)
+          .addOrderBy("job.sequenceNumber")
+          .where("job.sequenceNumber > :seq", { seq: sequenceOfAfterEdge })
+          .getCount()) > 0
+      );
+    };
+
+    const getJobsBefore = async (job: string, howManyJobs: number) => {
+      if (howManyJobs < 0) {
+        throw new Error("last has to be positive");
+      }
+
+      const sequenceOfBeforeEdge = (await this.jobs.findOne(job))
+        .sequenceNumber;
+
+      const allEdgesBefore = await this.jobs
+        .createQueryBuilder("job")
+        .addOrderBy("job.sequenceNumber")
+        .where("job.sequenceNumber < :seq", { seq: sequenceOfBeforeEdge })
+        .getCount();
+
+      console.log(howManyJobs);
+
+      // calculate the offset, how many rows need to be skipped until amount equals last
+      const offset =
+        allEdgesBefore - howManyJobs < 0 ? 0 : allEdgesBefore - howManyJobs;
+
+      return this.jobs
+        .createQueryBuilder("job")
+        .offset(offset)
+        .addOrderBy("job.sequenceNumber")
+        .where("job.sequenceNumber < :seq", { seq: sequenceOfBeforeEdge })
+        .getMany();
+    };
+
+    const hasPreviousPage = async (job: string, howManyJobs: number) => {
+      if (howManyJobs < 0) {
+        throw new Error("last has to be positive");
+      }
+
+      const sequenceOfBeforeEdge = (await this.jobs.findOne(job))
+        .sequenceNumber;
+
+      const allEdgesBefore = await this.jobs
+        .createQueryBuilder("job")
+        .addOrderBy("job.sequenceNumber")
+        .where("job.sequenceNumber < :seq", { seq: sequenceOfBeforeEdge })
+        .getCount();
+
+      return allEdgesBefore - howManyJobs >= 0;
+    };
+
+    let result: Array<Job> = [];
+
+    // check if cursor exists
+    if (
+      (await this.jobs.findByIds([decodeCursor(after || before)])).length === 0
+    ) {
+      return {
+        nodes: result,
+        pageInfo: {
+          endCursor: null,
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: null
+        },
+        totalCount: await this.jobs.count()
+      };
     }
 
-    return this.jobs.find();
+    if (after) {
+      result = await getJobsAfter(decodeCursor(after), first);
+    }
+
+    if (before) {
+      result = await getJobsBefore(decodeCursor(before), last);
+    }
+
+    if (!after && !before) {
+      result = await this.jobs
+        .createQueryBuilder("job")
+        .limit(first)
+        .addOrderBy("job.sequenceNumber")
+        .getMany();
+    }
+
+    const next = await hasNextPage(result[result.length - 1].id, pageSize);
+    const previous = await hasPreviousPage(result[0].id, pageSize);
+
+    const nodes = await this.jobs.findByIds(result.map(e => e.id));
+
+    return {
+      nodes,
+      pageInfo: {
+        endCursor: next ? encodeCursor(nodes[nodes.length - 1].id) : null,
+        hasNextPage: next,
+        hasPreviousPage: previous,
+        startCursor: previous ? encodeCursor(nodes[0].id) : null
+      },
+      totalCount: await this.jobs.count()
+    };
   }
 
   async createJob(args: any): Promise<Job> {

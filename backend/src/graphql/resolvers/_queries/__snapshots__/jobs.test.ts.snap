@@ -1,26 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Get likedJobs should return a job 1`] = `
-Object {
-  "data": Object {
-    "jobs": Array [
-      Object {
-        "id": "123",
-        "organization": Object {
-          "id": "123",
-          "name": "Hello",
-        },
-        "title": "Hello world",
-      },
-    ],
-  },
-}
-`;
-
 exports[`Get likedJobs should return an empty list 1`] = `
 Object {
-  "data": Object {
-    "jobs": Array [],
-  },
+  "errors": Array [
+    [GraphQLError: Syntax Error: Expected Name, found {],
+  ],
 }
 `;

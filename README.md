@@ -27,6 +27,12 @@ After docker-compose finished you can browse the following urls:
 
 The PostgreSQL instance runs on *localhost:5432*.
 
+## How to develop on back end
+
+You can use `backend/dev/seed_and_dev.sh` to start the back end.
+This script will start and set up everything you need to develop on the back end.
+Changes to the source of the back end will restart the server automatically.
+
 ## Technologies
 
 This project uses a number of different technologies. Most prominent are:
