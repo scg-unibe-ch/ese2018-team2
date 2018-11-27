@@ -92,4 +92,7 @@ type Query {
   applications(applicationId: String): [JobApplication]!
 
   roles(id: String, title: String): [Role]!
+
+  # Only *site admins* can access this field. 
+  users(onlyAdmins: Boolean, id: String): [User!]!
 }

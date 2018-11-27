@@ -1,9 +1,19 @@
-import { Connection, getConnection, Repository } from "typeorm";
+import {
+  Connection,
+  getConnection,
+  Repository,
+  FindManyOptions
+} from "typeorm";
 import bcrypt from "bcryptjs";
 import { User } from "../entity/User";
 import { Job } from "../entity/Job";
-import Utils from "./Utils";
+import Utils, { enforceAdmin } from "./Utils";
 import enforceAuth from "./Utils";
+
+export interface FindUserOptions {
+  onlyAdmins?: boolean;
+  id?: string;
+}
 
 export class UserRepository {
   private users: Repository<User>;
@@ -28,6 +38,33 @@ export class UserRepository {
     session.user = user;
 
     return true;
+  }
+
+  async findUsers(
+    { onlyAdmins, id }: FindUserOptions,
+    session: Express.Session
+  ) {
+    enforceAdmin(session);
+
+    // search by id
+    if (id) {
+      return this.users.find({ id });
+    }
+
+    // TODO won't work for more where
+    const whereOnlyAdmins = (
+      obj: FindManyOptions<User>,
+      siteAdmin?: boolean
+    ): FindManyOptions<User> =>
+      siteAdmin ? { ...obj, where: { siteAdmin: true } } : obj;
+
+    // create sort in where
+    const order = (obj: FindManyOptions<User>): FindManyOptions<User> => ({
+      ...obj,
+      order: { sequenceNumber: "ASC" }
+    });
+
+    return this.users.find(whereOnlyAdmins(order({}), onlyAdmins));
   }
 
   async getMe(session: Express.Session) {

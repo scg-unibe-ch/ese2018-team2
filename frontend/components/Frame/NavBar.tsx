@@ -33,7 +33,10 @@ const adminItems = [
   <Menu.Item key={"Administer"}>
     <Dropdown text={"Verwalten"}>
       <Dropdown.Menu>
-        <Dropdown.Item>Benutzende</Dropdown.Item>
+        <Link href="/admin/users" passHref>
+          <Dropdown.Item as={"a"}>Benutzende</Dropdown.Item>
+        </Link>
+
         <Dropdown.Item>Organizationen</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

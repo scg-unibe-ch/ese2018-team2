@@ -4,13 +4,15 @@ import me from "./me";
 import organizations from "./organizations";
 import applications from "./applications";
 import roles from "./roles";
+import users from "./users";
 
 export const Query: QueryResolvers.Type = {
   jobs,
   roles,
   organizations,
   me,
-  applications
+  applications,
+  users
 };
 
 export default Query;
