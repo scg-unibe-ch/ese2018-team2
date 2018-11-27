@@ -42,6 +42,15 @@ import generateTitle from "./rnd/buzz";
     .getRepository(Organization)
     .find({ take: organizationsToInsert.length - 2 });
 
+  const user = new User();
+  user.firstname = "Org";
+  user.lastname = "Org";
+  user.email = "org";
+  user.password = bcrypt.hashSync("123456", bcrypt.genSaltSync(10));
+  user.phone = ""
+  user.employer = [organizations[0]]
+  await connection.getRepository(User).save(user);
+
   for (let i = 0; i < 200; i++) {
     const job = new Job();
     job.start = new Date();

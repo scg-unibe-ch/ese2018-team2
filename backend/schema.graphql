@@ -4,9 +4,8 @@ type User {
   firstname: String!
   lastname: String!
   phone: String
-  bookmarkedJobs: [Job]!
-  employer: [Organization]
   siteAdmin: Boolean!
+  hasOrganizations: Boolean!
 }
 
 type Organization {
@@ -85,7 +84,7 @@ type Mutation {
 type Query {
   jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
-  organizations: [Organization]!
+  organizations: [Organization!]!
 
   me: User!
 

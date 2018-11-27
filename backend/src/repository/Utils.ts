@@ -14,6 +14,14 @@ export function enforceAdmin(session: Express.Session) {
   }
 }
 
+export function isAdmin(session: Express.Session) {
+  if (!session.user) {
+    return false;
+  }
+
+  return session.user.admin;
+}
+
 /**
  * Returns either null or the id of a user.
  * @param session Provided session

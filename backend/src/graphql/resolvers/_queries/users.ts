@@ -4,6 +4,6 @@ const users: QueryResolvers.UsersResolver = (
   _,
   args,
   { session, userRepository }
-) => userRepository.findUsers({ onlyAdmins: args.onlyAdmins, id: args.id }, session);
+) => userRepository.findUsers({ onlyAdmins: args.onlyAdmins, id: args.id }, session) as any;
 
 export default users;

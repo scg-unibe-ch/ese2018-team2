@@ -17,7 +17,7 @@ const UserDropdownComponent: React.SFC<WithMeProps> = ({ me }) => (
 const UserDropdown = withMe(UserDropdownComponent);
 
 const userItems = [
-  <Link href={"/applications"} passHref key={"Jobs"}>
+  <Link href={"/"} passHref key={"Jobs"}>
     <Menu.Item name={"Jobangebote"} />
   </Link>,
   <Link href={"/applications"} passHref key={"Applications"}>
@@ -36,11 +36,16 @@ const adminItems = [
         <Link href="/admin/users" passHref>
           <Dropdown.Item as={"a"}>Benutzende</Dropdown.Item>
         </Link>
-
         <Dropdown.Item>Organizationen</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   </Menu.Item>
+];
+
+const orgItems = [
+  <Link href={"/org/jobs"} key={"MyJobs"}>
+    <Menu.Item name={"Meine Jobinserate"}>Meine Jobinserate</Menu.Item>
+  </Link>
 ];
 
 const NavBarComponent: React.SFC<WithMeProps> = ({ me }) => (
@@ -53,9 +58,11 @@ const NavBarComponent: React.SFC<WithMeProps> = ({ me }) => (
       </Link>
     </Menu.Item>
 
-    {me && !me.siteAdmin && userItems}
+    {me && !me.siteAdmin && !me.hasOrganizations && userItems}
 
-    {me && me.siteAdmin && adminItems}
+    {me && me.siteAdmin && !me.hasOrganizations && adminItems}
+
+    {me && me.hasOrganizations && orgItems}
 
     <Menu.Item position={"right"} key={"Login"}>
       {!me && (

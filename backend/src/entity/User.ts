@@ -62,7 +62,7 @@ export class User {
   applications: Promise<JobApplication[]>;
 
   @ManyToMany(type => Organization, organisation => organisation.employee)
-  employer: Promise<Organization[]>;
+  employer: Organization[];
 
   @ManyToMany(type => Role, role => role.matchingStudents)
   @JoinTable({ name: "user_roles" })

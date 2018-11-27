@@ -27,7 +27,7 @@ export interface Job {
 }
 
 export interface JobConnection {
-  nodes: Job[]
+  nodes: any[]
   pageInfo: JobPageInfo
   totalCount: number
 }
@@ -51,12 +51,13 @@ export interface User {
   email: string;
   phone: string;
   siteAdmin: boolean;
+  hasOrganizations: boolean;
 }
 
 export interface JobApplication {
   id: string;
   state: JobApplicationState;
-  user: User;
+  user: any;
   job: Job;
 }
 

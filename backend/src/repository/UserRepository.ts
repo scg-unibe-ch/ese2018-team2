@@ -7,7 +7,7 @@ import {
 import bcrypt from "bcryptjs";
 import { User } from "../entity/User";
 import { Job } from "../entity/Job";
-import Utils, { enforceAdmin } from "./Utils";
+import Utils, { enforceAdmin, isAdmin } from "./Utils";
 import enforceAuth from "./Utils";
 
 export interface FindUserOptions {
@@ -38,6 +38,25 @@ export class UserRepository {
     session.user = user;
 
     return true;
+  }
+
+  async hasUserOrganization(id: string, session: Express.Session) {
+    enforceAuth(session);
+
+    const user = await this.users.findByIds([id], {relations: ["employer"]});
+    if (user.length === 0) {
+      throw new Error(`No user found for id: ${id}`);
+    }
+
+    // if user is admin, he can see hasOrganization
+    if (!isAdmin(session)) {
+      if (user[0].id !== id) {
+        throw new Error("No permission");
+      }
+    }
+
+    return user[0].employer.length > 0;
+
   }
 
   async findUsers(

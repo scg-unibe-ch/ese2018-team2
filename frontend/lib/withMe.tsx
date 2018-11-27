@@ -2,7 +2,6 @@ import gql from "graphql-tag";
 import { NextContext } from "next";
 import * as React from "react";
 import { graphql } from "react-apollo";
-import { Role } from "../../backend/src/entity/Role";
 
 export interface WithMeProps {
   me?: {
@@ -13,6 +12,7 @@ export interface WithMeProps {
     email: string;
     phone: string;
     roles: string;
+    hasOrganizations: string;
   };
 }
 
@@ -25,6 +25,7 @@ export const WithMeQuery = gql`
       siteAdmin
       email
       phone
+      hasOrganizations
     }
   }
 `;
