@@ -2,14 +2,14 @@ import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import { UserRepository } from "./repository/UserRepository";
 import { JobApplicationRepository } from "./repository/JobApplicationRepository";
-import { RoleRepository } from "./repository/RoleRepository";
+import { SkillRepository } from "./repository/SkillRepository";
 
 export interface Context {
   jobRepository: JobRepository;
   organizationRepository: OrganizationRepository;
   userRepository: UserRepository;
   applicationRepository: JobApplicationRepository;
-  roleRepository: RoleRepository;
+  skillRepository: SkillRepository;
   session?: Express.Session;
 }
 
@@ -52,7 +52,7 @@ export interface JobPageInfo {
   startCursor: string | null;
 }
 
-export interface Role {
+export interface Skill {
   id: string;
   title: string;
   description: string;

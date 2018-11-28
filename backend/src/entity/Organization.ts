@@ -44,7 +44,7 @@ export class Organization {
     version: number;
 
     @ManyToMany(type => User, user => user.employer)
-    @JoinTable({name: "organisation_staff"})
+    @JoinTable({name: "organizations_users"})
     employee: Promise<User[]>;
 
     @OneToMany(type => Job, job => job.organization, {onDelete: "SET NULL", onUpdate:"SET NULL", cascade: true})

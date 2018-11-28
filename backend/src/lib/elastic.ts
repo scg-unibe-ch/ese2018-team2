@@ -28,7 +28,7 @@ export const uploadJobs = async (connection: Connection, jobs: Array<Job>) => {
         Job: {
           properties: {
             title: { type: "text" },
-            roles: { type: "long" },
+            skills: { type: "long" },
             salary: { type: "double" },
             sequenceNumber: { type: "long" }
           }
@@ -47,7 +47,7 @@ export const uploadJobs = async (connection: Connection, jobs: Array<Job>) => {
       body: {
         title: job.title,
         salary: job.salary,
-        roles: job.roles.map(e => e.sequenceNumber),
+        skills: job.skills.map(e => e.sequenceNumber),
         sequenceNumber: job.sequenceNumber
       }
     });

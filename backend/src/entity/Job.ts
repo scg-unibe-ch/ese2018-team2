@@ -12,7 +12,7 @@ import {
   Generated
 } from "typeorm";
 import { Organization } from "./Organization";
-import { Role } from "./Role";
+import { Skill } from "./Skill";
 import { User } from "./User";
 import { JobApplication } from "./JobApplication";
 
@@ -54,9 +54,9 @@ export class Job {
   @Column({ nullable: true })
   end: Date;
 
-  @ManyToMany(type => Role)
-  @JoinTable()
-  roles: Role[];
+  @ManyToMany(type => Skill)
+  @JoinTable({name:"jobs_skills"})
+  skills: Skill[];
 
   @ManyToMany(type => User, user => user.bookmarkedJobs)
   usersBookmarked: Promise<User[]>;

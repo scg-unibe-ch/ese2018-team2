@@ -1,14 +1,8 @@
-import {
-  Connection,
-  getConnection,
-  Repository,
-  FindManyOptions
-} from "typeorm";
 import bcrypt from "bcryptjs";
-import { User } from "../entity/User";
+import { Connection, FindManyOptions, getConnection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
-import Utils, { enforceAdmin, isAdmin } from "./Utils";
-import enforceAuth from "./Utils";
+import { User } from "../entity/User";
+import enforceAuth, { enforceAdmin, isAdmin } from "./Utils";
 
 export interface FindUserOptions {
   onlyAdmins?: boolean;

@@ -4,8 +4,6 @@ import EnsureLoggedIn from "../../lib/EnsureLoggedIn";
 import { withIntialMe, WithMeProps } from "../../lib/withMe";
 import NavBar from "../Frame/NavBar";
 
-//  {me.roles}
-
 const Page: React.SFC<WithMeProps> = ({ me }) => {
   return (
     <React.Fragment>

@@ -3,7 +3,7 @@ import jobs from "./jobs";
 import me from "./me";
 import organizations from "./organizations";
 import applications from "./applications";
-import roles from "./roles";
+import skills from "./skills";
 import users from "./users";
 import search from "./search";
 import searchAutocompletions from "./searchAutocompletions";
@@ -11,7 +11,7 @@ import job from "./job"
 
 export const Query: QueryResolvers.Type = {
   jobs,
-  roles,
+  skills,
   organizations,
   me,
   applications,

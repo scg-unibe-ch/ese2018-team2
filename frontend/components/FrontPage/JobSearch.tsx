@@ -33,7 +33,7 @@ const query = gql`
         applied
       }
       buckets {
-        role {
+        skill {
           id
           title
         }

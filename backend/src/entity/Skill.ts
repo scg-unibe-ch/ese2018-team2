@@ -7,8 +7,8 @@ import {
 } from "typeorm";
 import { User } from "./User";
 
-@Entity("roles")
-export class Role {
+@Entity("skills")
+export class Skill {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -16,12 +16,12 @@ export class Role {
   @Generated("increment")
   sequenceNumber: number;
 
-  @Column("text")
+  @Column("text", {name: "title"})
   title: string;
 
-  @Column("text")
+  @Column("text", {name:"description"})
   description: string;
 
-  @ManyToMany(type => User, user => user.roles)
-  matchingStudents: Promise<User[]>;
+  @ManyToMany(type => User, user => user.skills)
+  users: Promise<User[]>;
 }

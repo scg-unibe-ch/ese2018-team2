@@ -1,10 +1,9 @@
 import { Connection, Repository } from "typeorm";
-import { JobApplication } from "../entity/JobApplication";
-import Utils, { getUserId } from "./Utils";
 import { Job } from "../entity/Job";
-import { User } from "../entity/User";
+import { JobApplication } from "../entity/JobApplication";
 import JobApplicationState from "../entity/JobApplicationState";
-import enforceAuth from "./Utils";
+import { User } from "../entity/User";
+import enforceAuth, { getUserId } from "./Utils";
 
 export class JobApplicationRepository {
   private connection: Connection;

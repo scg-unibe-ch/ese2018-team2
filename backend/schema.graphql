@@ -52,7 +52,7 @@ enum JobApplicationState {
   APPROVED
 }
 
-type Role {
+type Skill {
   id: ID!
   title: String!
   description: String!
@@ -65,7 +65,7 @@ input CreateJobInput {
 }
 
 type AggregationBucket {
-  role: Role!
+  skill: Skill!
   count: Int!
 }
 
@@ -93,7 +93,7 @@ type Mutation {
   deleteOrganization(organizationId: String!): Boolean!
   approveOrganization(organizationId: String!): Boolean!
 
-  createRole(title: String!, description: String!): Role!
+  createSkill(title: String!, description: String!): Skill!
 
 }
 
@@ -113,7 +113,7 @@ type Query {
 
   applications(applicationId: String): [JobApplication]!
 
-  roles(id: String, title: String): [Role]!
+  skills(id: String, title: String): [Skill!]!
 
   # search completions
   searchAutocompletions(value: String!): [JobAutocompletion!]!

@@ -9,23 +9,23 @@ import config from "./config";
 import { Job } from "./entity/Job";
 import { JobApplication } from "./entity/JobApplication";
 import { Organization } from "./entity/Organization";
-import { Role } from "./entity/Role";
+import { Skill } from "./entity/Skill";
 import { User } from "./entity/User";
 import resolvers from "./graphql";
 import client from "./lib/redis";
-import { Init1543407057561 } from "./migration/1543407057561-Init";
+import { Init1543443084492 } from "./migration/1543443084492-Init";
 import { JobApplicationRepository } from "./repository/JobApplicationRepository";
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
-import { RoleRepository } from "./repository/RoleRepository";
+import { SkillRepository } from "./repository/SkillRepository";
 import { UserRepository } from "./repository/UserRepository";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User, Role, JobApplication],
-  migrations: [Init1543407057561],
+  entities: [Job, Organization, User, Skill, JobApplication],
+  migrations: [Init1543443084492],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -35,7 +35,7 @@ createConnection({
   const organizationRepository = new OrganizationRepository(connection);
   const userRepository = new UserRepository(connection);
   const applicationRepository = new JobApplicationRepository(connection);
-  const roleRepository = new RoleRepository(connection);
+  const skillRepository = new SkillRepository(connection);
 
   const adminAvailable =
     (await connection.getRepository(User).find({ email: "admin@example.com" }))
@@ -59,7 +59,7 @@ createConnection({
     organizationRepository,
     userRepository,
     applicationRepository,
-    roleRepository,
+    skillRepository,
     session: request.session
   });
 

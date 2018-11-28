@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 import { createConnection } from "typeorm";
 import entity from "../../src/entity";
-import { Organization } from "../../src/entity/Organization";
-import { User } from "../../src/entity/User";
-import users from "./users";
 import { Job } from "../../src/entity/Job";
-import generateTitle from "./rnd/buzz";
-import { Role } from "../../src/entity/Role";
+import { Organization } from "../../src/entity/Organization";
+import { Skill } from "../../src/entity/Skill";
+import { User } from "../../src/entity/User";
 import { elasticClient, uploadJobs } from "../../src/lib/elastic";
+import generateTitle from "./rnd/buzz";
+import users from "./users";
 
 function sleep(millis: number) {
   return new Promise(resolve => setTimeout(resolve, millis));
@@ -60,16 +60,16 @@ function sleep(millis: number) {
   user.phone = ""
   user.employer = [organizations[0]]
   await connection.getRepository(User).save(user);
-  const roleNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-  for (let i = 0; i < roleNames.length; i++) {
-    const role = new Role();
-    role.title = roleNames[i];
-    role.description = `Role ${1}`;
+  const skillNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  for (let i = 0; i < skillNames.length; i++) {
+    const skill = new Skill();
+    skill.title = skillNames[i];
+    skill.description = `Skill ${1}`;
 
-    await connection.getRepository(Role).save(role);
+    await connection.getRepository(Skill).save(skill);
   }
 
-  const roles = await connection.getRepository(Role).find();
+  const skills = await connection.getRepository(Skill).find();
 
   for (let i = 0; i < 200; i++) {
     const job = new Job();
@@ -79,7 +79,7 @@ function sleep(millis: number) {
     job.organization =
       organizations[Math.floor(Math.random() * organizations.length)];
     job.salary = Math.random() * 10;
-    job.roles = [roles[Math.floor(Math.random() * roles.length)]];
+    job.skills = [skills[Math.floor(Math.random() * skills.length)]];
 
     await connection.getRepository(Job).save(job);
   }
@@ -96,7 +96,7 @@ function sleep(millis: number) {
 
   await uploadJobs(
     connection,
-    await connection.getRepository(Job).find({ relations: ["roles"] })
+    await connection.getRepository(Job).find({ relations: ["skills"] })
   );
 
   console.log("Ich habe fertig.");

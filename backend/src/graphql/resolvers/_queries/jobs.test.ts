@@ -7,7 +7,7 @@ import JobRepository from "../../../repository/JobRepository";
 import { OrganizationRepository } from "../../../repository/OrganizationRepository";
 import { UserRepository } from "../../../repository/UserRepository";
 import { JobApplicationRepository } from "../../../repository/JobApplicationRepository";
-import { RoleRepository } from "../../../repository/RoleRepository";
+import { SkillRepository } from "../../../repository/SkillRepository";
 
 describe("Get likedJobs", () => {
   const schema = makeExecutableSchema({
@@ -23,7 +23,7 @@ describe("Get likedJobs", () => {
       organizationRepository: new (jest.fn<OrganizationRepository>())(),
       userRepository: new (jest.fn<UserRepository>())(),
       applicationRepository: new (jest.fn<JobApplicationRepository>())(),
-      roleRepository: new (jest.fn<RoleRepository>())()
+      skillRepository: new (jest.fn<SkillRepository>())()
     };
 
     const query = `

@@ -11,7 +11,6 @@ export interface WithMeProps {
     siteAdmin: boolean;
     email: string;
     phone: string;
-    roles: string;
     hasOrganizations: string;
   };
 }

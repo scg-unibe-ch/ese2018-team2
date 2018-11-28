@@ -2,13 +2,9 @@ import { JobConnection } from "src/types";
 import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
 import { Organization } from "../entity/Organization";
-import { Role } from "../entity/Role";
+import { Skill } from "../entity/Skill";
 import { elasticClient } from "../lib/elastic";
-import {
-  createQuery,
-  createRangeFilter,
-  createMatchQuery
-} from "./searchFilters";
+import { createMatchQuery, createQuery, createRangeFilter } from "./searchFilters";
 
 export interface JobUpdateArgs {
   id: string;
@@ -274,7 +270,7 @@ export class JobRepository {
         aggs: {
           Job: {
             terms: {
-              field: "roles",
+              field: "skills",
               order: {
                 _key: "asc"
               }
@@ -292,16 +288,14 @@ export class JobRepository {
       count: e.doc_count
     }));
 
-    const roles = await this.connection.getRepository(Role).find();
-
     // THIS IS EVIL >:D
     const buckets = todo.map(async (bucket: any) => {
-      const role = (await this.connection
-        .getRepository(Role)
+      const skill = (await this.connection
+        .getRepository(Skill)
         .find({ sequenceNumber: bucket.key }))[0];
 
       return {
-        role,
+        skill,
         count: bucket.count
       };
     });
