@@ -1,7 +1,7 @@
 import { SingletonRouter, withRouter } from "next/router";
-import { ReactElement } from "react";
-import Detail from "./Detail";
 import * as React from "react";
+import { ReactElement } from "react";
+import Detail from "./Detail/Detail";
 
 interface IsDetailComponentProps {
   router?: SingletonRouter;
