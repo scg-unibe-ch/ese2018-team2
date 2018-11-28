@@ -35,7 +35,7 @@ const OrganisationOverviewComponent: React.SFC<
   </Container>
 );
 
-const query = gql`
+export const GET_ALL_ORGANIZATION_JOBS = gql`
   query organizations {
     organizations {
       id
@@ -49,7 +49,7 @@ const query = gql`
 `;
 
 export default () => (
-  <Query query={query}>
+  <Query query={GET_ALL_ORGANIZATION_JOBS}>
     {({ loading, error, data }) => (
       <OrganisationOverviewComponent
         loading={loading}

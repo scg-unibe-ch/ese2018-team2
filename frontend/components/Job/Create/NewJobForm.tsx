@@ -3,6 +3,7 @@ import OrganizationSelect from "../../Organization/OrganizationSelect";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import * as React from "react";
+import { GET_ALL_ORGANIZATION_JOBS } from "../../Organization/Jobs/OrganisationOverview";
 
 const SuccessMessage = (
   <Segment>
@@ -105,7 +106,11 @@ const CREATE_NEW_JOB = gql`
 
 const NewJobForm: React.SFC<> = () => (
   <React.Fragment>
-    <Mutation mutation={CREATE_NEW_JOB}>
+    <Mutation
+      mutation={CREATE_NEW_JOB}
+      refetchQueries={{ query: GET_ALL_ORGANIZATION_JOBS }}
+      awaitRefetchQueries
+    >
       {(createJob, { loading }) => (
         <NewJobFormComponent
           loading={loading}
