@@ -2,6 +2,13 @@ import { JobConnection } from "src/types";
 import { Connection, Repository } from "typeorm";
 import { Job } from "../entity/Job";
 import { Organization } from "../entity/Organization";
+import { Role } from "../entity/Role";
+import { elasticClient } from "../lib/elastic";
+import {
+  createQuery,
+  createRangeFilter,
+  createMatchQuery
+} from "./searchFilters";
 
 export interface JobUpdateArgs {
   id: string;
@@ -122,7 +129,8 @@ export class JobRepository {
 
     // check if cursor exists
     if (
-      (before || after) && (await this.jobs.findByIds([decodeCursor(after || before)])).length === 0
+      (before || after) &&
+      (await this.jobs.findByIds([decodeCursor(after || before)])).length === 0
     ) {
       return {
         nodes: result,
@@ -205,6 +213,95 @@ export class JobRepository {
     await this.jobs.update({ id }, fieldsToUpdate);
 
     return this.jobs.findOneOrFail(id);
+  }
+
+  async getCompletions(value: string) {
+    await elasticClient.ping({
+      requestTimeout: 30000
+    });
+
+    const result = await elasticClient.search({
+      index: "jobs",
+      body: {
+        size: 5,
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  title: value
+                }
+              }
+            ]
+          }
+        }
+      }
+    });
+
+    if (result.hits.hits.length > 0) {
+      // @ts-ignore
+      return result.hits.hits.map((hit) => ({ id: hit._id, title: hit._source["title"] }));
+    }
+
+    return new Array<{ id: string, title: string }>();
+  }
+
+  async search(search: string, minSalary: number, maxSalary: number) {
+    await elasticClient.ping({
+      requestTimeout: 30000
+    });
+
+    const matchQuery = search?createMatchQuery("title", search):{}
+  
+    const salaryRange = createRangeFilter("salary", minSalary, maxSalary);
+
+    const query = createQuery(matchQuery, [salaryRange]);
+
+    const searchResult = await elasticClient.search({
+      index: "jobs",
+      body: {
+        ...query,
+        aggs: {
+          Job: {
+            terms: {
+              field: "roles",
+              order: {
+                _key: "asc"
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const ids = searchResult.hits.hits.map(e => e._id);
+    const nodes = await this.jobs.findByIds(ids);
+
+    const todo = searchResult.aggregations["Job"].buckets.map((e: any) => ({
+      key: parseInt(e.key),
+      count: e.doc_count
+    }));
+
+    const roles = await this.connection.getRepository(Role).find();
+
+    // THIS IS EVIL >:D
+    const buckets = todo.map(async (bucket: any) => {
+      const role = (await this.connection
+        .getRepository(Role)
+        .find({ sequenceNumber: bucket.key }))[0];
+
+      return {
+        role,
+        count: bucket.count
+      };
+    });
+
+    console.log(`Buckets: ${JSON.stringify(buckets)}`);
+
+    return {
+      nodes,
+      buckets
+    };
   }
 }
 

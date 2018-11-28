@@ -10,3 +10,31 @@ services:
     image: "postgres:10.5-alpine"
     ports:
       - "5432:5432"
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+    container_name: elasticsearch
+    environment:
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - xpack.graph.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+      - "discovery.type=single-node"
+      - TAKE_FILE_OWNERSHIP=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.5.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    depends_on:
+      - elastic

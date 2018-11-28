@@ -64,6 +64,16 @@ input CreateJobInput {
   organization: ID!
 }
 
+type AggregationBucket {
+  role: Role!
+  count: Int!
+}
+
+type SearchConnection {
+  nodes: [Job!]!
+  buckets: [AggregationBucket!]!
+}
+
 type Mutation {
   login(email: String!, pw: String!): Boolean!
   logout: Boolean!
@@ -87,6 +97,11 @@ type Mutation {
 
 }
 
+type JobAutocompletion {
+  id: String!
+  title: String!
+}
+
 type Query {
   jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
@@ -98,6 +113,11 @@ type Query {
 
   roles(id: String, title: String): [Role]!
 
+  # search completions
+  searchAutocompletions(value: String!): [JobAutocompletion!]!
+
   # Only *site admins* can access this field. 
   users(onlyAdmins: Boolean, id: String): [User!]!
+  search(search: String, minSalary: Float, maxSalary: Float): SearchConnection!
+
 }

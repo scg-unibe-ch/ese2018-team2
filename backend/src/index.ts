@@ -13,19 +13,19 @@ import { Role } from "./entity/Role";
 import { User } from "./entity/User";
 import resolvers from "./graphql";
 import client from "./lib/redis";
+import { Init1543401889180 } from "./migration/1543401889180-Init";
 import { JobApplicationRepository } from "./repository/JobApplicationRepository";
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import { RoleRepository } from "./repository/RoleRepository";
 import { UserRepository } from "./repository/UserRepository";
-import {Init1543363987608} from "./migration/1543363987608-Init";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
   entities: [Job, Organization, User, Role, JobApplication],
-  migrations: [Init1543363987608],
+  migrations: [Init1543401889180],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });

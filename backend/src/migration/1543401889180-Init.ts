@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class Init1543363987608 implements MigrationInterface {
+export class Init1543401889180 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`CREATE TABLE "roles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "sequenceNumber" BIGSERIAL NOT NULL, "title" text NOT NULL, "description" text NOT NULL, CONSTRAINT "PK_c1433d71a4838793a49dcad46ab" PRIMARY KEY ("id"))`);
@@ -12,6 +12,7 @@ export class Init1543363987608 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "bookmarks" ("usersId" uuid NOT NULL, "jobsId" uuid NOT NULL, CONSTRAINT "PK_59b0563d7b6f7758e9f369bb324" PRIMARY KEY ("usersId", "jobsId"))`);
         await queryRunner.query(`CREATE TABLE "user_roles" ("usersId" uuid NOT NULL, "rolesId" uuid NOT NULL, CONSTRAINT "PK_38ffcfb865fc628fa337d9a0d4f" PRIMARY KEY ("usersId", "rolesId"))`);
         await queryRunner.query(`CREATE TABLE "organisation_staff" ("organizationsId" uuid NOT NULL, "usersId" uuid NOT NULL, CONSTRAINT "PK_1f99d1fc80c711002cb9cdd5adb" PRIMARY KEY ("organizationsId", "usersId"))`);
+        await queryRunner.query(`CREATE TABLE "jobs_roles_roles" ("jobsId" uuid NOT NULL, "rolesId" uuid NOT NULL, CONSTRAINT "PK_125fc316b9ca4e227509f45f64f" PRIMARY KEY ("jobsId", "rolesId"))`);
         await queryRunner.query(`ALTER TABLE "jobs" ADD CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9" FOREIGN KEY ("organizationId") REFERENCES "organizations"("id")`);
         await queryRunner.query(`ALTER TABLE "jobApplications" ADD CONSTRAINT "FK_14cbb9979268be97fbbcbcc156d" FOREIGN KEY ("userId") REFERENCES "users"("id")`);
         await queryRunner.query(`ALTER TABLE "jobApplications" ADD CONSTRAINT "FK_4fd9e5d5ddcf14514eb36e7d44e" FOREIGN KEY ("jobId") REFERENCES "jobs"("id")`);
@@ -21,9 +22,13 @@ export class Init1543363987608 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "user_roles" ADD CONSTRAINT "FK_13380e7efec83468d73fc37938e" FOREIGN KEY ("rolesId") REFERENCES "roles"("id") ON DELETE CASCADE`);
         await queryRunner.query(`ALTER TABLE "organisation_staff" ADD CONSTRAINT "FK_464773c7f13f22269da79a7de2f" FOREIGN KEY ("organizationsId") REFERENCES "organizations"("id") ON DELETE CASCADE`);
         await queryRunner.query(`ALTER TABLE "organisation_staff" ADD CONSTRAINT "FK_6ad3bb28bbaa3549d02c9a57b77" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "jobs_roles_roles" ADD CONSTRAINT "FK_74c21585b614ea17162554a34eb" FOREIGN KEY ("jobsId") REFERENCES "jobs"("id") ON DELETE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "jobs_roles_roles" ADD CONSTRAINT "FK_c6268066bfc9b912daaf968c020" FOREIGN KEY ("rolesId") REFERENCES "roles"("id") ON DELETE CASCADE`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
+        await queryRunner.query(`ALTER TABLE "jobs_roles_roles" DROP CONSTRAINT "FK_c6268066bfc9b912daaf968c020"`);
+        await queryRunner.query(`ALTER TABLE "jobs_roles_roles" DROP CONSTRAINT "FK_74c21585b614ea17162554a34eb"`);
         await queryRunner.query(`ALTER TABLE "organisation_staff" DROP CONSTRAINT "FK_6ad3bb28bbaa3549d02c9a57b77"`);
         await queryRunner.query(`ALTER TABLE "organisation_staff" DROP CONSTRAINT "FK_464773c7f13f22269da79a7de2f"`);
         await queryRunner.query(`ALTER TABLE "user_roles" DROP CONSTRAINT "FK_13380e7efec83468d73fc37938e"`);
@@ -33,6 +38,7 @@ export class Init1543363987608 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "jobApplications" DROP CONSTRAINT "FK_4fd9e5d5ddcf14514eb36e7d44e"`);
         await queryRunner.query(`ALTER TABLE "jobApplications" DROP CONSTRAINT "FK_14cbb9979268be97fbbcbcc156d"`);
         await queryRunner.query(`ALTER TABLE "jobs" DROP CONSTRAINT "FK_08bdc8b939f39e6d55b4c38cfb9"`);
+        await queryRunner.query(`DROP TABLE "jobs_roles_roles"`);
         await queryRunner.query(`DROP TABLE "organisation_staff"`);
         await queryRunner.query(`DROP TABLE "user_roles"`);
         await queryRunner.query(`DROP TABLE "bookmarks"`);

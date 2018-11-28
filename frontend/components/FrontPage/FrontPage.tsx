@@ -3,13 +3,13 @@ import "semantic-ui-css/semantic.min.css";
 import { Container, Divider } from "semantic-ui-react";
 import NavBar from "../Frame/NavBar";
 import HowItWorksStudents from "./HowItWorksStudents";
-import Search from "./Search";
+import JobSearch from "./JobSearch";
 
 export default () => (
   <div>
     <NavBar />
     <Container>
-      <Search />
+      <JobSearch />
       <Divider />
       <HowItWorksStudents />
     </Container>

@@ -29,16 +29,27 @@ export interface Job {
   organization: any;
 }
 
+export interface AggregationBucket {
+  key: string;
+  count: number;
+  label: string;
+}
+
+export interface SearchConnection {
+  nodes: any[];
+  buckets: any[];
+}
+
 export interface JobConnection {
-  nodes: any[]
-  pageInfo: JobPageInfo
-  totalCount: number
+  nodes: Job[];
+  pageInfo: JobPageInfo;
+  totalCount: number;
 }
 export interface JobPageInfo {
-  endCursor: string | null
-  hasNextPage: boolean
-  hasPreviousPage: boolean
-  startCursor: string | null
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
 }
 
 export interface Role {
@@ -62,6 +73,11 @@ export interface JobApplication {
   state: JobApplicationState;
   user: any;
   job: Job;
+}
+
+export interface JobAutocompletion {
+  id: string
+  title: string
 }
 
 export type JobApplicationState = "PENDING" | "REJECTED" | "APPROVED";

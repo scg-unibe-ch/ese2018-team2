@@ -54,8 +54,9 @@ export class Job {
   @Column({ nullable: true })
   end: Date;
 
+  @ManyToMany(type => Role)
   @JoinTable()
-  roles: Promise<Role[]>;
+  roles: Role[];
 
   @ManyToMany(type => User, user => user.bookmarkedJobs)
   usersBookmarked: Promise<User[]>;

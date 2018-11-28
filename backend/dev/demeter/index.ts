@@ -6,6 +6,12 @@ import { User } from "../../src/entity/User";
 import users from "./users";
 import { Job } from "../../src/entity/Job";
 import generateTitle from "./rnd/buzz";
+import { Role } from "../../src/entity/Role";
+import { elasticClient, uploadJobs } from "../../src/lib/elastic";
+
+function sleep(millis: number) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}
 
 (async function() {
   const connection = await createConnection({
@@ -54,6 +60,16 @@ import generateTitle from "./rnd/buzz";
   user.phone = ""
   user.employer = [organizations[0]]
   await connection.getRepository(User).save(user);
+  const roleNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  for (let i = 0; i < roleNames.length; i++) {
+    const role = new Role();
+    role.title = roleNames[i];
+    role.description = `Role ${1}`;
+
+    await connection.getRepository(Role).save(role);
+  }
+
+  const roles = await connection.getRepository(Role).find();
 
   for (let i = 0; i < 200; i++) {
     const job = new Job();
@@ -63,9 +79,25 @@ import generateTitle from "./rnd/buzz";
     job.organization =
       organizations[Math.floor(Math.random() * organizations.length)];
     job.salary = Math.random() * 10;
+    job.roles = [roles[Math.floor(Math.random() * roles.length)]];
 
     await connection.getRepository(Job).save(job);
   }
+
+  // Init
+  while (true) {
+    try {
+      console.log("Try to connect");
+      await elasticClient.ping({ requestTimeout: 300000 });
+      break;
+    } catch (e) {}
+    await sleep(5000);
+  }
+
+  await uploadJobs(
+    connection,
+    await connection.getRepository(Job).find({ relations: ["roles"] })
+  );
 
   console.log("Ich habe fertig.");
 
