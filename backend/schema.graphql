@@ -105,6 +105,8 @@ type JobAutocompletion {
 type Query {
   jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
+  job(id: String!): Job
+
   organizations(organizationId: String): [Organization]!
 
   me: User!

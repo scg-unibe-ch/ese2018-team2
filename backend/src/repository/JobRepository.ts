@@ -39,10 +39,10 @@ export class JobRepository {
 
   // TODO create interface for argument type
   async getJobs(
-    first: number,
-    last: number,
-    after: string,
-    before: string
+    first?: number,
+    last?: number,
+    after?: string,
+    before?: string,
   ): Promise<JobConnection> {
     first = first || 10;
 
@@ -191,6 +191,16 @@ export class JobRepository {
     // save
     await this.jobs.insert(job);
     return job;
+  }
+
+  async getJobById(id: string) {
+    const jobs = await this.jobs.findByIds([id]).catch(() => []);
+
+    if (jobs.length === 1) {
+      return jobs[0];
+    }
+
+    return null;
   }
 
   async deleteJob(id: string) {

@@ -7,8 +7,10 @@ import {
   Search,
   Segment,
   Card,
-  Message
+  Message,
+  Button
 } from "semantic-ui-react";
+import Link from "next/link";
 
 interface SearchFieldProps {}
 interface SearchFieldState {
@@ -65,9 +67,9 @@ class SearchField extends React.Component<SearchFieldProps, SearchFieldState> {
                   variables: { search: data.value }
                 });
 
-                // @ts-ignore
                 this.setState({
                   loading: false,
+                  // @ts-ignore
                   results: result.data.search.nodes
                 });
               }}
@@ -78,12 +80,18 @@ class SearchField extends React.Component<SearchFieldProps, SearchFieldState> {
               )}
               <Card.Group>
                 {results.map(job => (
-                  <Card key={job.id}>
-                    <Card.Content>
-                      <Card.Header>{job.title}</Card.Header>
-                      <Card.Description>{job.description}</Card.Description>
-                    </Card.Content>
-                  </Card>
+                  <Link
+                    key={job.id}
+                    href={{ pathname: "/job", query: { id: job.id } }}
+                    passHref
+                  >
+                    <Card link>
+                      <Card.Content>
+                        <Card.Header>{job.title}</Card.Header>
+                        <Card.Description>{job.description}</Card.Description>
+                      </Card.Content>
+                    </Card>
+                  </Link>
                 ))}
               </Card.Group>
             </Segment>

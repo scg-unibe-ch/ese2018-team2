@@ -7,6 +7,7 @@ import roles from "./roles";
 import users from "./users";
 import search from "./search";
 import searchAutocompletions from "./searchAutocompletions";
+import job from "./job"
 
 export const Query: QueryResolvers.Type = {
   jobs,
@@ -16,7 +17,8 @@ export const Query: QueryResolvers.Type = {
   applications,
   users,
   search,
-  searchAutocompletions
+  searchAutocompletions,
+  job
 };
 
 export default Query;
