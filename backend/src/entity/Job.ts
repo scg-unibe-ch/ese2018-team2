@@ -28,7 +28,7 @@ export class Job {
   description: string;
 
   @ManyToOne(type => Organization, organization => organization.jobs, {
-    eager: true
+    eager: true,
   })
   organization: Organization;
 

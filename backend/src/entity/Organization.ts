@@ -1,43 +1,52 @@
 import {
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  VersionColumn,
-  Generated,
-  ManyToMany,
-  JoinTable
+    Column,
+    CreateDateColumn,
+    Entity,
+    Generated,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
 } from "typeorm";
-import { Job } from "./Job";
-import { User } from "./User";
+import {Job} from "./Job";
+import {User} from "./User";
 
 @Entity("organizations")
 export class Organization {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
-  @Column("text", { nullable: false })
-  name: string;
+    @Column("text", {nullable: false})
+    name: string;
 
-  @Column("bigint")
-  @Generated("increment")
-  sequenceNumber: number;
+    @Column("text", {nullable: false})
+    email: string;
 
-  @CreateDateColumn({ type: "timestamp with time zone" })
-  createdAt: Date;
+    @Column("text")
+    phone: string;
 
-  @UpdateDateColumn({ type: "timestamp with time zone" })
-  updatedAt: Date;
+    @Column({type: "boolean", default: false})
+    approved: boolean;
 
-  @VersionColumn()
-  version: number;
+    @Column("bigint")
+    @Generated("increment")
+    sequenceNumber: number;
 
-  @ManyToMany(type => User, user => user.employer)
-  @JoinTable({ name: "organisation_staff" })
-  employee: Promise<User[]>;
+    @CreateDateColumn({type: "timestamp with time zone"})
+    createdAt: Date;
 
-  @OneToMany(type => Job, job => job.organization)
-  jobs: Promise<Job[]>;
+    @UpdateDateColumn({type: "timestamp with time zone"})
+    updatedAt: Date;
+
+    @VersionColumn()
+    version: number;
+
+    @ManyToMany(type => User, user => user.employer)
+    @JoinTable({name: "organisation_staff"})
+    employee: Promise<User[]>;
+
+    @OneToMany(type => Job, job => job.organization, {onDelete: "SET NULL", onUpdate:"SET NULL", cascade: true})
+    jobs: Promise<Job[]>;
 }

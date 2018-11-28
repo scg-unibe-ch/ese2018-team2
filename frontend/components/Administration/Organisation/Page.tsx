@@ -4,14 +4,17 @@ import EnsureAdmin from "../../../lib/EnsureAdmin";
 import { withIntialMe } from "../../../lib/withMe";
 import NavBar from "../../Frame/NavBar";
 import Overview from "./Overview";
+import EnsureLoggedIn from "../../../lib/EnsureLoggedIn";
 
 const Page = () => (
   <React.Fragment>
     <NavBar />
     <Container>
-      <EnsureAdmin>
-        <Overview />
-      </EnsureAdmin>
+      <EnsureLoggedIn>
+        <EnsureAdmin>
+          <Overview />
+        </EnsureAdmin>
+      </EnsureLoggedIn>
     </Container>
   </React.Fragment>
 );

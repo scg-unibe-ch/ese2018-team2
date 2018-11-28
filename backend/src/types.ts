@@ -16,6 +16,9 @@ export interface Context {
 export interface Organization {
   id: string;
   name: string;
+  email: string;
+  phone: string;
+  approved: boolean;
   jobs: Promise<any[]>;
 }
 

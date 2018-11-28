@@ -11,8 +11,11 @@ type User {
 type Organization {
   id: ID!
   name: String!
+  email: String!
+  phone: String
   jobs: [Job]!
   employees: [User]!
+  approved: Boolean!
 }
 
 type Job {
@@ -77,14 +80,17 @@ type Mutation {
   rejectJobApplication(applicationId: String!): Boolean!
 
   createOrganization(name: String!): Organization!
+  deleteOrganization(organizationId: String!): Boolean!
+  approveOrganization(organizationId: String!): Boolean!
 
   createRole(title: String!, description: String!): Role!
+
 }
 
 type Query {
   jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
-  organizations: [Organization!]!
+  organizations(organizationId: String): [Organization]!
 
   me: User!
 

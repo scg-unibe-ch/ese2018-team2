@@ -29,7 +29,11 @@ import generateTitle from "./rnd/buzz";
 
   const organizationsToInsert = new Array(20)
     .fill({})
-    .map((_, index) => ({ name: `Organization ${index + 1}` }));
+    .map((_, index) => ({
+        name: `Organization ${index + 1}`,
+        email: `info@organization_${index + 1}.ch`,
+        phone: `+4123 456 78 ${index + 1}`,
+    }));
 
   await connection
     .createQueryBuilder()

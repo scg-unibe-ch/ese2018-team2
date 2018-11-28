@@ -19,7 +19,7 @@ export function isAdmin(session: Express.Session) {
     return false;
   }
 
-  return session.user.admin;
+  return session.user.siteAdmin;
 }
 
 /**

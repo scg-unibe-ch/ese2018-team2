@@ -36,7 +36,9 @@ const adminItems = [
         <Link href="/admin/users" passHref>
           <Dropdown.Item as={"a"}>Benutzende</Dropdown.Item>
         </Link>
-        <Dropdown.Item>Organizationen</Dropdown.Item>
+        <Link href="/admin/organizations" passHref>
+          <Dropdown.Item as={"a"}>Organizationen</Dropdown.Item>
+        </Link>
       </Dropdown.Menu>
     </Dropdown>
   </Menu.Item>
