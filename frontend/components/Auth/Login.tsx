@@ -1,4 +1,6 @@
 import gql from "graphql-tag";
+import Link from "next/link";
+import { SingletonRouter, withRouter } from "next/router";
 import * as React from "react";
 import { Mutation } from "react-apollo";
 import {
@@ -10,8 +12,6 @@ import {
   Message,
   Segment
 } from "semantic-ui-react";
-import { withRouter, SingletonRouter } from "next/router";
-import Link from "next/link";
 
 interface LoginComponentProps {
   loading?: boolean;
@@ -73,7 +73,7 @@ class LoginComponent extends React.Component<
                   <Message negative>Wrong email or password!</Message>
                 )}
                 <Form.Input
-                  label={"E-Mail"}
+                  label={"E-Mail oder Benutzernamen"}
                   type={"text"}
                   name={"email"}
                   required

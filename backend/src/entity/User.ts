@@ -1,19 +1,19 @@
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    Generated,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-    VersionColumn
+  Column,
+  CreateDateColumn,
+  Entity,
+  Generated,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn
 } from "typeorm";
-import {Job} from "./Job";
-import {JobApplication} from "./JobApplication";
-import {Organization} from "./Organization";
-import {Role} from "./Role";
+import { Job } from "./Job";
+import { JobApplication } from "./JobApplication";
+import { Organization } from "./Organization";
+import { Role } from "./Role";
 
 @Entity("users")
 export class User {
@@ -29,8 +29,11 @@ export class User {
   @Column("text")
   phone: string;
 
-  @Column({ type: "text", unique: true })
+  @Column({ type: "citext", unique: true })
   email: string;
+
+  @Column({ type: "citext", unique: true, name: "username", nullable: true })
+  username: string;
 
   @Column("text")
   password: string;

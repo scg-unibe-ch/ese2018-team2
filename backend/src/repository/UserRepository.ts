@@ -25,7 +25,12 @@ export class UserRepository {
   }
 
   async login(email: string, password: string, session: Express.Session) {
-    const foundUsers = await this.users.find({ email });
+    const foundUsers = await this.users
+      .createQueryBuilder("users")
+      .orWhere("users.email = :email", { email })
+      .orWhere("users.username = :username", { username: email })
+      .getMany();
+
     if (foundUsers.length === 0) {
       return false;
     }
@@ -35,7 +40,9 @@ export class UserRepository {
       return false;
     }
 
-    session.user = user;
+    const result = (await this.users.findByIds([user.id]))[0];
+
+    session.user = result;
 
     return true;
   }
@@ -43,7 +50,7 @@ export class UserRepository {
   async hasUserOrganization(id: string, session: Express.Session) {
     enforceAuth(session);
 
-    const user = await this.users.findByIds([id], {relations: ["employer"]});
+    const user = await this.users.findByIds([id], { relations: ["employer"] });
     if (user.length === 0) {
       throw new Error(`No user found for id: ${id}`);
     }
@@ -56,7 +63,6 @@ export class UserRepository {
     }
 
     return user[0].employer.length > 0;
-
   }
 
   async findUsers(

@@ -3,5 +3,6 @@ export default {
   firstname: "Luca",
   lastname: "Althaus",
   phone: "+41 123 456 34 34",
-  siteAdmin: true
+  siteAdmin: true,
+  username: "luca"
 };
