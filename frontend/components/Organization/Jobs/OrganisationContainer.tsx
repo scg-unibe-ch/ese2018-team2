@@ -1,4 +1,6 @@
-import { Segment, Container, Header, Table } from "semantic-ui-react";
+import { Button, Container, Header, Segment, Table } from "semantic-ui-react";
+import * as React from "react";
+import Link from "next/link";
 
 interface Job {
   id: string;
@@ -27,12 +29,18 @@ const OrganisationContainer: React.SFC<OrganisationContainerProps> = ({
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Jobtitel</Table.HeaderCell>
+            <Table.HeaderCell>
+              <Link href={"/org/jobs/create"}>
+                <Button as="a" icon={"plus"} floated="right" />
+              </Link>
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {org.jobs.map(job => (
             <Table.Row key={job.id}>
               <Table.Cell>{job.title}</Table.Cell>
+              <Table.Cell />
             </Table.Row>
           ))}
         </Table.Body>

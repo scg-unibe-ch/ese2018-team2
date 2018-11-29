@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import * as React from "react";
 import { GET_ALL_ORGANIZATION_JOBS } from "../../Organization/Jobs/OrganisationOverview";
+import Link from "next/link";
 
 const SuccessMessage = (
   <Segment>
@@ -74,17 +75,31 @@ class NewJobFormComponent extends React.Component<
               placeholder="Stelle dein Jobangebot kurz vor"
               onChange={this.handleChange}
             />
-            <Button
-              disabled={this.state.showMessage}
-              size={"big"}
-              type={"Submit"}
-              labelPosition={"right"}
-              icon={"right arrow"}
-              color={"green"}
-              floated={"right"}
-              content={"Veröffendlichen"}
-              onClick={this.handleSubmit}
-            />
+            {!this.state.showMessage && (
+              <Button
+                size={"big"}
+                type={"Submit"}
+                labelPosition={"right"}
+                icon={"right arrow"}
+                color={"green"}
+                floated={"right"}
+                content={"Veröffendlichen"}
+                onClick={this.handleSubmit}
+              />
+            )}
+            {this.state.showMessage && (
+              <Link href={"/org/jobs"}>
+                <Button
+                  size={"big"}
+                  as={"a"}
+                  labelPosition={"right"}
+                  icon={"right arrow"}
+                  color={"green"}
+                  floated={"right"}
+                  content={"Zurück zur Übersicht"}
+                />
+              </Link>
+            )}
           </Form>
         </Segment>
       </Segment.Group>
@@ -108,13 +123,12 @@ const NewJobForm: React.SFC<> = () => (
   <React.Fragment>
     <Mutation
       mutation={CREATE_NEW_JOB}
-      refetchQueries={{ query: GET_ALL_ORGANIZATION_JOBS }}
+      refetchQueries={[{ query: GET_ALL_ORGANIZATION_JOBS }]}
       awaitRefetchQueries
     >
       {(createJob, { loading }) => (
         <NewJobFormComponent
           loading={loading}
-          showMessage={true}
           onCreate={async data => {
             await createJob({
               variables: {
