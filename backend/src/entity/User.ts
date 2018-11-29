@@ -1,8 +1,21 @@
-import { Column, CreateDateColumn, Entity, Generated, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Generated,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn
+} from "typeorm";
 import { Job } from "./Job";
 import { JobApplication } from "./JobApplication";
 import { Organization } from "./Organization";
 import { Skill } from "./Skill";
+import { StudentProfile } from "./StudentProfile";
 
 @Entity("users")
 export class User {
@@ -58,4 +71,7 @@ export class User {
   @ManyToMany(type => Skill, skill => skill.users)
   @JoinTable({ name: "users_skills" })
   skills: Promise<Skill[]>;
+
+  @OneToOne(type => StudentProfile, studentProfile => studentProfile.student)
+  studentProfile: Promise<StudentProfile>;
 }

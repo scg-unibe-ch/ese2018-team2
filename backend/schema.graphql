@@ -6,6 +6,14 @@ type User {
   phone: String
   siteAdmin: Boolean!
   hasOrganizations: Boolean!
+  studentProfile: StudentProfile
+}
+
+type StudentProfile {
+  id: ID!
+  student: User!
+  studyProgram: String!
+  university: String!
 }
 
 type Organization {
@@ -94,7 +102,6 @@ type Mutation {
   approveOrganization(organizationId: String!): Boolean!
 
   createSkill(title: String!, description: String!): Skill!
-
 }
 
 type JobAutocompletion {
@@ -118,8 +125,7 @@ type Query {
   # search completions
   searchAutocompletions(value: String!): [JobAutocompletion!]!
 
-  # Only *site admins* can access this field. 
+  # Only *site admins* can access this field.
   users(onlyAdmins: Boolean, id: String): [User!]!
   search(search: String, minSalary: Float, maxSalary: Float): SearchConnection!
-
 }
