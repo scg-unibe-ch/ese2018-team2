@@ -251,6 +251,7 @@ export class JobRepository {
       // @ts-ignore
       return result.hits.hits.map(hit => ({
         id: hit._id,
+        // @ts-ignore
         title: hit._source["title"]
       }));
     }
