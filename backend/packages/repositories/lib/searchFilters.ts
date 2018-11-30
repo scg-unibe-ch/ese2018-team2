@@ -13,7 +13,10 @@ export const createMatchQuery = (
   must: [
     {
       match: {
-        title: value
+        [field]: {
+          query: value,
+          fuzziness: 6
+        }
       }
     }
   ]

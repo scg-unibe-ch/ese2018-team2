@@ -238,7 +238,10 @@ export class JobRepository {
             must: [
               {
                 match: {
-                  title: value
+                  title: {
+                    query: value,
+                    fuzziness: 6
+                  }
                 }
               }
             ]
@@ -273,6 +276,7 @@ export class JobRepository {
     const searchResult = await elasticClient.search({
       index: "jobs",
       body: {
+        size: 30,
         ...query,
         aggs: {
           Job: {
@@ -286,8 +290,6 @@ export class JobRepository {
         }
       }
     });
-
-    console.log(`HERE: ${JSON.stringify(searchResult)}`);
 
     const ids = searchResult.hits.hits.map(e => e._id);
     const nodes = await this.jobs.findByIds(ids);
@@ -308,8 +310,6 @@ export class JobRepository {
         count: bucket.count
       };
     });
-
-    console.log(`Buckets: ${JSON.stringify(buckets)}`);
 
     return {
       nodes,
