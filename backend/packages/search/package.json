@@ -17,6 +17,7 @@
   "dependencies": {
     "@unijobs/backend-modules-config": "^1.0.0",
     "@unijobs/backend-modules-models": "^1.0.0",
+    "bodybuilder": "^2.2.16",
     "elasticsearch": "^15.2.0"
   }
 }
