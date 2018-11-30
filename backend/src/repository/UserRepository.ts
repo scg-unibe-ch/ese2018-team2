@@ -1,5 +1,10 @@
 import bcrypt from "bcryptjs";
-import { Connection, FindManyOptions, getConnection, Repository } from "typeorm";
+import {
+  Connection,
+  FindManyOptions,
+  getConnection,
+  Repository
+} from "typeorm";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
 import enforceAuth, { enforceAdmin, isAdmin } from "./Utils";
@@ -57,6 +62,26 @@ export class UserRepository {
     }
 
     return user[0].employer.length > 0;
+  }
+
+  async hasStudentProfile(id: string, session: Express.Session) {
+    enforceAuth(session);
+
+    const user = await this.users.findByIds([id], {
+      relations: ["studentProfile"]
+    });
+    if (user.length === 0) {
+      throw new Error(`No user found for id: ${id}`);
+    }
+
+    // if user is admin, he can see hasStudentProfile
+    if (!isAdmin(session)) {
+      if (user[0].id !== id) {
+        throw new Error("No permission");
+      }
+    }
+
+    return !!user[0].studentProfile;
   }
 
   async findUsers(

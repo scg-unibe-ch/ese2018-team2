@@ -66,6 +66,14 @@ export interface User {
   phone: string;
   siteAdmin: boolean;
   hasOrganizations: boolean;
+  isStudent: boolean;
+}
+
+export interface StudentProfile {
+  id: string;
+  student: User;
+  studyProgram: string;
+  university: string;
 }
 
 export interface JobApplication {
@@ -76,8 +84,8 @@ export interface JobApplication {
 }
 
 export interface JobAutocompletion {
-  id: string
-  title: string
+  id: string;
+  title: string;
 }
 
 export type JobApplicationState = "PENDING" | "REJECTED" | "APPROVED";

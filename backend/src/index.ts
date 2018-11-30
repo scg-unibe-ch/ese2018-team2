@@ -13,19 +13,21 @@ import { Skill } from "./entity/Skill";
 import { User } from "./entity/User";
 import resolvers from "./graphql";
 import client from "./lib/redis";
-import { Init1543443084492 } from "./migration/1543443084492-Init";
 import { JobApplicationRepository } from "./repository/JobApplicationRepository";
 import { JobRepository } from "./repository/JobRepository";
 import { OrganizationRepository } from "./repository/OrganizationRepository";
 import { SkillRepository } from "./repository/SkillRepository";
 import { UserRepository } from "./repository/UserRepository";
+import { StudentProfileRepository } from "./repository/StudentProfileRepository";
+import { Init1543587997486 } from "./migration/1543587997486-Init";
+import { StudentProfile } from "./entity/StudentProfile";
 
 //TODO environment variable for logging (e.g. NODE_ENV)
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User, Skill, JobApplication],
-  migrations: [Init1543443084492],
+  entities: [Job, Organization, User, Skill, JobApplication, StudentProfile],
+  migrations: [Init1543587997486],
   logging: true
 }).then(async connection => {
   await connection.runMigrations({ transaction: true });
@@ -36,6 +38,7 @@ createConnection({
   const userRepository = new UserRepository(connection);
   const applicationRepository = new JobApplicationRepository(connection);
   const skillRepository = new SkillRepository(connection);
+  const studentProfileRepository = new StudentProfileRepository(connection);
 
   const adminAvailable =
     (await connection.getRepository(User).find({ email: "admin@example.com" }))
@@ -60,6 +63,7 @@ createConnection({
     userRepository,
     applicationRepository,
     skillRepository,
+    studentProfileRepository,
     session: request.session
   });
 

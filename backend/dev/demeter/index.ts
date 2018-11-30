@@ -8,6 +8,8 @@ import { User } from "../../src/entity/User";
 import { elasticClient, uploadJobs } from "../../src/lib/elastic";
 import generateTitle from "./rnd/buzz";
 import users from "./users";
+import studentProfile from "./users/studentProfile";
+import { StudentProfile } from "../../src/entity/StudentProfile";
 
 function sleep(millis: number) {
   return new Promise(resolve => setTimeout(resolve, millis));
@@ -33,13 +35,11 @@ function sleep(millis: number) {
     .values(usersToInsert)
     .execute();
 
-  const organizationsToInsert = new Array(20)
-    .fill({})
-    .map((_, index) => ({
-        name: `Organization ${index + 1}`,
-        email: `info@organization_${index + 1}.ch`,
-        phone: `+4123 456 78 ${index + 1}`,
-    }));
+  const organizationsToInsert = new Array(20).fill({}).map((_, index) => ({
+    name: `Organization ${index + 1}`,
+    email: `info@organization_${index + 1}.ch`,
+    phone: `+4123 456 78 ${index + 1}`
+  }));
 
   await connection
     .createQueryBuilder()
@@ -52,13 +52,31 @@ function sleep(millis: number) {
     .getRepository(Organization)
     .find({ take: organizationsToInsert.length - 2 });
 
+  const studentProfile = new StudentProfile();
+  studentProfile.university = "Uni Bern";
+  studentProfile.studyProgram = "Informatik";
+  await connection.getRepository(StudentProfile).save(studentProfile);
+
+  const studentProfileToInsert = await connection
+    .getRepository(StudentProfile)
+    .find(studentProfile);
+
+  const student = new User();
+  student.studentProfile = studentProfileToInsert[0];
+  student.firstname = "Student";
+  student.lastname = "Student";
+  student.email = "student.student@students.unibe.ch";
+  student.password = bcrypt.hashSync("123456", bcrypt.genSaltSync(10));
+  student.phone = "123";
+  await connection.getRepository(User).save(student);
+
   const user = new User();
   user.firstname = "Org";
   user.lastname = "Org";
   user.email = "org";
   user.password = bcrypt.hashSync("123456", bcrypt.genSaltSync(10));
-  user.phone = ""
-  user.employer = [organizations[0]]
+  user.phone = "";
+  user.employer = [organizations[0]];
   await connection.getRepository(User).save(user);
   const skillNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
   for (let i = 0; i < skillNames.length; i++) {
