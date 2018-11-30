@@ -15,24 +15,23 @@ done
 
 clear
 
-yarn;
+yarn install;
 
 clear;
 
 yarn run clean;
-
-clear;
-
 yarn run build;
 
 clear;
 
-./node_modules/.bin/ts-node node_modules/.bin/typeorm migration:run;
+# Do migration
+yarn --cwd="packages/models" run migrate;
 
 clear;
 
-yarn seed;
+# Run demeter
+yarn --cwd="applications/demeter" run start;
 
 clear;
 
-yarn dev;
+yarn watch;

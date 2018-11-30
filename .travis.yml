@@ -1,15 +1,14 @@
+sudo: true
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
 matrix:
   include:
     - language: node_js
       node_js:
         - "11"
       install:
-        - yarn --cwd "backend"
+        - yarn --cwd "backend" install
       script:
         - yarn --cwd "backend" run build
         - yarn --cwd "backend" run test
-    - language: node_js
-      install:
-        - yarn --cwd "frontend"
-      script:
-        - yarn --cwd "frontend" run build

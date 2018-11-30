@@ -13,8 +13,10 @@ until psql -H postgres://postgres@localhost:5432/postgres -c "select 1" > /dev/n
   sleep 1
 done
 
+cd packages/models/;
+
 # delete current patch
-rm src/migration/*ts
+rm migration/*ts
 
 # Generate new patch
 ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate -n Init
@@ -22,7 +24,7 @@ rm src/migration/*ts
 echo "
 
 -------------------------------------------------------------------------------------
-Replace used migration InitFile in src/index.ts with the newly createt version.
+New migration generated.
 -------------------------------------------------------------------------------------
 
 ";

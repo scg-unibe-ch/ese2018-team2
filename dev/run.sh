@@ -15,6 +15,6 @@ until psql -H postgres://postgres@localhost:5432/postgres -c "select 1" > /dev/n
   sleep 1
 done
 
-cd backend;
+cd backend/applications/server;
 ./node_modules/.bin/ts-node node_modules/.bin/typeorm migration:run;
 yarn seed;

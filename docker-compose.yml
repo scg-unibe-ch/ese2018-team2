@@ -42,7 +42,7 @@ services:
       - redis
       - elastic
     build:
-      context: backend
+      context: backend/applications/server
     ports:
       - "4000:4000"
     environment:

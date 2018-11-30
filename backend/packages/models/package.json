@@ -1,0 +1,23 @@
+{
+  "name": "@unijobs/backend-modules-models",
+  "version": "1.0.0",
+  "license": "",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "migrate": "ts-node ./node_modules/.bin/typeorm migration:run"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.12",
+    "typeorm": "^0.2.9"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.1"
+  }
+}
