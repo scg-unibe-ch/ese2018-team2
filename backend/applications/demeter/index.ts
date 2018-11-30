@@ -1,5 +1,16 @@
-import { Job, JobApplication, Organization, Skill, User, StudentProfile } from "@unijobs/backend-modules-models";
-import { elasticClient, uploadJobs } from "@unijobs/backend-modules-search";
+import {
+  Job,
+  JobApplication,
+  Organization,
+  Skill,
+  User,
+  StudentProfile
+} from "@unijobs/backend-modules-models";
+import {
+  elasticClient,
+  uploadJobs,
+  createIndices
+} from "@unijobs/backend-modules-search";
 import bcrypt from "bcryptjs";
 import { createConnection } from "typeorm";
 import generateTitle from "./rnd/buzz";
@@ -13,9 +24,7 @@ function sleep(millis: number) {
   const connection = await createConnection({
     type: "postgres",
     url: "postgres://postgres@localhost:5432/postgres",
-    entities: [
-      Job, Organization, Skill, User, JobApplication, StudentProfile
-    ],
+    entities: [Job, Organization, Skill, User, JobApplication, StudentProfile],
     logging: true
   });
 
@@ -107,6 +116,8 @@ function sleep(millis: number) {
     } catch (e) {}
     await sleep(5000);
   }
+
+  await createIndices();
 
   await uploadJobs(
     connection,
