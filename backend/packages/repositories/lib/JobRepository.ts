@@ -3,7 +3,11 @@ import { Job } from "@unijobs/backend-modules-models";
 import { Organization } from "@unijobs/backend-modules-models";
 import { Skill } from "@unijobs/backend-modules-models";
 import { elasticClient } from "@unijobs/backend-modules-search";
-import { createMatchQuery, createQuery, createRangeFilter } from "./searchFilters";
+import {
+  createMatchQuery,
+  createQuery,
+  createRangeFilter
+} from "./searchFilters";
 
 export interface JobUpdateArgs {
   id: string;
@@ -37,7 +41,7 @@ export class JobRepository {
     first?: number,
     last?: number,
     after?: string,
-    before?: string,
+    before?: string
   ): Promise<any> {
     first = first || 10;
 
@@ -245,10 +249,13 @@ export class JobRepository {
 
     if (result.hits.hits.length > 0) {
       // @ts-ignore
-      return result.hits.hits.map((hit) => ({ id: hit._id, title: hit._source["title"] }));
+      return result.hits.hits.map(hit => ({
+        id: hit._id,
+        title: hit._source["title"]
+      }));
     }
 
-    return new Array<{ id: string, title: string }>();
+    return new Array<{ id: string; title: string }>();
   }
 
   async search(search: string, minSalary: number, maxSalary: number) {
@@ -256,8 +263,8 @@ export class JobRepository {
       requestTimeout: 30000
     });
 
-    const matchQuery = search?createMatchQuery("title", search):{}
-  
+    const matchQuery = search ? createMatchQuery("title", search) : {};
+
     const salaryRange = createRangeFilter("salary", minSalary, maxSalary);
 
     const query = createQuery(matchQuery, [salaryRange]);
@@ -279,11 +286,13 @@ export class JobRepository {
       }
     });
 
+    console.log(`HERE: ${JSON.stringify(searchResult)}`);
+
     const ids = searchResult.hits.hits.map(e => e._id);
     const nodes = await this.jobs.findByIds(ids);
 
     const todo = searchResult.aggregations["Job"].buckets.map((e: any) => ({
-      key: parseInt(e.key),
+      key: e.key,
       count: e.doc_count
     }));
 
@@ -291,7 +300,7 @@ export class JobRepository {
     const buckets = todo.map(async (bucket: any) => {
       const skill = (await this.connection
         .getRepository(Skill)
-        .find({ sequenceNumber: bucket.key }))[0];
+        .find({ id: bucket.key }))[0];
 
       return {
         skill,

@@ -13,8 +13,6 @@ export const uploadJobs = async (connection: Connection, jobs: Array<Job>) => {
     index: "jobs"
   });
 
-  console.log(`indexExists: ${indexExists}`);
-
   if (indexExists) {
     await elasticClient.indices.delete({
       index: "jobs"
@@ -28,7 +26,7 @@ export const uploadJobs = async (connection: Connection, jobs: Array<Job>) => {
         Job: {
           properties: {
             title: { type: "text" },
-            skills: { type: "long" },
+            skills: { type: "keyword" },
             salary: { type: "double" },
             sequenceNumber: { type: "long" }
           }
@@ -47,7 +45,7 @@ export const uploadJobs = async (connection: Connection, jobs: Array<Job>) => {
       body: {
         title: job.title,
         salary: job.salary,
-        skills: job.skills.map(e => e.sequenceNumber),
+        skills: job.skills.map(e => e.id),
         sequenceNumber: job.sequenceNumber
       }
     });
