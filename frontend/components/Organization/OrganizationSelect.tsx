@@ -5,7 +5,7 @@ import { Form } from "semantic-ui-react";
 
 interface OrganizationSelectComponentProps {
   loading: boolean;
-  data: {
+  data?: {
     organizations: {
       id: string;
       name: string;
@@ -14,7 +14,7 @@ interface OrganizationSelectComponentProps {
   handleChange: (e: any, x: { name; value }) => void;
 }
 
-const OrganizationSelectComponent: React.SFC<
+export const OrganizationSelectComponent: React.SFC<
   OrganizationSelectComponentProps
 > = ({ loading, data, handleChange }) => (
   <Form.Select
@@ -22,11 +22,11 @@ const OrganizationSelectComponent: React.SFC<
     placeholder={"Select organization"}
     name={"organization"}
     onChange={handleChange}
-    options={data.organizations.map(org => ({
+    options={data?data.organizations.map(org => ({
       key: org.id,
       value: org.id,
       text: org.name
-    }))}
+    })):[]}
   />
 );
 
