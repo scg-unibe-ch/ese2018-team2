@@ -1,11 +1,12 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Container, Divider } from "semantic-ui-react";
-import NavBar from "../layout/header/NavBar";
 import BuisnessHowItWorks from "./BuisnessHowItWorks";
 import BuisnessStart from "./BuisnessStart";
+import NavBar from "../Frame/NavBar";
+import { withIntialMe } from "../../lib/withMe";
 
-export default () => (
+export default withIntialMe(() => (
   <div>
     <NavBar />
     <Container>
@@ -14,4 +15,4 @@ export default () => (
       <BuisnessHowItWorks />
     </Container>
   </div>
-);
+));

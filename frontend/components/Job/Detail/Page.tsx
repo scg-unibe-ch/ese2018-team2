@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container } from "semantic-ui-react";
-import NavBar from "../../layout/header/NavBar";
 import JobDetailGroupComponent from "./JobDetailGroup";
+import NavBar from "../../Frame/NavBar";
 
 const Page = ({ job }) => (
   <div>
