@@ -32,6 +32,4 @@ clear;
 # Run demeter
 yarn --cwd="applications/demeter" run start;
 
-clear;
-
 yarn watch;

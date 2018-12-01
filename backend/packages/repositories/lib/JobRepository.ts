@@ -281,7 +281,7 @@ export class JobRepository {
         aggs: {
           Job: {
             terms: {
-              field: "skills",
+              field: "skills.keyword",
               order: {
                 _key: "asc"
               }

@@ -120,7 +120,6 @@ function sleep(millis: number) {
   await createIndices();
 
   await uploadJobs(
-    connection,
     await connection.getRepository(Job).find({ relations: ["skills"] })
   );
 
