@@ -12,3 +12,11 @@ matrix:
       script:
         - yarn --cwd "backend" run build
         - yarn --cwd "backend" run test
+    - language: node_js
+      node_js:
+        - "11"
+      install:
+        - yarn --cwd "frontend" install
+      script:
+        - yarn --cwd "frontend" run build
+        - yarn --cwd "frontend" run test
