@@ -61,11 +61,7 @@ export const JobPage: React.SFC<JobPageProps> = ({ loading, error, data }) => {
             <Button icon={"plus"} as={"a"} />
           </Link>
 
-          <Item.Group divided>
-            {data.jobs.map(job => (
-              <JobItem key={job.id} job={job} />
-            ))}
-          </Item.Group>
+          <Header content={"WIP"}/>
         </Segment>
       </Container>
     </React.Fragment>
