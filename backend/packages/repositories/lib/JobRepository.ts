@@ -1,13 +1,6 @@
+import { Job, Organization, Skill } from "@unijobs/backend-modules-models";
+import { elasticClient, search as elasticJobSearch, SearchBucket, SearchNode } from "@unijobs/backend-modules-search";
 import { Connection, Repository } from "typeorm";
-import { Job } from "@unijobs/backend-modules-models";
-import { Organization } from "@unijobs/backend-modules-models";
-import { Skill } from "@unijobs/backend-modules-models";
-import { elasticClient } from "@unijobs/backend-modules-search";
-import {
-  createMatchQuery,
-  createQuery,
-  createRangeFilter
-} from "./searchFilters";
 
 export interface JobUpdateArgs {
   id: string;
@@ -267,36 +260,16 @@ export class JobRepository {
       requestTimeout: 30000
     });
 
-    const matchQuery = search ? createMatchQuery("title", search) : {};
+    const searchResult = await elasticJobSearch({ search });
 
-    const salaryRange = createRangeFilter("salary", minSalary, maxSalary);
+    console.log(searchResult);
 
-    const query = createQuery(matchQuery, [salaryRange]);
-
-    const searchResult = await elasticClient.search({
-      index: "jobs",
-      body: {
-        size: 30,
-        ...query,
-        aggs: {
-          Job: {
-            terms: {
-              field: "skills.keyword",
-              order: {
-                _key: "asc"
-              }
-            }
-          }
-        }
-      }
-    });
-
-    const ids = searchResult.hits.hits.map(e => e._id);
+    const ids = searchResult.nodes.map((e: SearchNode) => e.id);
     const nodes = await this.jobs.findByIds(ids);
 
-    const todo = searchResult.aggregations["Job"].buckets.map((e: any) => ({
+    const todo = searchResult.buckets.map((e: SearchBucket) => ({
       key: e.key,
-      count: e.doc_count
+      count: e.count
     }));
 
     // THIS IS EVIL >:D
