@@ -32,7 +32,9 @@
       "json",
       "node"
     ],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupEnzyme.ts"
   },
   "scripts": {
@@ -57,6 +59,7 @@
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",
     "react-dom": "^16.5.2",
+    "react-toastify": "^4.4.3",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.82.5",
     "url-loader": "^1.1.2"

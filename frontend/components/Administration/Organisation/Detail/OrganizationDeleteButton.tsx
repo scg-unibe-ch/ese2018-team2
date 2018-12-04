@@ -4,6 +4,7 @@ import * as React from "react";
 import { Mutation } from "react-apollo";
 import { Button, Confirm, Popup } from "semantic-ui-react";
 import { GET_ALL_ORGANIZATIONS } from "../Overview";
+import { toast } from "react-toastify";
 
 interface OrganizationDeleteButtonComponentProps {
   organizationId: string;
@@ -98,6 +99,7 @@ const OrganizationDeleteButton: React.SFC<OrganizationDeleteButtonProps> = ({
           await deleteOrganization({
             variables: { organizationId: organizationId }
           });
+          toast.success("Organisation erfolgreich gelöscht.");
           await router.replace("/admin/organizations");
         }}
       />

@@ -1,9 +1,10 @@
 import { Mutation } from "react-apollo";
 import { GET_ALL_ORGANIZATIONS } from "../Overview";
-import { Button } from "semantic-ui-react";
+import { Button, Loader } from "semantic-ui-react";
 import React from "react";
 import gql from "graphql-tag";
 import { SingletonRouter, withRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const APPROVE_ORGANIZATION = gql`
   mutation ApproveOrganization($id: String!) {
@@ -25,9 +26,10 @@ const ApproveOrganizationButton: React.SFC<ApproveOrganizationButtonProps> = ({
     refetchQueries={[{ query: GET_ALL_ORGANIZATIONS }]}
     awaitRefetchQueries
   >
-    {(approveOrganization, _) => (
+    {(approveOrganization, { loading }) => (
       <Button
-        content={"Approve"}
+        disabled={loading}
+        content={loading ? <Loader inline active size={"tiny"} /> : "Annehmen"}
         labelPosition="right"
         color={"green"}
         icon="checkmark"
@@ -35,6 +37,7 @@ const ApproveOrganizationButton: React.SFC<ApproveOrganizationButtonProps> = ({
           await approveOrganization({
             variables: { id: organizationId }
           });
+          toast.success("Organisation wurde bestätigt");
           await router.push("/admin/organizations");
         }}
       />

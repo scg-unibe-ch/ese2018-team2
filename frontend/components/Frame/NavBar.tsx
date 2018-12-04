@@ -51,7 +51,7 @@ const orgItems = [
 ];
 
 const NavBarComponent: React.SFC<WithMeProps> = ({ me }) => (
-  <Menu size="large" stackable borderless>
+  <Menu size="large" stackable borderless style={{ marginTop: "0px" }}>
     <Menu.Item key={"Logo"}>
       <Link href={"/"} passHref>
         <a>
