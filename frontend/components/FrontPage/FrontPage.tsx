@@ -1,17 +1,14 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Container, Divider } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import NavBar from "../Frame/NavBar";
-import HowItWorksStudents from "./HowItWorksStudents";
-import JobSearch from "./JobSearch";
+import SearchBoxComponent from "../Search/SearchBox";
 
 export default () => (
   <div>
     <NavBar />
     <Container>
-      <JobSearch />
-      <Divider />
-      <HowItWorksStudents />
+      <SearchBoxComponent />
     </Container>
   </div>
 );
