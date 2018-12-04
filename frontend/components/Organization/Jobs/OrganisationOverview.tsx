@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { ApolloError } from "apollo-boost";
 import { Query } from "react-apollo";
 import OrganisationContainer from "./OrganisationContainer";
+import IsDetail from "./IsDetail";
 
 interface OrganisationOverviewComponentProps {
   loading: boolean;
@@ -23,6 +24,7 @@ interface OrganisationOverviewComponentProps {
 const OrganisationOverviewComponent: React.SFC<
   OrganisationOverviewComponentProps
 > = ({ loading, error, data }) => (
+  <IsDetail>
   <Container>
     <Header as={"h2"}>Übersicht Jobinserate</Header>
     <Segment basic loading={loading}>
@@ -33,6 +35,7 @@ const OrganisationOverviewComponent: React.SFC<
         data.organizations.map(org => <OrganisationContainer org={org} />)}
     </Segment>
   </Container>
+  </IsDetail>
 );
 
 export const GET_ALL_ORGANIZATION_JOBS = gql`

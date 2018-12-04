@@ -1,6 +1,7 @@
 import { Button, Container, Header, Segment, Table } from "semantic-ui-react";
 import * as React from "react";
 import Link from "next/link";
+import Router from "next/router";
 
 interface Job {
   id: string;
@@ -25,7 +26,7 @@ const OrganisationContainer: React.SFC<OrganisationContainerProps> = ({
       {org.name}
     </Header>
     <Segment attached>
-      <Table>
+      <Table singleLine fixed selectable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Jobtitel</Table.HeaderCell>
@@ -38,7 +39,15 @@ const OrganisationContainer: React.SFC<OrganisationContainerProps> = ({
         </Table.Header>
         <Table.Body>
           {org.jobs.map(job => (
-            <Table.Row key={job.id}>
+            <Table.Row key={job.id} onClick={async e => {
+              e.preventDefault();
+              await Router.push({
+                pathname: "/org/jobs",
+                query: {
+                  detail: job.id
+                }
+              });
+            }}>
               <Table.Cell>{job.title}</Table.Cell>
               <Table.Cell />
             </Table.Row>
