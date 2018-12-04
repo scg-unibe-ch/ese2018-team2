@@ -1079,6 +1079,30 @@
     "@types/glob" "*"
     "@types/node" "*"
 
+"@types/slate-plain-serializer@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@types/slate-plain-serializer/-/slate-plain-serializer-0.6.1.tgz#c392ce51621f7c55df0976f161dcfca18bd559ee"
+  integrity sha512-5meyKFvmWH1T02j2dbAaY8kn/FNofxP79jV3TsfuLsUIeHkON5CroBxAyrgkYF4vHp+MVWZddI36Yvwl7Y0Feg==
+  dependencies:
+    "@types/slate" "*"
+
+"@types/slate-react@^0.20.2":
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/@types/slate-react/-/slate-react-0.20.2.tgz#41d6260b69972ff17b9b288be5e052a892f8f560"
+  integrity sha512-+ONDvmrq4UiSzB+chNyCUbJIR8VU/E0ucTK7aceLBE84rdiIB4iiRCs0eT7rAPMO836yTCZGEGdqVRZJLIiUOg==
+  dependencies:
+    "@types/react" "*"
+    "@types/slate" "*"
+    immutable "^3.8.2"
+
+"@types/slate@*", "@types/slate@^0.43.4":
+  version "0.43.4"
+  resolved "https://registry.yarnpkg.com/@types/slate/-/slate-0.43.4.tgz#742d08b76977f86aeb3ba503be256f79533b0456"
+  integrity sha512-TrGLnX3Xi3TKoxq4+YWBDC/LrJvPG/NMH61pHEiaCDL1lfSyaBWE4UI2SttryxYZsk/yLBNtfFyh8gYvQQ6dqg==
+  dependencies:
+    "@types/react" "*"
+    immutable "^3.8.2"
+
 "@types/tapable@*":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.4.tgz#b4ffc7dc97b498c969b360a41eee247f82616370"
@@ -4802,6 +4826,11 @@ immutable-tuple@^0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/immutable-tuple/-/immutable-tuple-0.4.9.tgz#473ebdd6c169c461913a454bf87ef8f601a20ff0"
   integrity sha512-LWbJPZnidF8eczu7XmcnLBsumuyRBkpwIRPCZxlojouhBo5jEBO4toj6n7hMy6IxHU/c+MqDSWkvaTpPlMQcyA==
+
+immutable@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
+  integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
 
 immutable@^4.0.0-rc.12:
   version "4.0.0-rc.12"
