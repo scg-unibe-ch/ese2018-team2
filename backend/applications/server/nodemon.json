@@ -1,0 +1,12 @@
+{
+  "restartable": "",
+  "ignore": [
+    "node_modules/**/node_modules"
+  ],
+  "watch": [
+    "../../**/dist/**"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
