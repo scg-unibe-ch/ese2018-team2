@@ -38,8 +38,9 @@
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupEnzyme.ts"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "yarn run clean&&next",
     "build": "next build",
+    "clean": "rimraf .next",
     "test": "jest",
     "start": "next start",
     "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
@@ -82,6 +83,7 @@
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.4",
     "prettier": "1.14.3",
+    "rimraf": "^2.6.2",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.3"
