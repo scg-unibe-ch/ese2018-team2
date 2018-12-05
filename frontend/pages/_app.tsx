@@ -23,6 +23,7 @@ class MyApp extends App {
         <ToastContainer
           hideProgressBar
           autoClose={2500}
+          position={"bottom-right"}
           style={{ marginTop: "120px" }}
         />
         <ApolloProvider client={apollo}>
