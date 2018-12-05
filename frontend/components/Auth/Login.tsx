@@ -73,7 +73,7 @@ class LoginComponent extends React.Component<
                   <Message negative>Wrong email or password!</Message>
                 )}
                 <Form.Input
-                  label={"E-Mail oder Benutzernamen"}
+                  label={"E-Mail oder Benutzername"}
                   type={"text"}
                   name={"email"}
                   required
