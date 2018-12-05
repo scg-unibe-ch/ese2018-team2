@@ -5,10 +5,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run --parallel build",
     "test": "lerna run test --stream",
     "watch": "lerna run --parallel watch",
-    "clean": "lerna run clean",
+    "clean": "lerna run --parallel clean",
     "prettier": "prettier --write './**/*.{ts,json,graphql}'",
     "cloc": "find . -name '*.ts' -not -path \"*/node_modules*\" -not -name '*.d.ts' -not -path \"./node_modules*\" -not -path \"*/__generated__*\" | xargs wc -l"
   },
