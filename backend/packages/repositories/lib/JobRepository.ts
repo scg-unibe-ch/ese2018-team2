@@ -1,6 +1,17 @@
-import { Job, Organization, Skill } from "@unijobs/backend-modules-models";
-import { elasticClient, search as elasticJobSearch, SearchBucket, SearchNode } from "@unijobs/backend-modules-search";
+import {
+  Job,
+  JobApplication,
+  Organization,
+  Skill
+} from "@unijobs/backend-modules-models";
+import {
+  elasticClient,
+  search as elasticJobSearch,
+  SearchBucket,
+  SearchNode
+} from "@unijobs/backend-modules-search";
 import { Connection, Repository } from "typeorm";
+import { getUserId } from "./Utils";
 
 export interface JobUpdateArgs {
   id: string;
@@ -255,14 +266,34 @@ export class JobRepository {
     return new Array<{ id: string; title: string }>();
   }
 
-  async search(search: string, minSalary: number, maxSalary: number) {
+  async search(
+    search: string,
+    minSalary: number,
+    maxSalary: number,
+    session: Express.Session
+  ) {
     await elasticClient.ping({
       requestTimeout: 30000
     });
 
-    const searchResult = await elasticJobSearch({ search });
+    // Exclude contains ids of already applied jobs
+    let exclude: Array<string> = [];
 
-    console.log(searchResult);
+    if (getUserId(session)) {
+      // Only select jobId
+      const applications = await this.connection
+        .getRepository(JobApplication)
+        .find({
+          relations: ["job"],
+          where: {
+            user: getUserId(session)
+          }
+        });
+
+      exclude = applications.map(application => application.job.id);
+    }
+
+    const searchResult = await elasticJobSearch({ search }, exclude);
 
     const ids = searchResult.nodes.map((e: SearchNode) => e.id);
     const nodes = await this.jobs.findByIds(ids);

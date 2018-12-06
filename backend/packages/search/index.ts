@@ -13,7 +13,7 @@ import _uploadJobs from "./lib/_uploadJobs";
 
 export const elasticClient = new Client({
   host: config.get("elasticsearch_url"),
-  log: "trace" // TODO make configurable via environment variable
+  log: "" // TODO make configurable via environment variable
 });
 
 export const createIndices = () => _createIndices(elasticClient);
@@ -22,5 +22,10 @@ export const uploadJobs = (jobs: Job[]) => _uploadJobs(elasticClient, jobs);
 
 export { SearchInput, SearchNode, SearchResult, SearchBucket };
 
-export const search = async (input: SearchInput): Promise<SearchResult> =>
-  _search(elasticClient, input);
+/**
+ * Search for entities.
+ * @param input 
+ * @param exclude exclude following ids.
+ */
+export const search = async (input: SearchInput, exclude?: string[]): Promise<SearchResult> =>
+  _search(elasticClient, input, exclude);

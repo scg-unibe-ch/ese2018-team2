@@ -21,7 +21,11 @@ export interface SearchResult {
   buckets: SearchBucket[];
 }
 
-export const _search = async (client: Client, input: SearchInput): Promise<SearchResult> => {
+export const _search = async (
+  client: Client,
+  input: SearchInput,
+  exclude?: string[]
+): Promise<SearchResult> => {
   let builder = bodybuilder();
 
   if (input.search) {
@@ -33,11 +37,25 @@ export const _search = async (client: Client, input: SearchInput): Promise<Searc
 
   builder = builder.size(30);
 
-  builder = builder.aggregation("terms", "skills.keyword", {
-    order: {
-      _key: "asc"
-    }
-  }, "skills");
+  builder = builder.aggregation(
+    "terms",
+    "skills.keyword",
+    {
+      order: {
+        _key: "asc"
+      }
+    },
+    "skills"
+  );
+
+  if (exclude) {
+    console.log(exclude)
+    builder = builder.notFilter("ids", {
+      values: [...exclude]
+    });
+  }
+
+  console.log(builder.build())
 
   const result = await client.search({
     body: builder.build()
@@ -54,5 +72,5 @@ export const _search = async (client: Client, input: SearchInput): Promise<Searc
   return {
     nodes,
     buckets
-  }
+  };
 };
