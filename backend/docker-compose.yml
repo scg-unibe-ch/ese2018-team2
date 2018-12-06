@@ -6,8 +6,8 @@ services:
     ports:
       - "6379:6379"
   postgres:
-    container_name: "PostgreSQL-database"
-    image: "postgres:10.5-alpine"
+    container_name: "postgres"
+    image: "postgres:11.1-alpine"
     ports:
       - "5432:5432"
 
