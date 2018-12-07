@@ -13,7 +13,7 @@
     ]
   },
   "scripts": {
-    "watch": "concurrently -k \"nodemon dist/index.js\" \"tsc -w\" \"nodemon -e graphql --exec 'yarn run schema:generate'\"",
+    "watch": "concurrently -k \"nodemon dist/index.js\" \"tsc -w\" \"nodemon -w . -e graphql --exec 'yarn run schema:generate'\"",
     "build": "yarn run schema:generate && tsc",
     "schema:generate": "graphqlgen",
     "clean": "rimraf dist **/__generated__ src/**/*.js src/**/*.map",
