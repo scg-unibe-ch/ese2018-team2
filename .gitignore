@@ -6,3 +6,4 @@ node_modules
 */src/generated/*
 **/generated/*
 **/__generated__/*
+frontend/schema.graphql

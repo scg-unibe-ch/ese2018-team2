@@ -4,6 +4,10 @@ import { Query } from "react-apollo";
 import { Container, Dimmer, Header, Loader, Segment } from "semantic-ui-react";
 import JobForm from "./JobForm";
 import * as React from "react";
+import {
+  GetJobWithDetails,
+  GetJobWithDetailsVariables
+} from "./__generated__/GetJobWithDetails";
 
 interface JobDetailGroupComponentProps {
   loading: boolean;
@@ -21,16 +25,16 @@ export const JobDetailGroupComponent: React.SFC<
         <Loader active={loading} />
       </Dimmer>
       <Header block attached="top">
-        {!loading && data.jobs[0].title}
+        {!loading && data.job.title}
       </Header>
-      <Segment attached>{!loading && <JobForm data={data.jobs[0]} />}</Segment>
+      <Segment attached>{!loading && <JobForm data={data.job} />}</Segment>
     </Dimmer.Dimmable>
   </Container>
 );
 
 export const GET_JOB_WITH_DETAILS = gql`
   query GetJobWithDetails($id: String!) {
-    jobs(id: $id) {
+    job(id: $id) {
       id
       title
       description
@@ -38,12 +42,17 @@ export const GET_JOB_WITH_DETAILS = gql`
   }
 `;
 
+class GetJobWithDetailsQuery extends Query<
+  GetJobWithDetails,
+  GetJobWithDetailsVariables
+> {}
+
 interface GetJobsWithDetails {
-  jobs: {
+  job: {
     id: string;
     title: string;
     description: string;
-  }[];
+  };
 }
 
 interface JobDetailGroupProps {
@@ -52,7 +61,11 @@ interface JobDetailGroupProps {
 
 const JobDetailGroup: React.SFC<JobDetailGroupProps> = ({ job }) => {
   return (
-    <Query query={GET_JOB_WITH_DETAILS} variables={{ id: job }} ssr>
+    <GetJobWithDetailsQuery
+      query={GET_JOB_WITH_DETAILS}
+      variables={{ id: job }}
+      ssr
+    >
       {({ loading, error, data }) => (
         <JobDetailGroupComponent
           loading={loading}
@@ -60,7 +73,7 @@ const JobDetailGroup: React.SFC<JobDetailGroupProps> = ({ job }) => {
           data={data as GetJobsWithDetails}
         />
       )}
-    </Query>
+    </GetJobWithDetailsQuery>
   );
 };
 

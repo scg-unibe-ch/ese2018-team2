@@ -38,13 +38,15 @@
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupEnzyme.ts"
   },
   "scripts": {
-    "dev": "yarn run clean&&next",
-    "build": "next build",
-    "clean": "rimraf .next",
+    "dev": "yarn run clean && yarn run apollo:copy:schema && concurrently -k \"next\" \"yarn run apollo:watch\"",
+    "build": "yarn run clean && yarn run apollo:copy:schema && yarn run apollo:codegen && yarn next build",
+    "clean": "rimraf .next ./**/__generated__/** *.graphql",
     "test": "jest",
     "start": "next start",
-    "codegen:generate": "apollo codegen:generate --schema=../backend/schema.graphql --addTypename --target=typescript __generated__",
-    "codegen:watch": "chokidar \"**/*.tsx\" -c \"yarn run codegen:generate\""
+    "apollo:watch": "chokidar \"../backend/applications/server/**/*.graphql\" -c \"yarn run apollo:copy:schema && yarn run apollo:codegen:watch\"",
+    "apollo:codegen:watch": "apollo client:codegen --target typescript --localSchemaFile=schema.graphql --includes=./**/*.tsx --watch __generated__",
+    "apollo:codegen": "apollo client:codegen --target typescript --localSchemaFile=schema.graphql --includes=./**/*.tsx __generated__",
+    "apollo:copy:schema": "cp ../backend/applications/server/schema.graphql ."
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
@@ -79,7 +81,7 @@
     "@types/slate": "^0.43.4",
     "@types/slate-plain-serializer": "^0.6.1",
     "@types/slate-react": "^0.20.2",
-    "apollo": "^1.9.2",
+    "apollo": "^2.1.7",
     "chokidar-cli": "^1.2.1",
     "concurrently": "^4.0.1",
     "enzyme": "^3.7.0",
