@@ -1,4 +1,4 @@
-import {MutationResolvers} from "../../__generated__/graphqlgen";
+import { MutationResolvers } from "../../__generated__/graphqlgen";
 import createJob from "./createJob";
 import createOrganization from "./createOrganization";
 import deleteJob from "./deleteJob";
@@ -13,22 +13,24 @@ import rejectJobApplication from "./rejectJobApplication";
 import createSkill from "./createSkill";
 import approveOrganization from "./approveOrganization";
 import deleteOrganization from "./deleteOrganization";
+import sendEmailTo from "./sendEmailTo";
 
 export const Mutation: MutationResolvers.Type = {
-    createJob,
-    updateJob,
-    deleteJob,
-    createOrganization,
-    approveOrganization,
-    deleteOrganization,
-    createSkill,
-    login,
-    logout,
-    addBookmark,
-    removeBookmark,
-    applyForJob,
-    approveJobApplication,
-    rejectJobApplication
+  createJob,
+  updateJob,
+  deleteJob,
+  createOrganization,
+  approveOrganization,
+  deleteOrganization,
+  createSkill,
+  login,
+  logout,
+  addBookmark,
+  removeBookmark,
+  applyForJob,
+  approveJobApplication,
+  rejectJobApplication,
+  sendEmailTo
 };
 
 export default Mutation;

@@ -102,6 +102,9 @@ type Mutation {
   approveOrganization(organizationId: String!): Boolean!
 
   createSkill(title: String!, description: String!): Skill!
+
+  #POC: send an email to someone on buttonclick
+  sendEmailTo(email: String!): Boolean
 }
 
 type JobAutocompletion {

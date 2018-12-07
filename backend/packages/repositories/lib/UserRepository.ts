@@ -1,8 +1,14 @@
 import bcrypt from "bcryptjs";
-import { Connection, FindManyOptions, getConnection, Repository } from "typeorm";
+import {
+  Connection,
+  FindManyOptions,
+  getConnection,
+  Repository
+} from "typeorm";
 import { Job } from "@unijobs/backend-modules-models";
 import { User } from "@unijobs/backend-modules-models";
 import enforceAuth, { enforceAdmin, isAdmin } from "./Utils";
+import { sendEmail } from "@unijobs/backend-modules-mail";
 
 export interface FindUserOptions {
   onlyAdmins?: boolean;
@@ -133,5 +139,9 @@ export class UserRepository {
       .remove(jobId);
 
     return true;
+  }
+
+  async sendEmailTo(email: string): Promise<any> {
+    return await sendEmail(email);
   }
 }
