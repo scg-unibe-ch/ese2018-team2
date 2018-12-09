@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
+import Link from "next/link";
 import { withRouter, WithRouterProps } from "next/router";
 import * as React from "react";
 import { Query } from "react-apollo";
 import "semantic-ui-css/semantic.min.css";
-import { Card, Container, Segment } from "semantic-ui-react";
+import { Accordion, Card, Container, Divider, Grid, Search, Segment, Form } from "semantic-ui-react";
 import { withIntialMe } from "../../../lib/withMe";
 import NavBar from "../../Frame/NavBar";
-import SearchField from "../SearchField";
-import Link from "next/link";
+import Content from "./Content";
 
 const query = gql`
   query JobSearch($search: String) {
@@ -31,7 +31,7 @@ const SearchSegmentComponent: React.SFC<WithRouterProps> = ({ router }) => (
     variables={{ search: router.query && router.query.search }}
   >
     {({ loading, data }) => (
-      <Segment loading={loading} vertical>
+      <Segment loading={loading} vertical style={{ paddingTop: "0" }}>
         <Container>
           <Card.Group stackable itemsPerRow={4}>
             {!data.loading &&
@@ -64,14 +64,19 @@ const SearchSegmentComponent: React.SFC<WithRouterProps> = ({ router }) => (
 
 const SearchSegment = withRouter(SearchSegmentComponent);
 
+const panels = [
+  {
+    key: "salary",
+    title: "Salär",
+    content: {
+      content: <p>Salär</p>
+    }
+  }
+];
+
 export default withIntialMe(() => (
   <React.Fragment>
     <NavBar />
-    <Segment vertical>
-      <Container>
-        <SearchField />
-      </Container>
-    </Segment>
-    <SearchSegment />
+    <Content />
   </React.Fragment>
 ));
