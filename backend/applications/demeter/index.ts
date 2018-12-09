@@ -101,7 +101,7 @@ function sleep(millis: number) {
     job.description = `Job ${i + 1}`;
     job.organization =
       organizations[Math.floor(Math.random() * organizations.length)];
-    job.salary = Math.random() * 10;
+    job.salary = Math.floor(Math.random() * 100) + 1;
     job.skills = [skills[Math.floor(Math.random() * skills.length)]];
 
     await connection.getRepository(Job).save(job);
