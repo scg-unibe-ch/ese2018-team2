@@ -11,6 +11,7 @@ import { withMe, WithMeProps } from "../../../lib/withMe";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { GET_ALL_USER_APPLICATIONS } from "../../Applications/ApplicationList";
+import { toast } from "react-toastify";
 
 interface Job {
   id: string;
@@ -25,6 +26,7 @@ interface Job {
 interface ApplyButtonComponentProps {
   id?: string;
 }
+
 interface ApplyButtonComponentState {
   finished: boolean;
   applied: boolean;
@@ -41,26 +43,12 @@ class ApplyButtonComponent extends React.Component<
   ApplyButtonComponentState
 > {
   state = {
-    finished: false,
     applied: false
-  };
-
-  apply = () => {
-    this.setState({ finished: true, applied: true });
-    setTimeout(() => {
-      this.setState({ ...this.state, finished: false });
-    }, 3000);
   };
 
   render() {
     return (
       <React.Fragment>
-        <TransitionablePortal
-          open={this.state.finished}
-          transition={{ animation: "slide down", duration: 100 }}
-        >
-          <Message positive content={"Bewerbung wurde gesendet"} />
-        </TransitionablePortal>
         <Mutation
           mutation={apply_mutation}
           variables={{ id: this.props.id }}
@@ -76,7 +64,8 @@ class ApplyButtonComponent extends React.Component<
                   variables: { id: this.props.id }
                 });
                 if (result) {
-                  this.apply();
+                  this.setState({ applied: true });
+                  toast.success("Für job beworben");
                 }
               }}
             >
