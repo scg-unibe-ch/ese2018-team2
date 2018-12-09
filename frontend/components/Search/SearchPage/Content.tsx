@@ -9,15 +9,18 @@ import { Divider, Form, Grid, Header, Search } from "semantic-ui-react";
 import JobCardGrid from "./JobCardGrid";
 import { SEARCH } from "./__generated__/SEARCH";
 
-const Range = Slider.createSliderWithTooltip(Slider.Range);
-
 const query = gql`
-  query SEARCH($search: String) {
-    search(search: $search) {
+  query SEARCH($search: String, $minSalary: Float, $maxSalary: Float) {
+    search(search: $search, minSalary: $minSalary, maxSalary: $maxSalary) {
       nodes {
         id
         title
+        salary
         description
+      }
+      aggregations {
+        id
+        value
       }
     }
   }
@@ -33,11 +36,40 @@ class ContentComponent extends React.Component<
   {
     loading: boolean;
     data: { id: string; title: string; description: string }[];
+    minSalary?: number;
+    maxSalary?: number;
   }
 > {
   state = {
     loading: false,
+    minSalary: null,
+    maxSalary: null,
     data: []
+  };
+
+  search = async () => {
+
+    const { search, sMin, sMax } = this.props.router.query;
+
+    this.setState({ loading: true, data: [] });
+    // TODO error handling
+    const data = await this.props.client.query({
+      query: query,
+      variables: {
+        search: search,
+        minSalary: sMin&&parseFloat(sMin as string),
+        maxSalary: sMax&&parseFloat(sMax as string)
+      }
+    });
+
+    const nodes = (data.data as SEARCH).search.nodes;
+
+    const aggregations = (data.data as SEARCH).search.aggregations.reduce(
+      (acc, e) => ({ ...acc, [e.id]: parseFloat(e.value) }),
+      {}
+    );
+
+    this.setState({ loading: false, data: nodes, ...aggregations });
   };
 
   async componentDidMount() {
@@ -51,25 +83,23 @@ class ContentComponent extends React.Component<
         });
 
         const nodes = (data.data as SEARCH).search.nodes;
-        this.setState({ loading: false, data: nodes });
+
+        const aggregations = (data.data as SEARCH).search.aggregations.reduce(
+          (acc, e) => ({ ...acc, [e.id]: parseFloat(e.value) }),
+          {}
+        );
+
+        this.setState({ loading: false, data: nodes, ...aggregations });
       }
     })();
   }
 
   render() {
-    const panels = [
-      {
-        key: "salary",
-        title: "Salär",
-        content: {
-          content: <p>Salär</p>
-        }
-      }
-    ];
+    const Range = Slider.createSliderWithTooltip(Slider.Range);
 
     const { router, client } = this.props;
 
-    const { search } = router.query;
+    const { search, sMin, sMax } = router.query;
 
     return (
       <Grid columns={2} stackable padded={"horizontally"}>
@@ -94,7 +124,9 @@ class ContentComponent extends React.Component<
               });
 
               const nodes = (data.data as SEARCH).search.nodes;
-              this.setState({ loading: false, data: nodes });
+              const aggregations = (data.data as SEARCH).search.aggregations;
+              this.setState({ loading: false, data: nodes, ...aggregations });
+              console.log(this.state);
             }}
           >
             <Search
@@ -106,7 +138,24 @@ class ContentComponent extends React.Component<
           </Form>
           <Divider />
           <Header as={"h3"}>Lohn</Header>
-          <Range pushable defaultValue={[0, 100]} allowCross={false} />
+          <Range
+            min={this.state.minSalary!! || 0}
+            max={this.state.maxSalary!! || 100}
+            defaultValue={[sMin || 0, sMax || 100]}
+            allowCross={false}
+            onAfterChange={async value => {
+              const [min, max] = value;
+              await router.replace({
+                pathname: "/s",
+                query: {
+                  search: search,
+                  sMin: min,
+                  sMax: max
+                }
+              });
+              await this.search();
+            }}
+          />
         </Grid.Column>
         <Grid.Column width={12}>
           <JobCardGrid loading={this.state.loading} data={this.state.data} />

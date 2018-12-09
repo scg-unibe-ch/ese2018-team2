@@ -1,7 +1,14 @@
 import { ApolloError } from "apollo-boost";
 import Link from "next/link";
 import React from "react";
-import { Card, Container, Header, Placeholder, Segment } from "semantic-ui-react";
+import {
+  Card,
+  Container,
+  Header,
+  Placeholder,
+  Segment,
+  Icon
+} from "semantic-ui-react";
 
 interface JobCardGridProps {
   loading: boolean;
@@ -9,6 +16,7 @@ interface JobCardGridProps {
     id: string;
     title: string;
     description: string;
+    salary: number;
   }[];
   error?: ApolloError;
 }
@@ -40,11 +48,21 @@ const JobCardGrid: React.FC<JobCardGridProps> = ({ loading, data }) => (
         data &&
         data.length > 0 &&
         data.map(job => (
-          <Link key={job.id} href={{ pathname: "/job", query: { id: job.id } }} passHref>
+          <Link
+            key={job.id}
+            href={{ pathname: "/job", query: { id: job.id } }}
+            passHref
+          >
             <Card link>
               <Card.Content>
                 <Card.Header>{job.title}</Card.Header>
                 <Card.Description>{job.description}</Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name="money bill alternate outline" />
+                  {job.salary}
+                </a>
               </Card.Content>
             </Card>
           </Link>

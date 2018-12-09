@@ -30,6 +30,7 @@ type Job {
   id: ID!
   title: String!
   description: String!
+  salary: Float!
   organization: Organization!
   applied: Boolean!
 }
