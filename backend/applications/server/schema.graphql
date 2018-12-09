@@ -79,7 +79,7 @@ type AggregationBucket {
 
 type SearchAggregation {
   id: ID!
-  value: String!
+  value: String
 }
 
 type SearchConnection {
