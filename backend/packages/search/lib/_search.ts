@@ -16,9 +16,15 @@ export interface SearchBucket {
   count: number;
 }
 
+export interface SearchAggregation {
+  id: string;
+  value: string;
+}
+
 export interface SearchResult {
   nodes: SearchNode[];
   buckets: SearchBucket[];
+  aggregations: SearchAggregation[];
 }
 
 export const _search = async (
@@ -48,18 +54,28 @@ export const _search = async (
     "skills"
   );
 
+  builder = builder.aggregation("min", "salary", "minSalary");
+
+  builder = builder.aggregation("max", "salary", "maxSalary");
+
   if (exclude) {
-    console.log(exclude)
+    console.log(exclude);
     builder = builder.notFilter("ids", {
       values: [...exclude]
     });
   }
 
-  console.log(builder.build())
+  console.log(builder.build());
 
   const result = await client.search({
     body: builder.build()
   });
+
+  console.log();
+  console.log();
+  console.log(result);
+  console.log();
+  console.log();
 
   const nodes = result.hits.hits.map(e => ({ id: e._id, _type: e._type }));
 
@@ -69,8 +85,20 @@ export const _search = async (
     count: e.doc_count
   }));
 
+  const aggregations = [
+    {
+      id: "minSalary",
+      value: result.aggregations.minSalary.value
+    },
+    {
+      id: "maxSalary",
+      value: result.aggregations.maxSalary.value
+    }
+  ];
+
   return {
     nodes,
-    buckets
+    buckets,
+    aggregations
   };
 };

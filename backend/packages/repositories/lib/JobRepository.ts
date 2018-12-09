@@ -317,7 +317,8 @@ export class JobRepository {
 
     return {
       nodes,
-      buckets
+      buckets,
+      aggregations: searchResult.aggregations
     };
   }
 }

@@ -35,9 +35,15 @@ export interface AggregationBucket {
   label: string;
 }
 
+export interface SearchAggregation {
+  id: string;
+  value: string;
+}
+
 export interface SearchConnection {
   nodes: any[];
   buckets: any[];
+  aggregations: any[];
 }
 
 export interface JobConnection {

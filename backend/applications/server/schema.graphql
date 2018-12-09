@@ -77,9 +77,15 @@ type AggregationBucket {
   count: Int!
 }
 
+type SearchAggregation {
+  id: ID!
+  value: String!
+}
+
 type SearchConnection {
   nodes: [Job!]!
   buckets: [AggregationBucket!]!
+  aggregations: [SearchAggregation!]!
 }
 
 type Mutation {

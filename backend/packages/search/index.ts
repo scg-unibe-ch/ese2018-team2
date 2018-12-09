@@ -7,7 +7,8 @@ import {
   SearchInput,
   SearchNode,
   SearchResult,
-  _search
+  _search,
+  SearchAggregation
 } from "./lib/_search";
 import _uploadJobs from "./lib/_uploadJobs";
 
@@ -20,12 +21,20 @@ export const createIndices = () => _createIndices(elasticClient);
 
 export const uploadJobs = (jobs: Job[]) => _uploadJobs(elasticClient, jobs);
 
-export { SearchInput, SearchNode, SearchResult, SearchBucket };
+export {
+  SearchInput,
+  SearchNode,
+  SearchResult,
+  SearchBucket,
+  SearchAggregation
+};
 
 /**
  * Search for entities.
- * @param input 
+ * @param input
  * @param exclude exclude following ids.
  */
-export const search = async (input: SearchInput, exclude?: string[]): Promise<SearchResult> =>
-  _search(elasticClient, input, exclude);
+export const search = async (
+  input: SearchInput,
+  exclude?: string[]
+): Promise<SearchResult> => _search(elasticClient, input, exclude);
