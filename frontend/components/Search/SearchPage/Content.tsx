@@ -1,11 +1,15 @@
 import { ApolloClient } from "apollo-boost";
 import gql from "graphql-tag";
 import { SingletonRouter, withRouter } from "next/router";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import React from "react";
 import { ApolloConsumer } from "react-apollo";
-import { Accordion, Divider, Form, Grid, Search } from "semantic-ui-react";
+import { Divider, Form, Grid, Header, Search } from "semantic-ui-react";
 import JobCardGrid from "./JobCardGrid";
 import { SEARCH } from "./__generated__/SEARCH";
+
+const Range = Slider.createSliderWithTooltip(Slider.Range);
 
 const query = gql`
   query SEARCH($search: String) {
@@ -101,7 +105,8 @@ class ContentComponent extends React.Component<
             />
           </Form>
           <Divider />
-          <Accordion exclusive panels={panels} />
+          <Header as={"h3"}>Lohn</Header>
+          <Range pushable defaultValue={[0, 100]} allowCross={false} />
         </Grid.Column>
         <Grid.Column width={12}>
           <JobCardGrid loading={this.state.loading} data={this.state.data} />
