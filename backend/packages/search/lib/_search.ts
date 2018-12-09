@@ -3,6 +3,8 @@ import bodybuilder from "bodybuilder";
 
 export interface SearchInput {
   search?: string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 export interface SearchNode {
@@ -41,6 +43,23 @@ export const _search = async (
     });
   }
 
+  if (input.maxSalary!! || input.minSalary!!) {
+    if (input.maxSalary!! && input.minSalary!!) {
+      builder = builder.addQuery("range", "salary", {
+        gte: input.minSalary,
+        lte: input.maxSalary
+      });
+    } else if (input.minSalary!!) {
+      builder = builder.addQuery("range", "salary", {
+        gte: input.minSalary
+      });
+    } else if (input.maxSalary!!) {
+      builder = builder.addQuery("range", "salary", {
+        lte: input.maxSalary
+      });
+    }
+  }
+
   builder = builder.size(30);
 
   builder = builder.aggregation(
@@ -59,7 +78,6 @@ export const _search = async (
   builder = builder.aggregation("max", "salary", "maxSalary");
 
   if (exclude) {
-    console.log(exclude);
     builder = builder.notFilter("ids", {
       values: [...exclude]
     });
@@ -70,12 +88,6 @@ export const _search = async (
   const result = await client.search({
     body: builder.build()
   });
-
-  console.log();
-  console.log();
-  console.log(result);
-  console.log();
-  console.log();
 
   const nodes = result.hits.hits.map(e => ({ id: e._id, _type: e._type }));
 

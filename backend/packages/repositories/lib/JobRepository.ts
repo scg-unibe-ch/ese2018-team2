@@ -293,7 +293,10 @@ export class JobRepository {
       exclude = applications.map(application => application.job.id);
     }
 
-    const searchResult = await elasticJobSearch({ search }, exclude);
+    const searchResult = await elasticJobSearch(
+      { search, minSalary, maxSalary },
+      exclude
+    );
 
     const ids = searchResult.nodes.map((e: SearchNode) => e.id);
     const nodes = await this.jobs.findByIds(ids);

@@ -73,25 +73,7 @@ class ContentComponent extends React.Component<
   };
 
   async componentDidMount() {
-    await (async () => {
-      if (this.props.router.query.search) {
-        this.setState({ loading: true, data: [] });
-        // TODO error handling
-        const data = await this.props.client.query({
-          query: query,
-          variables: { search: this.props.router.query.search }
-        });
-
-        const nodes = (data.data as SEARCH).search.nodes;
-
-        const aggregations = (data.data as SEARCH).search.aggregations.reduce(
-          (acc, e) => ({ ...acc, [e.id]: parseFloat(e.value) }),
-          {}
-        );
-
-        this.setState({ loading: false, data: nodes, ...aggregations });
-      }
-    })();
+    await this.search();
   }
 
   render() {
@@ -139,8 +121,8 @@ class ContentComponent extends React.Component<
           <Divider />
           <Header as={"h3"}>Lohn</Header>
           <Range
-            min={this.state.minSalary!! || 0}
-            max={this.state.maxSalary!! || 100}
+            min={0}
+            max={100}
             defaultValue={[sMin || 0, sMax || 100]}
             allowCross={false}
             onAfterChange={async value => {
