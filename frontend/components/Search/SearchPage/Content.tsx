@@ -36,8 +36,8 @@ class ContentComponent extends React.Component<
     data: []
   };
 
-  componentDidMount() {
-    (async () => {
+  async componentDidMount() {
+    await (async () => {
       if (this.props.router.query.search) {
         this.setState({ loading: true, data: [] });
         // TODO error handling
@@ -94,6 +94,7 @@ class ContentComponent extends React.Component<
             }}
           >
             <Search
+              required
               defaultValue={search as string}
               input={{ fluid: true, name: "search" }}
               showNoResults={false}
