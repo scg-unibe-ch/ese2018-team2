@@ -1,19 +1,19 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
+  Generated,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
-  VersionColumn,
-  Generated
+  VersionColumn
 } from "typeorm";
 import { Job } from "./Job";
 import JobApplicationState from "./JobApplicationState";
 import { User } from "./User";
 
-@Entity("jobApplications")
+@Entity("jobApplications", { name: "jobApplications" })
 export class JobApplication {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -38,11 +38,11 @@ export class JobApplication {
   @VersionColumn()
   version: number;
 
-  @ManyToOne(type => User, {eager: true})
-  @JoinColumn()
+  @ManyToOne(type => User, { eager: true })
+  @JoinColumn({ name: "user" })
   user: User;
 
-  @ManyToOne(type => Job, {eager: true})
-  @JoinColumn()
+  @ManyToOne(type => Job, { eager: true })
+  @JoinColumn({ name: "job" })
   job: Job;
 }

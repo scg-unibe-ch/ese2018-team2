@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 
-@Entity("studentProfiles")
+@Entity("studentProfiles", { name: "studentProfiles" })
 export class StudentProfile {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -19,6 +19,6 @@ export class StudentProfile {
   university: string;
 
   @OneToOne(type => User, user => user.studentProfile)
-  @JoinColumn()
+  @JoinColumn({ name: "user" })
   student: User;
 }

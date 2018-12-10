@@ -2,7 +2,8 @@ import {
   Job,
   JobApplication,
   Organization,
-  Skill
+  Skill,
+  User
 } from "@unijobs/backend-modules-models";
 import {
   elasticClient,
@@ -292,16 +293,25 @@ export class JobRepository {
 
     if (getUserId(session)) {
       // Only select jobId
-      const applications = await this.connection
+      const users = await this.connection
+        .getRepository(User)
+        .find({ where: { id: getUserId(session) } });
+
+      if (users.length !== 1) {
+        console.log("More than one user found!!!");
+        throw new Error("Unexpected error");
+      }
+
+      const applications = await users[0].applications;
+
+      const result = await this.connection
         .getRepository(JobApplication)
-        .find({
-          relations: ["job"],
-          where: {
-            user: getUserId(session)
-          }
+        .findByIds(applications.map(application => application.id), {
+          relations: ["job"]
         });
 
-      exclude = applications.map(application => application.job.id);
+      // TODO evil :(
+      exclude = result.map(application => application.job.id);
     }
 
     const searchResult = await elasticJobSearch(

@@ -17,7 +17,7 @@ import { Organization } from "./Organization";
 import { Skill } from "./Skill";
 import { StudentProfile } from "./StudentProfile";
 
-@Entity("users")
+@Entity("users", { name: "users" })
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;

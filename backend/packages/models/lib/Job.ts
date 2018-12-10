@@ -1,22 +1,22 @@
 import {
   Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
   CreateDateColumn,
+  Entity,
+  Generated,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
-  VersionColumn,
-  Generated
+  VersionColumn
 } from "typeorm";
+import { JobApplication } from "./JobApplication";
 import { Organization } from "./Organization";
 import { Skill } from "./Skill";
 import { User } from "./User";
-import { JobApplication } from "./JobApplication";
 
-@Entity("jobs")
+@Entity("jobs", { name: "jobs" })
 export class Job {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -28,12 +28,22 @@ export class Job {
   description: string;
 
   @ManyToOne(type => Organization, organization => organization.jobs, {
-    eager: true,
+    eager: true
   })
   organization: Organization;
 
   @Column("float")
   salary: number;
+
+  // else "pauschal"
+  @Column({ type: "boolean", default: false })
+  isSalaryPerHour: boolean;
+
+  /**
+   * Aka "Pensum"
+   */
+  @Column({ type: "float" })
+  workload: number;
 
   @Column("bigint")
   @Generated("increment")
@@ -54,8 +64,16 @@ export class Job {
   @Column({ nullable: true })
   end: Date;
 
+  // TODO not nullable
+  @Column({ nullable: true, name: "workingTime" })
+  workingTime: number;
+
+  // TODO not nullable
+  @Column({ nullable: true, name: "isWorkingTimePerWeek", default: "true" })
+  isWorkingTimePerWeek: boolean;
+
   @ManyToMany(type => Skill)
-  @JoinTable({name:"jobs_skills"})
+  @JoinTable({ name: "jobs_skills" })
   skills: Skill[];
 
   @ManyToMany(type => User, user => user.bookmarkedJobs)

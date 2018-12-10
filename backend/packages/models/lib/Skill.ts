@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 
-@Entity("skills")
+@Entity("skills", { name: "skills" })
 export class Skill {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -16,10 +16,10 @@ export class Skill {
   @Generated("increment")
   sequenceNumber: number;
 
-  @Column("text", {name: "title"})
+  @Column("text", { name: "title" })
   title: string;
 
-  @Column("text", {name:"description"})
+  @Column("text", { name: "description" })
   description: string;
 
   @ManyToMany(type => User, user => user.skills)
