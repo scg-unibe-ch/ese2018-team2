@@ -21,20 +21,22 @@ interface OrganisationOverviewComponentProps {
   };
 }
 
-const OrganisationOverviewComponent: React.SFC<
+const OrganisationOverviewComponent: React.FC<
   OrganisationOverviewComponentProps
 > = ({ loading, error, data }) => (
   <IsDetail>
-  <Container>
-    <Header as={"h2"}>Übersicht Jobinserate</Header>
-    <Segment basic loading={loading}>
-      {error && <p>{error.message}</p>}
-      {!loading &&
-        !error &&
-        data &&
-        data.organizations.map(org => <OrganisationContainer org={org} />)}
-    </Segment>
-  </Container>
+    <Container>
+      <Header as={"h2"}>Übersicht Jobinserate</Header>
+      <Segment basic loading={loading}>
+        {error && <p>{error.message}</p>}
+        {!loading &&
+          !error &&
+          data &&
+          data.organizations.map(org => (
+            <OrganisationContainer key={org.id} org={org} />
+          ))}
+      </Segment>
+    </Container>
   </IsDetail>
 );
 

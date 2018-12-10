@@ -15,7 +15,13 @@ import client from "./lib/redis";
 createConnection({
   type: "postgres",
   url: config.get("database_url"),
-  entities: [Job, Organization, User, Skill, JobApplication, StudentProfile],
+  entities: [
+      Job,
+      Organization,
+      User,
+      Skill,
+      JobApplication,
+      StudentProfile],
   logging: true
 }).then(async connection => {
   const typeDefs = importSchema("./schema.graphql");
@@ -23,7 +29,7 @@ createConnection({
   const jobRepository = new JobRepository(connection);
   const organizationRepository = new OrganizationRepository(connection);
   const userRepository = new UserRepository(connection);
-  const applicationRepository = new JobApplicationRepository(connection);
+  const jobApplicationRepository = new JobApplicationRepository(connection);
   const skillRepository = new SkillRepository(connection);
   const studentProfileRepository = new StudentProfileRepository(connection);
 
@@ -48,7 +54,7 @@ createConnection({
     jobRepository,
     organizationRepository,
     userRepository,
-    applicationRepository,
+    jobApplicationRepository,
     skillRepository,
     studentProfileRepository,
     session: request.session

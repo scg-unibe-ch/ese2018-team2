@@ -40,6 +40,17 @@ export class JobRepository {
     this.organizations = connection.getRepository(Organization);
   }
 
+  async getOrganizationJobs(organizationId: string, session: Express.Session) {
+    const jobs = await this.jobs
+      .createQueryBuilder("jobs")
+      .where('jobs."organizationId" = :organization', {
+        organization: organizationId
+      })
+      .getMany();
+
+    return jobs;
+  }
+
   // TODO create interface for argument type
   async getJobs(
     first?: number,

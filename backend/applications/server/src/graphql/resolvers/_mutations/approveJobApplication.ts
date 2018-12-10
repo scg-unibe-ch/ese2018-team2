@@ -5,7 +5,7 @@ const approveJobApplication: MutationResolvers.ApproveJobApplicationResolver = (
   args,
   ctx
 ) =>
-  ctx.applicationRepository.approveJobApplication(
+  ctx.jobApplicationRepository.approveJobApplication(
     args.applicationId,
     ctx.session
   );

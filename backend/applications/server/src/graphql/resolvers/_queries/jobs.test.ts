@@ -18,7 +18,7 @@ describe("Get likedJobs", () => {
       })))(),
       organizationRepository: new (jest.fn<OrganizationRepository>())(),
       userRepository: new (jest.fn<UserRepository>())(),
-      applicationRepository: new (jest.fn<JobApplicationRepository>())(),
+      jobApplicationRepository: new (jest.fn<JobApplicationRepository>())(),
       skillRepository: new (jest.fn<SkillRepository>())()
     };
 

@@ -38,11 +38,11 @@ export class JobApplication {
   @VersionColumn()
   version: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, {eager: true})
   @JoinColumn()
   user: User;
 
-  @ManyToOne(type => Job)
+  @ManyToOne(type => Job, {eager: true})
   @JoinColumn()
   job: Job;
 }
