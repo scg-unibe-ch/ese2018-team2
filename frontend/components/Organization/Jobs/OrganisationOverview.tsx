@@ -13,13 +13,20 @@ interface OrganisationOverviewComponentProps {
     organizations: {
       id: string;
       name: string;
-      jobs: {
-        id: string;
-        title: string;
-      }[];
     }[];
   };
 }
+
+export const GET_ALL_ORGANIZATION_JOBS = gql`
+  query GetOrgJobs($orgId: String!) {
+    getOrganizationJobs(organizationId: $orgId) {
+      id
+      title
+      description
+      applicationCount
+    }
+  }
+`;
 
 const OrganisationOverviewComponent: React.FC<
   OrganisationOverviewComponentProps
@@ -33,28 +40,37 @@ const OrganisationOverviewComponent: React.FC<
           !error &&
           data &&
           data.organizations.map(org => (
-            <OrganisationContainer key={org.id} org={org} />
+            <Query
+              query={GET_ALL_ORGANIZATION_JOBS}
+              variables={{ orgId: org.id }}
+            >
+              {({ loading, error, data }) => (
+                <OrganisationContainer
+                  key={org.id}
+                  org={org}
+                  loading={loading}
+                  error={error}
+                  jobs={!error && data.getOrganizationJobs}
+                />
+              )}
+            </Query>
           ))}
       </Segment>
     </Container>
   </IsDetail>
 );
 
-export const GET_ALL_ORGANIZATION_JOBS = gql`
+export const GET_USER_ORGANIZATIONS = gql`
   query organizations {
     organizations {
       id
       name
-      jobs {
-        id
-        title
-      }
     }
   }
 `;
 
 export default () => (
-  <Query query={GET_ALL_ORGANIZATION_JOBS}>
+  <Query query={GET_USER_ORGANIZATIONS}>
     {({ loading, error, data }) => (
       <OrganisationOverviewComponent
         loading={loading}

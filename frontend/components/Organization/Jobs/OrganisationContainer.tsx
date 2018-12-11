@@ -1,37 +1,61 @@
 import {
   Button,
   Container,
+  Dimmer,
   Header,
+  Icon,
+  Loader,
   Segment,
-  Table,
-  Icon
+  Table
 } from "semantic-ui-react";
 import * as React from "react";
 import Link from "next/link";
 import OrganizationOverviewItem from "./OrganizationOverviewItem";
+import { ApolloError } from "apollo-client";
 
 interface Job {
   id: string;
   title: string;
   description: string;
-  salary: number;
+  applicationCount: number;
 }
 
-interface Organisation {
+interface Organization {
   id: string;
   name: string;
-  jobs: {
-    id: string;
-    title: string;
-  };
 }
 
 interface OrganisationContainerProps {
-  org: Organisation;
+  org: Organization;
+  loading: boolean;
+  error: ApolloError;
+  jobs: Job[];
 }
 
+const errorPlaceholder = (
+  <Table.Cell colSpan={4}>
+    <Segment basic>
+      <Header as="h2" textAlign={"center"}>
+        <Icon.Group size="large">
+          <Icon name="server" />
+          <Icon corner name="close" color="red" />
+        </Icon.Group>
+        <Header.Content>Server Error</Header.Content>
+      </Header>
+    </Segment>
+  </Table.Cell>
+);
+const loadingPlaceholder = (
+  <Dimmer active inverted>
+    <Loader active />
+  </Dimmer>
+);
+
 const OrganisationContainer: React.FC<OrganisationContainerProps> = ({
-  org
+  org,
+  loading,
+  error,
+  jobs
 }) => (
   <Container>
     <Header as="h3" attached="top" block>
@@ -73,9 +97,18 @@ const OrganisationContainer: React.FC<OrganisationContainerProps> = ({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {org.jobs.map(job => (
-            <OrganizationOverviewItem key={job.id} job={job} />
-          ))}
+          {!!error && errorPlaceholder}
+          {loading && loadingPlaceholder}
+          {!loading &&
+            !error &&
+            jobs.map(job => (
+              <OrganizationOverviewItem
+                loading={loading}
+                error={error}
+                key={job.id}
+                job={job}
+              />
+            ))}
         </Table.Body>
       </Table>
     </Segment>
