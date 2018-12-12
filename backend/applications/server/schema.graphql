@@ -22,8 +22,19 @@ type Organization {
   email: String!
   phone: String
   jobs: [Job]!
-  employees: [User]!
+  employee: [User]!
   approved: Boolean!
+  pages: [OrganizationPage!]!
+}
+
+type StudyProgram {
+  id: ID!
+  title: String!
+}
+
+type OrganizationPage {
+  id: ID!
+  studyPrograms: [StudyProgram!]!
 }
 
 interface JobInterface {
@@ -113,6 +124,8 @@ type Mutation {
   login(email: String!, pw: String!): Boolean!
   logout: Boolean!
 
+  createPage(organizationSlug: String!, studyProgramSlugs: [String!]!): Boolean!
+
   createJob(input: CreateJobInput!): Job!
   updateJob(id: ID!, title: String, description: String): Job!
   deleteJob(job: ID!): Boolean!
@@ -140,6 +153,10 @@ type JobAutocompletion {
 }
 
 type Query {
+  availableStudyPrograms: [StudyProgram!]!
+
+  page(pageSlug: String!): [Job!]!
+
   jobs(first: Int, last: Int, before: String, after: String): JobConnection!
 
   job(id: String!): Job

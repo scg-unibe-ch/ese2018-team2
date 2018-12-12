@@ -1,7 +1,11 @@
+import {
+  Job,
+  Organization,
+  Page,
+  StudyProgram,
+  User
+} from "@unijobs/backend-modules-models";
 import { Connection, Repository } from "typeorm";
-import { Job } from "@unijobs/backend-modules-models";
-import { Organization } from "@unijobs/backend-modules-models";
-import { User } from "@unijobs/backend-modules-models";
 import enforceAuth, { enforceAdmin, getUserId, isAdmin } from "./Utils";
 
 export class OrganizationRepository {
@@ -57,5 +61,66 @@ export class OrganizationRepository {
     await this.jobs.delete({ organization: { id: organizationId } });
     await this.organizations.delete({ id: organizationId });
     return true;
+  }
+
+  async getPages(organizationId: string) {
+    const results = await this.organizations.find({
+      where: {
+        id: organizationId
+      },
+      relations: ["pages"]
+    });
+
+    if (results.length < 0) {
+      console.log("No organization found");
+      //TODO better handling
+      throw new Error("Permission denied");
+    }
+
+    return this.connection
+      .getRepository(Page)
+      .createQueryBuilder("page")
+      .leftJoinAndSelect("page.studyPrograms", "studyProgram")
+      .where('page."organizationId" = :o', { o: organizationId })
+      .getMany();
+  }
+
+  async createPage(
+    organizationId: string,
+    studyPrograms: string[],
+    session: Express.Session
+  ) {
+    enforceAuth(session);
+    // TODO Check user priviliges
+
+    const p = new Page();
+    p.organization = await this.organizations.findOne(organizationId);
+    p.studyPrograms = await this.connection
+      .getRepository(StudyProgram)
+      .findByIds(studyPrograms);
+
+    await this.connection.getRepository(Page).save(p);
+    return true;
+  }
+
+  async getJobsForPage(pageSlug: string) {
+    const pages = await this.connection
+      .getRepository(Page)
+      .findByIds([pageSlug], { relations: ["studyPrograms"] });
+
+    if (pages.length !== 1) {
+      throw new Error("404");
+    }
+
+    const jobs = await this.connection
+      .getRepository(Job)
+      .createQueryBuilder("job")
+      .leftJoin("job.preferredStudyPrograms", "studyprogram")
+      .where("studyprogram.id IN (:...ids)", {
+        ids: pages[0].studyPrograms.map(s => s.id)
+      })
+      .getMany();
+
+    return this.jobs.findByIds(jobs.map(j => j.id));
   }
 }

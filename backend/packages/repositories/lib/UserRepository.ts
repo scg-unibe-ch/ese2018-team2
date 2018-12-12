@@ -5,7 +5,7 @@ import {
   getConnection,
   Repository
 } from "typeorm";
-import { Job } from "@unijobs/backend-modules-models";
+import { Job, StudyProgram } from "@unijobs/backend-modules-models";
 import { User } from "@unijobs/backend-modules-models";
 import enforceAuth, { enforceAdmin, isAdmin } from "./Utils";
 import { sendEmail } from "@unijobs/backend-modules-mail";
@@ -18,10 +18,12 @@ export interface FindUserOptions {
 export class UserRepository {
   private users: Repository<User>;
   private jobs: Repository<Job>;
+  private studyPrograms: Repository<StudyProgram>;
 
   constructor(connection: Connection) {
     this.users = connection.getRepository(User);
     this.jobs = connection.getRepository(Job);
+    this.studyPrograms = connection.getRepository(StudyProgram);
   }
 
   async login(email: string, password: string, session: Express.Session) {
@@ -143,5 +145,13 @@ export class UserRepository {
 
   async sendEmailTo(email: string): Promise<any> {
     return await sendEmail(email);
+  }
+
+  async getAvailableStudyPrograms(): Promise<any> {
+    return this.studyPrograms.find({
+      order: {
+        title: "ASC"
+      }
+    });
   }
 }

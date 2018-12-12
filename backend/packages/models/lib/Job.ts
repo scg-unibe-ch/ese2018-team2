@@ -15,6 +15,7 @@ import { JobApplication } from "./JobApplication";
 import { Organization } from "./Organization";
 import { Skill } from "./Skill";
 import { User } from "./User";
+import { StudyProgram } from "./StudyProgram";
 
 @Entity("jobs", { name: "jobs" })
 export class Job {
@@ -38,6 +39,10 @@ export class Job {
   // else "pauschal"
   @Column({ type: "boolean", default: false })
   isSalaryPerHour: boolean;
+
+  @ManyToMany(type => StudyProgram)
+  @JoinTable({ name: "job_studyProgram" })
+  preferredStudyPrograms: StudyProgram[];
 
   /**
    * Aka "Pensum"

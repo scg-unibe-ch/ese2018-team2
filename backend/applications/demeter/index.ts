@@ -2,18 +2,22 @@ import {
   Job,
   JobApplication,
   Organization,
+  Page,
   Skill,
-  User,
-  StudentProfile
+  StudentProfile,
+  StudyProgram,
+  University,
+  User
 } from "@unijobs/backend-modules-models";
 import {
+  createIndices,
   elasticClient,
-  uploadJobs,
-  createIndices
+  uploadJobs
 } from "@unijobs/backend-modules-search";
 import bcrypt from "bcryptjs";
 import { createConnection } from "typeorm";
 import generateTitle from "./rnd/buzz";
+import studyPrograms from "./studyPrograms";
 import users from "./users";
 
 function sleep(millis: number) {
@@ -24,7 +28,17 @@ function sleep(millis: number) {
   const connection = await createConnection({
     type: "postgres",
     url: "postgres://postgres@localhost:5432/postgres",
-    entities: [Job, Organization, Skill, User, JobApplication, StudentProfile],
+    entities: [
+      Job,
+      Organization,
+      Skill,
+      User,
+      JobApplication,
+      StudentProfile,
+      University,
+      StudyProgram,
+      Page
+    ],
     logging: true
   });
 
@@ -94,6 +108,22 @@ function sleep(millis: number) {
 
   const skills = await connection.getRepository(Skill).find();
 
+  const unibe = new University();
+  unibe.name = "Unibersität Bern";
+
+  await connection.getRepository(University).save(unibe);
+
+  for (let i = 0; i < studyPrograms.length; i++) {
+    const p = new StudyProgram();
+    p.title = studyPrograms[i];
+    p.universities = [unibe];
+    await connection.getRepository(StudyProgram).save(p);
+  }
+
+  const availableStudyPrograms = await connection
+    .getRepository(StudyProgram)
+    .find();
+
   for (let i = 0; i < 200; i++) {
     const job = new Job();
     job.start = new Date();
@@ -104,6 +134,9 @@ function sleep(millis: number) {
     job.salary = Math.floor(Math.random() * 100) + 1;
     job.skills = [skills[Math.floor(Math.random() * skills.length)]];
     job.workload = Math.floor(Math.random() * 90) + 10;
+    job.preferredStudyPrograms = [
+      availableStudyPrograms[Math.floor(Math.random() * studyPrograms.length)]
+    ];
 
     await connection.getRepository(Job).save(job);
   }

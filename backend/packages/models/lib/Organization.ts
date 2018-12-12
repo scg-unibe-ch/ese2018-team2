@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import { Job } from "./Job";
 import { User } from "./User";
+import { Page } from "./Page";
 
 @Entity("organizations", { name: "organizations" })
 export class Organization {
@@ -53,4 +54,7 @@ export class Organization {
     cascade: true
   })
   jobs: Promise<Job[]>;
+
+  @OneToMany(type => Page, page => page.organization)
+  pages: Page[];
 }

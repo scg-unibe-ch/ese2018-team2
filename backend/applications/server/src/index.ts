@@ -1,12 +1,29 @@
-import "reflect-metadata";
 import config from "@unijobs/backend-modules-config";
-import { Job, JobApplication, Organization, Skill, StudentProfile, User } from "@unijobs/backend-modules-models";
-import { JobApplicationRepository, JobRepository, OrganizationRepository, SkillRepository, UserRepository, StudentProfileRepository } from "@unijobs/backend-modules-repositories";
+import {
+  Job,
+  JobApplication,
+  Organization,
+  Page,
+  Skill,
+  StudentProfile,
+  StudyProgram,
+  University,
+  User
+} from "@unijobs/backend-modules-models";
+import {
+  JobApplicationRepository,
+  JobRepository,
+  OrganizationRepository,
+  SkillRepository,
+  StudentProfileRepository,
+  UserRepository
+} from "@unijobs/backend-modules-repositories";
 import bcrypt from "bcryptjs";
 import createRedisStore from "connect-redis";
 import session from "express-session";
 import { importSchema } from "graphql-import";
 import { GraphQLServer } from "graphql-yoga";
+import "reflect-metadata";
 import { createConnection } from "typeorm";
 import resolvers from "./graphql";
 import client from "./lib/redis";
@@ -16,12 +33,16 @@ createConnection({
   type: "postgres",
   url: config.get("database_url"),
   entities: [
-      Job,
-      Organization,
-      User,
-      Skill,
-      JobApplication,
-      StudentProfile],
+    Job,
+    Organization,
+    User,
+    Skill,
+    JobApplication,
+    StudentProfile,
+    University,
+    StudyProgram,
+    Page
+  ],
   logging: true
 }).then(async connection => {
   const typeDefs = importSchema("./schema.graphql");

@@ -6,6 +6,9 @@ import { User } from "./lib/User";
 import { Job } from "./lib/Job";
 import JobApplicationState from "./lib/JobApplicationState";
 import { StudentProfile } from "./lib/StudentProfile";
+import { University } from "./lib/University";
+import { StudyProgram } from "./lib/StudyProgram";
+import { Page } from "./lib/Page";
 
 export {
   JobApplication,
@@ -14,5 +17,8 @@ export {
   User,
   Job,
   JobApplicationState,
-  StudentProfile
+  StudentProfile,
+  University,
+  StudyProgram,
+  Page
 };

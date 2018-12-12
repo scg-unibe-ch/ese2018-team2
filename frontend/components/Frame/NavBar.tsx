@@ -47,6 +47,9 @@ const adminItems = [
 const orgItems = [
   <Link href={"/org/jobs"} key={"MyJobs"}>
     <Menu.Item name={"Meine Jobinserate"}>Meine Jobinserate</Menu.Item>
+  </Link>,
+  <Link href={"/org/pages"} key={"pages"}>
+    <Menu.Item name={"Pages"}>Pages</Menu.Item>
   </Link>
 ];
 
