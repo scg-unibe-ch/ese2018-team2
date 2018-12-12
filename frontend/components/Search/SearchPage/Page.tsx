@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
-import Link from "next/link";
 import { withRouter, WithRouterProps } from "next/router";
 import * as React from "react";
 import { Query } from "react-apollo";
 import "semantic-ui-css/semantic.min.css";
-import { Accordion, Card, Container, Divider, Grid, Search, Segment, Form } from "semantic-ui-react";
+import { Card, Container, Segment } from "semantic-ui-react";
 import { withIntialMe } from "../../../lib/withMe";
 import NavBar from "../../Frame/NavBar";
 import Content from "./Content";
+import JobCard from "../../Job/JobCard";
 
 const query = gql`
   query JobSearch($search: String) {
@@ -20,6 +20,7 @@ const query = gql`
           id
           name
         }
+        salary
       }
     }
   }
@@ -41,19 +42,12 @@ const SearchSegmentComponent: React.SFC<WithRouterProps> = ({ router }) => (
                 id: string;
                 title: string;
                 description: string;
+                organization: {
+                  name: string;
+                };
+                salary: number;
               }[]).map(job => (
-                <Link
-                  key={job.id}
-                  href={{ pathname: "/job", query: { id: job.id } }}
-                  passHref
-                >
-                  <Card link>
-                    <Card.Content>
-                      <Card.Header>{job.title}</Card.Header>
-                      <Card.Description>{job.description}</Card.Description>
-                    </Card.Content>
-                  </Card>
-                </Link>
+                <JobCard key={job.id} href={"/job?id=" + job.id} job={job} />
               ))}
           </Card.Group>
         </Container>

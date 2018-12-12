@@ -9,6 +9,7 @@ import {
   Segment,
   Icon
 } from "semantic-ui-react";
+import JobCard from "../../Job/JobCard";
 
 interface JobCardGridProps {
   loading: boolean;
@@ -16,6 +17,9 @@ interface JobCardGridProps {
     id: string;
     title: string;
     description: string;
+    organization: {
+      name: string;
+    };
     salary: number;
   }[];
   error?: ApolloError;
@@ -48,35 +52,16 @@ const JobCardGrid: React.FC<JobCardGridProps> = ({ loading, data }) => (
         data &&
         data.length > 0 &&
         data.map(job => (
-          <Link
-            key={job.id}
-            href={{ pathname: "/job", query: { id: job.id } }}
-            passHref
-          >
-            <Card link>
-              <Card.Content>
-                <Card.Header>{job.title}</Card.Header>
-                <Card.Description>{job.description}</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name="money bill alternate outline" />
-                  {job.salary}
-                </a>
-              </Card.Content>
-            </Card>
-          </Link>
+          <JobCard key={job.id} href={"/job?id=" + job.id} job={job} />
         ))}
-      {!loading &&
-        data &&
-        data.length === 0 && (
-          <Container style={{ padding: "10px" }}>
-            <Header as={"h2"}>Keine Ergebnisse</Header>
-            <Header as={"h3"}>
-              Erhalte mehr Ergebnisse, in dem du die Filter anpasst.
-            </Header>
-          </Container>
-        )}
+      {!loading && data && data.length === 0 && (
+        <Container style={{ padding: "10px" }}>
+          <Header as={"h2"}>Keine Ergebnisse</Header>
+          <Header as={"h3"}>
+            Erhalte mehr Ergebnisse, in dem du die Filter anpasst.
+          </Header>
+        </Container>
+      )}
     </Card.Group>
   </Segment>
 );

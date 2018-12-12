@@ -17,6 +17,10 @@ const query = gql`
         title
         salary
         description
+        salary
+        organization {
+          name
+        }
       }
       aggregations {
         id
@@ -48,7 +52,6 @@ class ContentComponent extends React.Component<
   };
 
   search = async () => {
-
     const { search, sMin, sMax } = this.props.router.query;
 
     this.setState({ loading: true, data: [] });
@@ -57,8 +60,8 @@ class ContentComponent extends React.Component<
       query: query,
       variables: {
         search: search,
-        minSalary: sMin&&parseFloat(sMin as string),
-        maxSalary: sMax&&parseFloat(sMax as string)
+        minSalary: sMin && parseFloat(sMin as string),
+        maxSalary: sMax && parseFloat(sMax as string)
       }
     });
 
