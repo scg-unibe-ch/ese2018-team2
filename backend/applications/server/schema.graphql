@@ -50,6 +50,17 @@ type OrganizationJob implements JobInterface {
   applicationCount: Int!
 }
 
+input CreateJobInput {
+  title: String!
+  description: String!
+  organization: String!
+  salary: Float!
+  isSalaryPerHour: Boolean!
+  start: String!
+  end: String
+  workload: Float!
+}
+
 type JobConnection {
   nodes: [Job!]!
   pageInfo: JobPageInfo!
@@ -80,12 +91,6 @@ type Skill {
   id: ID!
   title: String!
   description: String!
-}
-
-input CreateJobInput {
-  title: String!
-  description: String = ""
-  organization: ID!
 }
 
 type AggregationBucket {

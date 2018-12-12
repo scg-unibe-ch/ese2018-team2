@@ -117,7 +117,7 @@ interface LoginProps {
   handleSuccess?: () => Promise<void>;
 }
 
-const Login: React.SFC<LoginProps> = ({ router, handleSuccess }) => (
+const Login: React.FC<LoginProps> = ({ router, handleSuccess }) => (
   <Mutation mutation={LOGIN}>
     {(login, { loading }) => (
       <LoginComponent

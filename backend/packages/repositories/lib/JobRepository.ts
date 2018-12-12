@@ -196,8 +196,11 @@ export class JobRepository {
     const job = new Job();
     job.title = args.input.title;
     job.description = args.input.description;
-    job.salary = 1.0;
-    job.start = new Date();
+    job.salary = args.input.salary;
+    job.isSalaryPerHour = args.input.isSalaryPerHour;
+    job.start = args.input.start;
+    !!args.input.end && (job.end = args.input.end);
+    job.workload = args.input.workload;
 
     const organization = await this.organizations.findOneOrFail(
       args.input.organization

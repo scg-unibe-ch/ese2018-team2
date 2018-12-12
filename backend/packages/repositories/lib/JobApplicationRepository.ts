@@ -105,7 +105,7 @@ export class JobApplicationRepository {
 
     return await this.applications
       .createQueryBuilder("jobApplications")
-      .where('"jobId" = :jobId', { jobId })
+      .where('"job" = :jobId', { jobId })
       .getCount();
   }
 

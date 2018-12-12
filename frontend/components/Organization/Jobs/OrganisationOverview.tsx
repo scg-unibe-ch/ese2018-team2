@@ -43,6 +43,7 @@ const OrganisationOverviewComponent: React.FC<
             <Query
               query={GET_ALL_ORGANIZATION_JOBS}
               variables={{ orgId: org.id }}
+              key={org.id}
             >
               {({ loading, error, data }) => (
                 <OrganisationContainer
