@@ -5,6 +5,10 @@ This application was developed in the context of
 [*ESE: Introduction to Software Engineering*](http://scg.unibe.ch/teaching/ese?_s=Nsa-grgFUmyAcN6b&_k=42JrWQtE&_n&15),
 a course for Bachelor students in Computer Science at the University of Bern.
 
+## Limitations
+
+**Only MacOS or Linux are supported and you need at least 8GB of RAM.**
+
 ## Monorepo Structure
 
 * **/frontend** Source of the front end.
@@ -17,21 +21,31 @@ Ensure the following tools are installed:
 
 * [Docker](https://www.docker.com)
 * [Docker Compose](https://docs.docker.com/compose/)
+* [yarn](https://yarnpkg.com/lang/en/)
 
-To run this project use `docker-compose build` then `docker-compose up -d`.
+### Run the back end
 
-After docker-compose finished you can browse the following urls:
+The *backend/dev/seed_and_dev.sh* will initialize a test environment with a pre seeded database.
 
-* [front end: http://localhost:3000](http://localhost:3000)
-* [back end: http://localhost:4000](http://localhost:4000)
+After the script ran you can access the GraphQL-Playground on [back end: http://localhost:4000](http://localhost:4000).
 
 The PostgreSQL instance runs on *localhost:5432*.
 
-## How to develop on back end
+### Run the front end
 
-You can use `backend/dev/seed_and_dev.sh` to start the back end.
-This script will start and set up everything you need to develop on the back end.
-Changes to the source of the back end will restart the server automatically.
+You can start the front end by executing the following commands in the folder *frontend*:
+
+````
+yarn install && yarn dev
+````
+
+### Users for testing
+
+| Username | Password | Type |
+| -------- |----------| -----|
+| beri | 123456 | Student |
+| org | 123456 | Organisation |
+| fabio | 123456 | System Adminstrator |
 
 ## Technologies
 
@@ -45,3 +59,23 @@ This project uses a number of different technologies. Most prominent are:
 * [Docker](https://www.docker.com): To encapsulate front end, back end and make the developer experience a bit nicer.
 * [PostgreSQL](https://www.postgresql.org): Used as the main data store.
 * [redis](https://redis.io): Used to store sessions.
+
+## Architecture Overview
+
+````
+Next.js -- GraphQL -- Back end -- PostgreSQL & Elasticsearch
+````
+
+The front end (Next.js) communicates with the back end via a GraphQL powered API. The back end stores data in PostgreSQL and indexes job postings with Elasticsearch.
+
+The job search is implemented with Elasticsearch.
+
+## Points of interest
+
+ Directory | Descrption |
+| -------- |----------|
+| backend/applications/server | Main back end server and GraphQL API |
+| backend/packages/repositories | Business logic |
+| backend/packages/models | Database model and mapping |
+| backend/packages/search | Search API based on Elasticsearch |
+| frontend/components | React components of the front end |
