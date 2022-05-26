@@ -39,7 +39,7 @@
     "@unijobs/backend-modules-models": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^3.4.0",
-    "convict": "^4.4.0",
+    "convict": "^6.2.3",
     "elasticsearch": "^15.2.0",
     "express-session": "^1.15.6",
     "graphql-import": "^0.7.1",
