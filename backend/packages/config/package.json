@@ -11,7 +11,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "convict": "^4.4.0"
+    "convict": "^6.2.4"
   },
   "devDependencies": {
     "@types/convict": "^4.2.0",
